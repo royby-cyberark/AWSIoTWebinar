@@ -1,5 +1,3 @@
-//TODO - Split to files - agenda, hands on session
-
 # AWS IoT Webinar - Using AWS IoT for Authenticating External Services
 
 ## Welcome
@@ -9,6 +7,8 @@ below you will find general description, links and most importantly, step-by-ste
 I hope you enjoy the webinar and if you have any questions feel free to open an issue here or DM me @RoyBenYosefTM on twitter.
 
 ## Intro
+
+AWS IoT is a suite of services that  ... 
 
 //TODO - add intro
 

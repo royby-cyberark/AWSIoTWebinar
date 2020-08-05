@@ -17,4 +17,6 @@ I hope you enjoy the webinar and if you have any questions feel free to open an 
 https://github.com/royby-cyberark/AWSIoTWebinar/blob/master/aws-iot-services.md
 
 ## AWS IoT Hands-on Session
-//TODO - implement
+
+https://github.com/royby-cyberark/AWSIoTWebinar/blob/master/aws-iot-hands-on.md
+

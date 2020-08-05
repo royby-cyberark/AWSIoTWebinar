@@ -1,6 +1,3 @@
-# AWS IoT Services
-//TODO - below you can find the list of features with short description...
-
 # AWS IoT Services and Features
 
 * Protocols //TODO

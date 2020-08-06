@@ -69,7 +69,7 @@ In simple words, you can publish a job message to one or more devices, which in 
 An example would be creating a job to instruct a device to rotate its certificate.
 
 
-#### SDKs
+### SDKs
 
 AWS Provides a large number of SDKs for all major languages and platforms. 
 You have an easy way to write client code on virtually any platform, but since it is also MQTT, you can also do things yourself, if you choose to do so.
@@ -86,7 +86,7 @@ You have an easy way to write client code on virtually any platform, but since i
 * iOS
 * Arduino 
 
-#### Other AWS IoT Service
+### Other AWS IoT Service
 
 We will only mention those by name since they are generally out of scope for this webinar:
 

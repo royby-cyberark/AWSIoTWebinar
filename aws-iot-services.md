@@ -40,21 +40,25 @@ https://docs.aws.amazon.com/iot/latest/developerguide/iot-policies.html
 
 #### Rules 
 Rules give your devices the ability to interact with AWS services. Rules are analyzed and actions are performed based on the MQTT topic stream. 
+You use an SQL syntax to act on those message, as shown below.
+In simple words, devices can send messages to AWS IoT backend topics and you can use these messages to do things like: 
 
-//TODO - FINISH
-
-they provide message processing and integration with other AWS services. You can use an SQL-based language to select data from message payloads, and then process and send the data to other services, such as Amazon S3, Amazon DynamoDB, and AWS Lambda. You can also use the message broker to republish messages to other subscribers.
-
-You can then perform actions according to the results of the rule analysis.
+* Augment or filter data received from a device
+* Write data received from a device to an Amazon DynamoDB database.
+* Save a file to S3 
+* Send a push notification to all users using Amazon SNS.
+* Send a message to SQS
+* Send messages to Kinesis
+* Invoke a lambda
+* Send data to the Amazon Elasticsearch Service.
+* And more...
 
 A simple example:
 
-A device publishes messages to some topic: tenant-abc/audits, the message is in JSON format.
-A rule is defines so: "SELECT * FROM tenant-abc/audits" which means that any incoming message will result in some action (you can write other queries with logic in them)
+A device publishes messages to some topic: my-service/audits, the message is in JSON format.
+A rule is defines so: "SELECT * FROM my-service/audits" which means that any incoming message will result in some action
 An action is defined to send this incoming message to Kinesis to further processing.
 You can also set multiple actions and fan out the messages that are processed by the rules.
-
-
 
 https://docs.aws.amazon.com/iot/latest/developerguide/iot-rules.html
 

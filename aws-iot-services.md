@@ -24,17 +24,45 @@ One or more "Thing" provisioning. This includes creatoin and registration of a d
 
 ### Communication
 AWS IoT is built on top of the IoT standard MQTT protocol, and uses HTTPS for communication.
-see protocols (docs)[https://docs.aws.amazon.com/iot/latest/developerguide/protocols.html] for more info 
-It also supports MQTT over WebSockets as described here.
+see protocols [docs](https://docs.aws.amazon.com/iot/latest/developerguide/protocols.html) for more info 
+It also supports MQTT over WebSockets as described [here](https://docs.aws.amazon.com/iot/latest/developerguide/mqtt-ws.html).
 
-* message brokers //TODO
-* Protocols //TODO
-* IoT policies //TODO
-* Rules //TODO
-* Jobs //TODO
-* SDKs
+#### Message brokers
+The way devices communicate with the backend is by publishing and subscribing to messages queues.
+The message broker provides a secure mechanism for devices and AWS IoT applications to publish and receive messages from each other. You can use either the MQTT protocol over HTTPS or over WebSocket to publish and subscribe.
+for more info [see](https://docs.aws.amazon.com/iot/latest/developerguide/iot-message-broker.html)
 
-## Other AWS IoT Services
+#### IoT policies
+During the provisioning process, you create a cert and attach an IoT policy to it. IoT policies determine which operations a device can perform **in the AWS IoT data plane**.
+Although they are similar in format, **they are NOT AIM policies**, and are unlimited, they also include versioning unlike AIM policies and are only attached to IoT certificates.
+For example: Allow a device to subscribe and publish to certain topics.
+https://docs.aws.amazon.com/iot/latest/developerguide/iot-policies.html
+
+#### Rules 
+Rules give your devices the ability to interact with AWS services. Rules are analyzed and actions are performed based on the MQTT topic stream. 
+
+//TODO - FINISH
+
+they provide message processing and integration with other AWS services. You can use an SQL-based language to select data from message payloads, and then process and send the data to other services, such as Amazon S3, Amazon DynamoDB, and AWS Lambda. You can also use the message broker to republish messages to other subscribers.
+
+You can then perform actions according to the results of the rule analysis.
+
+A simple example:
+
+A device publishes messages to some topic: tenant-abc/audits, the message is in JSON format.
+A rule is defines so: "SELECT * FROM tenant-abc/audits" which means that any incoming message will result in some action (you can write other queries with logic in them)
+An action is defined to send this incoming message to Kinesis to further processing.
+You can also set multiple actions and fan out the messages that are processed by the rules.
+
+
+
+https://docs.aws.amazon.com/iot/latest/developerguide/iot-rules.html
+
+
+#### Jobs //TODO
+#### SDKs //TODO
+
+## Other AWS IoT Services - //TODO
 * device shadow //TODO
 * secure tunneling //TODO
 * Device management //TODO

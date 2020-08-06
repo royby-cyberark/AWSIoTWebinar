@@ -63,12 +63,34 @@ You can also set multiple actions and fan out the messages that are processed by
 https://docs.aws.amazon.com/iot/latest/developerguide/iot-rules.html
 
 
-#### Jobs //TODO
-#### SDKs //TODO
+#### Jobs
+A job is a remote operation that is sent to and executed on one or more devices connected to AWS IoT. For example, you can define a job that instructs a set of devices to download and install application or firmware updates, reboot, rotate certificates, or perform remote troubleshooting operations.
+In simple words, you can publish a job message to one or more devices, which in turn will recieve then and act upon it. 
+An example would be creating a job to instruct a device to rotate its certificate.
 
-## Other AWS IoT Services - //TODO
-* device shadow //TODO
-* secure tunneling //TODO
+
+#### SDKs
+
+AWS Provides a large number of SDKs for all major languages and platforms. 
+You have an easy way to write client code on virtually any platform, but since it is also MQTT, you can also do things yourself, if you choose to do so.
+
+* C++
+  * C++ 11 or higher
+  * CMake 3.1+
+  * Clang 3.9+ or GCC 4.4+ or MSVC 2015+
+* Java
+* Python
+* JS
+* Embeded c
+* Android
+* iOS
+* Arduino 
+
+#### Other AWS IoT Service
+
+We will only mention those by name since they are generally out of scope for this webinar:
+
+* Secure tunneling - 
 * Device management //TODO
   * IoT analytics analysis //TODO
   * reports //TODO
@@ -78,3 +100,5 @@ https://docs.aws.amazon.com/iot/latest/developerguide/iot-rules.html
   * audit //TODO
   * Mitigation actions //TODO
 * greengrass
+
+And there's a lot more. I encourage you to go and see for yourself.

@@ -1,6 +1,12 @@
 # AWS IoT Services and Features
 ## AWS IoT Core
-
+The core service AWS IoT has to offer.
+ * Onboarding - One or more "Thing" provisioning
+ * Management
+    * Thing types
+    * Static groups
+    * Dynamic groups
+    * 
 
 * message brokers //TODO
 * Protocols //TODO

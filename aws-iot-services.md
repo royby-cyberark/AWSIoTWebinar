@@ -90,11 +90,11 @@ You have an easy way to write client code on virtually any platform, but since i
 
 We will only mention those by name since they are generally out of scope for this webinar:
 
-* Secure tunneling - When devices are deployed behind restricted firewalls at remote sites, you need a way to gain access to those device for troubleshooting, configuration updates, and other operational tasks.
+* **Secure tunneling** - When devices are deployed behind restricted firewalls at remote sites, you need a way to gain access to those device for troubleshooting, configuration updates, and other operational tasks.
 * Device management
-  * IoT analytics - a fully-managed service that makes it easy to run and operationalize sophisticated analytics on massive volumes of IoT data.
-  * Device defender - a fully managed service that helps you secure your fleet of IoT devices. AWS IoT Device Defender continuously audits your IoT configurations to make sure that they aren’t deviating from security best practices.
-  * Events - enables you to monitor your equipment or device fleets for failures or changes in operation, and to trigger actions when such events occur. 
-* Greengrass - AWS IoT Greengrass is software that lets you run local compute, messaging, management, sync, and ML inference capabilities on connected devices in a secure way. With AWS IoT Greengrass, connected devices can run AWS Lambda functions, Docker containers, or both, execute predictions based on machine learning models, keep device data in sync, and communicate with other devices securely – even when not connected to the Internet.
+  * **IoT analytics** - a fully-managed service that makes it easy to run and operationalize sophisticated analytics on massive volumes of IoT data.
+  * **Device defender** - a fully managed service that helps you secure your fleet of IoT devices. AWS IoT Device Defender continuously audits your IoT configurations to make sure that they aren’t deviating from security best practices.
+  * **Events** - enables you to monitor your equipment or device fleets for failures or changes in operation, and to trigger actions when such events occur. 
+* **Greengrass** - AWS IoT Greengrass is software that lets you run local compute, messaging, management, sync, and ML inference capabilities on connected devices in a secure way. With AWS IoT Greengrass, connected devices can run AWS Lambda functions, Docker containers, or both, execute predictions based on machine learning models, keep device data in sync, and communicate with other devices securely – even when not connected to the Internet.
 
 And there's a lot more. I encourage you to go and see for yourself.

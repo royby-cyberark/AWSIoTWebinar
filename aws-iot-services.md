@@ -23,6 +23,10 @@ One or more "Thing" provisioning. This includes creatoin and registration of a d
   * AWS IoT Authentication deep-dive course: https://www.aws.training/Details/Curriculum?id=42335
 
 ### Communication
+AWS IoT is built on top of the IoT standard MQTT protocol, and uses HTTPS for communication.
+see protocols (docs)[https://docs.aws.amazon.com/iot/latest/developerguide/protocols.html] for more info 
+It also supports MQTT over WebSockets as described here.
+
 * message brokers //TODO
 * Protocols //TODO
 * IoT policies //TODO

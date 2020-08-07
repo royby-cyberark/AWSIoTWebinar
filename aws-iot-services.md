@@ -56,7 +56,7 @@ In simple words, devices can send messages to AWS IoT backend topics and you can
 A simple example:
 
 A device publishes messages to some topic: my-service/audits, the message is in JSON format.
-The rule is defined so: "SELECT * FROM my-service/audits" which means that any incoming message will result in some action
+The rule is defined so: "SELECT * FROM my-service/audits" which means that the data in that message can be used to perform some action.
 An action is defined to send this incoming message to Kinesis to further processing.
 You can also set multiple actions and fan out the messages that are processed by the rules.
 

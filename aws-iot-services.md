@@ -66,7 +66,6 @@ https://docs.aws.amazon.com/iot/latest/developerguide/iot-rules.html
 #### Jobs
 A job is a remote operation that is sent to and executed on one or more devices connected to AWS IoT. For example, you can define a job that instructs a set of devices to download and install application or firmware updates, reboot, rotate certificates, or perform remote troubleshooting operations.
 In simple words, you can publish a job message to one or more devices, which in turn will receive then and act upon it. 
-An example would be creating a job to instruct a device to rotate its certificate.
 
 
 ### SDKs

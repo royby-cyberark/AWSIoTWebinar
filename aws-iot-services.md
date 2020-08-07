@@ -70,7 +70,7 @@ In simple words, you can publish a job message to one or more devices, which in 
 
 ### SDKs
 
-AWS Provides a large number of SDKs for all major languages and platforms. 
+AWS Provides many SDKs for all major languages and platforms. 
 You have an easy way to write client code on virtually any platform, but since it is also MQTT, you can also do things yourself, if you choose to do so.
 
 * C++

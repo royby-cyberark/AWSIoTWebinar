@@ -80,7 +80,7 @@ You have an easy way to write client code on virtually any platform, but since i
 * Java
 * Python
 * JS
-* Embeded c
+* Embedded c
 * Android
 * iOS
 * Arduino 

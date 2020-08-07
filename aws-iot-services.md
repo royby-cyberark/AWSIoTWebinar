@@ -4,7 +4,7 @@
 The core service AWS IoT has to offer which we will focus on.
 
 ### Onboarding
-One or more "Thing" provisioning. This includes creatoin and registration of a device, or "thing", download of the SDK that fits your needs, and setting some thing meta data, like thing type and attributes.
+One or more "Thing" provisioning. This includes creation and registration of a device, or "thing", download of the SDK that fits your needs, and setting some thing meta data, like thing type and attributes.
 
 ### Management
 * Thing types - ease mangement by giving devices the same type and set of properties 

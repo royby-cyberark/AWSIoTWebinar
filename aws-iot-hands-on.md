@@ -24,13 +24,26 @@ and have your infrastructure "as code".
 ## Step-By-Step
 
 * In the AWS Console, open the "AWS IoT Core" service
-* Open "Onboard", "Getting started", and under "Onboard a device" click "Get started" 
-* Select your OS for the SDK that you will be using, we are going to go with Linux/OSX
-* Pick your programming language, we will use Python, click next
+* Under "Manage", "Things", clicn on "Create"
+* Click "Create a single thing"
+* Name your device `iot-webinar-device`
+* Optional: Click on "Create Type" and name it `iot-webinar-type` - this will create a device type which we can use later to group devices by type and act upon this type. //TODO add here - what are we doing with it
+* Optional: under "Add this thing to a group", click "Create group" and name the group `iot-webinar-group`, click "Create" //TODO - what is this used for
+* Make sure your device group is set to the new group, click "Next" 
+* Select "One-click certificate creation"
+* On the next page we are presented with a link to download the device certificate 
+* Download the certificate, public key and private key
+* You also need AWS's Root ca which you can find [here](https://docs.aws.amazon.com/iot/latest/developerguide/server-authentication.html?icmpid=docs_iot_console#server-authentication-certs)
+* We are going to download the "RSA 2048 bit" key, right click on the link and save to file locally
+* Click on "Activate", this will activate the certificate that you created and associated with the device.
+* Click on "Attach policy" and **DO NOT** pick a policy (we will create a policy later)
+* "Register thing"
+* 
+
 
 **NOTE:** The device should have Python and Git (Optional) installed and a TCP connection to the public internet on port 8883
 
-* Name your device in the IoT Service as `iot-webinar-device`
-* Click on "Show optional configuration"
-* Optional: Click on "Create Type" and name it `iot-webinar-type` - this will create a device type which we can use later to group devices by type and act upon this type. //TODO add here - what are we doing with it
-* Under 'Set searchable thing attributes' add a 'tenant_id' attribute //TODO - say something, where's the value?
+
+* Under 'Set searchable thing attributes' add a 'tenant_id' attribute and set its value to `abcdef-12345` //TODO - say something, where's the value?
+* Click on "Next step" and except to get a "Successfully created thing." message
+* 

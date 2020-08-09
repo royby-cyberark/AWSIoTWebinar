@@ -23,10 +23,14 @@ and have your infrastructure "as code".
 
 ## Step-By-Step
 
-* In the AWS Console, open the "AWS IoT Core" service. 
-* Open "Onboard", "Getting started", and under "Onboard a device" click "Get started". 
-* Select your OS for the SDK that you will be using, we are going to go with Linux/OSX.  
-* Pick your programming language, we will use Python.  
+* In the AWS Console, open the "AWS IoT Core" service
+* Open "Onboard", "Getting started", and under "Onboard a device" click "Get started" 
+* Select your OS for the SDK that you will be using, we are going to go with Linux/OSX
+* Pick your programming language, we will use Python, click next
 
-**NOTE:** The device should have Python and Git (Optional) installed and a TCP connection to the public internet on port 8883.  
-* 
+**NOTE:** The device should have Python and Git (Optional) installed and a TCP connection to the public internet on port 8883
+
+* Name your device in the IoT Service as `iot-webinar-device`
+* Click on "Show optional configuration"
+* Optional: Click on "Create Type" and name it `iot-webinar-type` - this will create a device type which we can use later to group devices by type and act upon this type. //TODO add here - what are we doing with it
+* Under 'Set searchable thing attributes' add a 'tenant_id' attribute //TODO - say something, where's the value?

@@ -15,6 +15,14 @@ We are going to use AWS IoT for this, since everything it provides can easily be
 
 But before we dive in, let's do a quick overview of the prominent services that AWS IoT has to offer.
 
+**A Note Infrastructure as code**
+Being focused on the AWS IoT, I will go through the steps using the AWS console. in a real environment, you will, of course, do thing differently. 
+For example, you will deploy all your resources with CDK (or another similar framework), keeping the producing code in source control. 
+and have your infrastructure "as code".
+
+
 ## Step-By-Step
 
-
+* In the AWS Console, open the "AWS IoT Core" service
+* Open "Onboard", "Getting started", and under "Onboard a device" click "Get started"
+* Select your OS for the SDK that you will be using, we are going to go with Linux/OSX

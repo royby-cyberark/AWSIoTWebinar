@@ -23,6 +23,7 @@ and have your infrastructure "as code".
 
 ## Step-By-Step
 
+### Device creation
 * In the AWS Console, open the "AWS IoT Core" service
 * Under "Manage", "Things", clicn on "Create"
 * Click "Create a single thing"
@@ -38,12 +39,16 @@ and have your infrastructure "as code".
 * Click on "Activate", this will activate the certificate that you created and associated with the device.
 * Click on "Attach policy" and **DO NOT** pick a policy (we will create a policy later)
 * "Register thing"
-* 
 // * review device
+
+### Rule creation
 // * create rule - type? group? 
 // * create policy
 //   * policy variables group, attribute, type
 
+### Job creation
+
+###
 
 
 

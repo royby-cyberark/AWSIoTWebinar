@@ -39,6 +39,13 @@ and have your infrastructure "as code".
 * Click on "Attach policy" and **DO NOT** pick a policy (we will create a policy later)
 * "Register thing"
 * 
+// * review device
+// * create rule - type? group? 
+// * create policy
+//   * policy variables group, attribute, type
+
+
+
 
 
 **NOTE:** The device should have Python and Git (Optional) installed and a TCP connection to the public internet on port 8883

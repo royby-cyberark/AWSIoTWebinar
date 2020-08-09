@@ -39,7 +39,10 @@ and have your infrastructure "as code".
 * Click on "Activate", this will activate the certificate that you created and associated with the device.
 * Click on "Attach policy" and **DO NOT** pick a policy (we will create a policy later)
 * "Register thing"
-// * review device
+* Under "Manage", "Things", open your device and review it
+  * Details: arn, thing type
+  * Security: review the certificate, its arn, policies and things
+  * Groups
 
 ### Rule creation
 // * create rule - type? group? 

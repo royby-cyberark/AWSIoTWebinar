@@ -23,9 +23,9 @@ and have your infrastructure "as code".
 
 ## Step-By-Step
 
-* In the AWS Console, open the "AWS IoT Core" service
-* Open "Onboard", "Getting started", and under "Onboard a device" click "Get started"
-* Select your OS for the SDK that you will be using, we are going to go with Linux/OSX
-* Pick your programming language, we will use Python
-**NOTE:** The device should have Python and Git (Optional) installed and a TCP connection to the public internet on port 8883.
+* In the AWS Console, open the "AWS IoT Core" service. 
+* Open "Onboard", "Getting started", and under "Onboard a device" click "Get started". 
+* Select your OS for the SDK that you will be using, we are going to go with Linux/OSX. 
+* Pick your programming language, we will use Python. 
+**NOTE:** The device should have Python and Git (Optional) installed and a TCP connection to the public internet on port 8883.  
 * 

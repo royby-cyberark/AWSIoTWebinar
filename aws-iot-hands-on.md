@@ -45,6 +45,13 @@ and have your infrastructure "as code".
   * Groups
 
 ### Rule creation
+* Under "Act", "Rules", click "Create"
+* Name it `IotWebinarRule` (only alphanumeric and underscore are allowed)
+* Set the SQL query to `SELECT * FROM 'iot/audit'`
+* Click on "Add Action"
+* 
+//TODO - limit of rules, generally write the limits
+
 // * create rule - type? group? 
 // * create policy
 //   * policy variables group, attribute, type

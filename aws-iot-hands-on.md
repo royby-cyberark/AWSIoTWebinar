@@ -98,9 +98,10 @@ and have your infrastructure "as code".
 * Open https://console.aws.amazon.com/cloudwatch/, choose "Log groups".
 * In the Filter text box, enter `AWSIotLogsV2` , and then press Enter
 * For more info, see the [docs](https://docs.aws.amazon.com/iot/latest/developerguide/cloud-watch-logs.html)
-* 
+* If you want to configure the logging vebosity, you can do that in the "Settings" page in the IoT dashboard
 
 ### Device Setup
+* In the IoT dashboard, click on "settings" and note your service endpoint address
 * //TODO - implement
 * The IoT (and other) SDKs can be found here: 
   * SDK Hub: https://aws.amazon.com/tools/#sdk, under "IoT Device SDKs"

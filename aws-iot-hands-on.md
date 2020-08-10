@@ -47,6 +47,7 @@ and have your infrastructure "as code".
   * Details: arn, thing type - note your device arn for later
   * Security: review the certificate, its arn, policies and things
   * Groups
+* Click on "Edit" in the thing page and add an attribute, which key is 'Owner' and value is abcde-12345. we will later use this is the policy that will restric devices to post to their teant topic
 
 ### Rule creation
 * Create an S3 bucket
@@ -54,11 +55,14 @@ and have your infrastructure "as code".
   * Use all defaults and create bucket
 * Under "Act", "Rules", click "Create"
 * Name it `IotWebinarRule` (only alphanumeric and underscore are allowed)
-* Set the SQL query to `SELECT * FROM 'iot/audit'` (Use the default SQL version)
+* Set the SQL query to `SELECT * FROM 'abcde-12345/+/audit'` (Use the default SQL version)  //TODO - fix this to use thing-name???
+  This select the entire message from the topic that start with the tenant-id 'abcde-12345', then any path then 'audit'
+  This, along with the policy restrictions will help us achieve tenant isolation.
+  see [this](https://docs.aws.amazon.com/iot/latest/developerguide/iot-sql-from.html) for more info about FROM clause wildcards 
 * Create S3 store action
   * Click on "Add Action"
   * Select S3
-  * Select the 'iot-webinar-audits' bucket and set the key to `iot-webinar-audit`
+  * Select the 'iot-webinar-audits' bucket and set the key to `${topic()}/${timestamp()}` see [this](https://docs.aws.amazon.com/iot/latest/developerguide/iot-substitution-templates.html) for details on substitution template
   * To create a role that will allow iot to access our S3 bucket: "Create Role" and name it `iot-webinar-s3-role` 
   * Click on "Add Action" to finalize the creation
 * Create an SNS push notification action
@@ -84,8 +88,37 @@ and have your infrastructure "as code".
   * For "Effect", check "Allow"
   * "Create"
   
+  
+  
 //TODO: FIX THIS:
 * Go to thing, security, certificate, attach policy
+
+actually use this (TODO FIX THIS):
+```
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "iot:Connect"
+      ],
+      "Resource": "arn:aws:iot:eu-west-1:195361640859:client/${iot:Connection.Thing.ThingName}"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "iot:Publish"
+      ],
+      "Resource": "arn:aws:iot:eu-west-1:195361640859:topic/${iot:Connection.Thing.Attributes[Owner]}/${iot:Connection.Thing.ThingName}/audit"
+    }
+  ]
+}
+```
+
+//TODO - see this: https://docs.aws.amazon.com/iot/latest/developerguide/thing-policy-variables.html
+//TODO - see this: https://docs.aws.amazon.com/iot/latest/developerguide/example-iot-policies-elements.html
+//TODO and examples: https://docs.aws.amazon.com/iot/latest/developerguide/pub-sub-policy.html, etc.
 
 ### Test the rule 
 * Open "Act", "Tests"
@@ -98,21 +131,25 @@ and have your infrastructure "as code".
 * Open https://console.aws.amazon.com/cloudwatch/, choose "Log groups".
 * In the Filter text box, enter `AWSIotLogsV2` , and then press Enter
 * For more info, see the [docs](https://docs.aws.amazon.com/iot/latest/developerguide/cloud-watch-logs.html)
-* 
+* If you want to configure the logging vebosity, you can do that in the "Settings" page in the IoT dashboard
 
 ### Device Setup
+* In the IoT dashboard, click on "settings" and note your service endpoint address
 * //TODO - implement
 * The IoT (and other) SDKs can be found here: 
   * SDK Hub: https://aws.amazon.com/tools/#sdk, under "IoT Device SDKs"
   * The Python SDK is here: https://github.com/aws/aws-iot-device-sdk-python
   * SDK code samples: https://github.com/aws/aws-iot-device-sdk-python
-* For simplicity, clone this repo: //TODO
+* `git clone git@github.com:royby-cyberark/AWSIoTWebinar.git`
+* 
 * Run the following command line, replacing all placeholders with your values:
 //TODO - command line here
 * Open http://localhost:80 (this is the so called honeypot), which will in turn, send an even audit message to the topic
 * See that an audit was writter to the S3 bucket and also that an email notification was sent.
 
 //TODO - tenantid/device name/type/group?
+
+* //TODO - fix timeout, updated policy to "Resource": "arn:aws:iot:eu-west-1:195361640859:*", and then the client worked. fix this.
 
 ### Job creation
 * Cert rotation...

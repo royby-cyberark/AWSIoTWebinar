@@ -87,6 +87,9 @@ and have your infrastructure "as code".
 //TODO: FIX THIS:
 * Go to thing, security, certificate, attach policy
 
+//TODO - see this: https://docs.aws.amazon.com/iot/latest/developerguide/example-iot-policies-elements.html
+//TODO and examples: https://docs.aws.amazon.com/iot/latest/developerguide/pub-sub-policy.html, etc.
+
 ### Test the rule 
 * Open "Act", "Tests"
 * Under publish, enter iot/audit

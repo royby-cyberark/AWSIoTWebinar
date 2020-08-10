@@ -90,6 +90,9 @@ and have your infrastructure "as code".
 
 //TODO - limit of rules, generally write the limits
 
+### Device Setup
+* //TODO - implement
+
 ### Job creation
 
 ###

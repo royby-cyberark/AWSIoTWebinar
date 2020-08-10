@@ -23,6 +23,10 @@ and have your infrastructure "as code".
 
 ## Step-By-Step
 
+**Prerequisites:**
+* git
+* python 3.7+
+
 ### Device creation
 * In the AWS Console, open the "AWS IoT Core" service
 * Under "Manage", "Things", clicn on "Create"
@@ -98,15 +102,18 @@ and have your infrastructure "as code".
 
 ### Device Setup
 * //TODO - implement
+* The IoT (and other) SDKs can be found here: https://aws.amazon.com/tools/#sdk, under "IoT Device SDKs
+* For simplicity, clone this repo: //TODO
+* Run the following command line, replacing all placeholders with your values:
+//TODO - command line here
+* Open http://localhost:80 (this is the so called honeypot), which will in turn, send an even audit message to the topic
+* See that an audit was writter to the S3 bucket and also that an email notification was sent.
+
+//TODO - tenantid/device name/type/group?
 
 ### Job creation
-
-###
-
-
-
-
-**NOTE:** The device should have Python and Git (Optional) installed and a TCP connection to the public internet on port 8883
+* Cert rotation...
+* //TODO - this shouldn't be manual...
 
 
 * Under 'Set searchable thing attributes' add a 'tenant_id' attribute and set its value to `abcdef-12345` //TODO - say something, where's the value?

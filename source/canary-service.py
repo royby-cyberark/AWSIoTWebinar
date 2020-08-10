@@ -64,10 +64,21 @@ mqtt_client.configureMQTTOperationTimeout(5)  # 5 sec
 
 mqtt_client.connect()
 
+def send_audit(client_address, honeypot_port):
+    msg = {}
+    msg['message'] = {"clientAddress": client_address, "serverPort": honeypot_port}
+    msgJson = json.dumps(msg)
+    mqtt_client.publish(topic, msgJson, 1)
+    print('Published topic %s: %s\n' % (topic, msgJson))
+
+
+WEB_SERVER_PORT = 80
 
 class Handler(http.server.SimpleHTTPRequestHandler):
 
     def do_GET(self):
+        send_audit(self.client_address, WEB_SERVER_PORT)
+
         self.send_response(200)
         self.send_header('Content-Type', 'text/html; charset=utf-8')
         self.end_headers()
@@ -76,15 +87,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         return
 
 
-print('Server listening on port 8000...')
-httpd = socketserver.TCPServer(('', 8000), Handler)
+print(f'Server listening on port {WEB_SERVER_PORT}...')
+httpd = socketserver.TCPServer(('', WEB_SERVER_PORT), Handler)
 httpd.serve_forever()
 
-
-# msg = {}
-# msg['message'] = "Alarma!"
-# msgJson = json.dumps(msg)
-# mqtt_client.publish(topic, msgJson, 1)
-# print('Published topic %s: %s\n' % (topic, msgJson))
-
-# time.sleep(2)

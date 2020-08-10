@@ -106,7 +106,8 @@ and have your infrastructure "as code".
   * SDK Hub: https://aws.amazon.com/tools/#sdk, under "IoT Device SDKs"
   * The Python SDK is here: https://github.com/aws/aws-iot-device-sdk-python
   * SDK code samples: https://github.com/aws/aws-iot-device-sdk-python
-* For simplicity, clone this repo: //TODO
+* `git clone git@github.com:royby-cyberark/AWSIoTWebinar.git`
+* 
 * Run the following command line, replacing all placeholders with your values:
 //TODO - command line here
 * Open http://localhost:80 (this is the so called honeypot), which will in turn, send an even audit message to the topic

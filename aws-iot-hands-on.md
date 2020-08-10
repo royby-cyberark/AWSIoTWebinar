@@ -102,7 +102,10 @@ and have your infrastructure "as code".
 
 ### Device Setup
 * //TODO - implement
-* The IoT (and other) SDKs can be found here: https://aws.amazon.com/tools/#sdk, under "IoT Device SDKs
+* The IoT (and other) SDKs can be found here: 
+  * https://aws.amazon.com/tools/#sdk, under "IoT Device SDKs
+  * The Python SDK is here: https://github.com/aws/aws-iot-device-sdk-python
+  * SDK code samples: https://github.com/aws/aws-iot-device-sdk-python
 * For simplicity, clone this repo: //TODO
 * Run the following command line, replacing all placeholders with your values:
 //TODO - command line here

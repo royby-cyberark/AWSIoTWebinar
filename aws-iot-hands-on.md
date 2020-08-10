@@ -54,11 +54,11 @@ and have your infrastructure "as code".
   * Use all defaults and create bucket
 * Under "Act", "Rules", click "Create"
 * Name it `IotWebinarRule` (only alphanumeric and underscore are allowed)
-* Set the SQL query to `SELECT * FROM 'iot/audit'` (Use the default SQL version)
+* Set the SQL query to `SELECT * FROM 'iot-webinar-device/audit'` (Use the default SQL version)  //TODO - fix this to use thing-name???
 * Create S3 store action
   * Click on "Add Action"
   * Select S3
-  * Select the 'iot-webinar-audits' bucket and set the key to `iot-webinar-audit`
+  * Select the 'iot-webinar-audits' bucket and set the key to `${topic()}/${timestamp()}` see [this](https://docs.aws.amazon.com/iot/latest/developerguide/iot-substitution-templates.html) for details on substitution template
   * To create a role that will allow iot to access our S3 bucket: "Create Role" and name it `iot-webinar-s3-role` 
   * Click on "Add Action" to finalize the creation
 * Create an SNS push notification action
@@ -84,8 +84,34 @@ and have your infrastructure "as code".
   * For "Effect", check "Allow"
   * "Create"
   
+  
+  
 //TODO: FIX THIS:
 * Go to thing, security, certificate, attach policy
+
+actually use this (TODO FIX THIS):
+```
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "iot:Connect"
+      ],
+      "Resource": "arn:aws:iot:eu-west-1:195361640859:client/${iot:Connection.Thing.ThingName}"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "iot:Publish"
+      ],
+      "Resource": "arn:aws:iot:eu-west-1:195361640859:topic/${iot:Connection.Thing.ThingName}/audit"
+    }
+  ]
+}
+```
+
 
 //TODO - see this: https://docs.aws.amazon.com/iot/latest/developerguide/example-iot-policies-elements.html
 //TODO and examples: https://docs.aws.amazon.com/iot/latest/developerguide/pub-sub-policy.html, etc.

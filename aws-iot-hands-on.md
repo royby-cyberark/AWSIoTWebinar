@@ -40,21 +40,55 @@ and have your infrastructure "as code".
 * Click on "Attach policy" and **DO NOT** pick a policy (we will create a policy later)
 * "Register thing"
 * Under "Manage", "Things", open your device and review it
-  * Details: arn, thing type
+  * Details: arn, thing type - note your device arn for later
   * Security: review the certificate, its arn, policies and things
   * Groups
 
 ### Rule creation
+* Create an S3 bucket
+  * Open S3, create bucket, name it `iot-webinar-audits`
+  * Use all defaults and create bucket
 * Under "Act", "Rules", click "Create"
 * Name it `IotWebinarRule` (only alphanumeric and underscore are allowed)
-* Set the SQL query to `SELECT * FROM 'iot/audit'`
-* Click on "Add Action"
-* 
-//TODO - limit of rules, generally write the limits
+* Set the SQL query to `SELECT * FROM 'iot/audit'` (Use the default SQL version)
+* Create S3 store action
+  * Click on "Add Action"
+  * Select S3
+  * Select the 'iot-webinar-audits' bucket and set the key to `iot-webinar-audit`
+  * To create a role that will allow iot to access our S3 bucket: "Create Role" and name it `iot-webinar-s3-role` 
+  * Click on "Add Action" to finalize the creation
+* Create an SNS push notification action
+  * "Add Action"
+  * Under "SNS Topic" click "Create" and name it `iot-webinar-sns-topic`
+  * To create a role that will allow iot to send SNS notifications: "Create Role" and name it `iot-webinar-sns-role`
+  * Click on "Add Action" to finalize the creation
+  * Subscribe to SNS notifications
+    * Open the SNS service
+    * Subscrption, Create subsription
+    * Under "Topic ARN", use auto-complete to select your SNS webinar topic arn
+    * Select "Email" for "Protocol"
+    * For "Endpoint", enter your email and click "Create Subscription"
+    * Open the email and click the confirm link
+* Review your new roles
+* "Create Rule"
 
-// * create rule - type? group? 
-// * create policy
-//   * policy variables group, attribute, type
+### IoT Policy creation
+* "Secure", "Policies", "Create", name it `iot-webinar-policy`
+* Under "Add Statements". //TODO - verify minimum required actions
+  * Add the following actions: `iot:Connect,iot:Receive,iot:Publish,iot:Subscribe` (the field uses auto-complete) 
+  * Under 'Resource ARN' paste the device arn you noted before //TODO - what do we need here?
+  * For "Effect", check "Allow"
+  * "Create"
+  
+//TODO: FIX THIS:
+* Go to thing, security, certificate, attach policy
+
+### Test the rule 
+* Open "Act", "Tests"
+* Under publish, enter iot/audit
+* Click "Publish to topic"
+
+//TODO - limit of rules, generally write the limits
 
 ### Job creation
 

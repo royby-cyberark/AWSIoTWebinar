@@ -90,6 +90,12 @@ and have your infrastructure "as code".
 
 //TODO - limit of rules, generally write the limits
 
+### Cloudwatch logging 
+* Open https://console.aws.amazon.com/cloudwatch/
+* In the Filter text box, enter `AWSIotLogsV2` , and then press Enter
+* For more info, see the [docs](https://docs.aws.amazon.com/iot/latest/developerguide/cloud-watch-logs.html)
+* 
+
 ### Device Setup
 * //TODO - implement
 

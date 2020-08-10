@@ -116,6 +116,8 @@ and have your infrastructure "as code".
 
 //TODO - tenantid/device name/type/group?
 
+* //TODO - fix timeout, updated policy to "Resource": "arn:aws:iot:eu-west-1:195361640859:*", and then the client worked. fix this.
+
 ### Job creation
 * Cert rotation...
 * //TODO - this shouldn't be manual...

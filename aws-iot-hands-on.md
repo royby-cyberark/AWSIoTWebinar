@@ -55,6 +55,7 @@ and have your infrastructure "as code".
 * Under "Act", "Rules", click "Create"
 * Name it `IotWebinarRule` (only alphanumeric and underscore are allowed)
 * Set the SQL query to `SELECT * FROM 'iot-webinar-device/audit'` (Use the default SQL version)  //TODO - fix this to use thing-name???
+  see [this](https://docs.aws.amazon.com/iot/latest/developerguide/iot-sql-from.html) for more info about FROM clause wildcards 
 * Create S3 store action
   * Click on "Add Action"
   * Select S3

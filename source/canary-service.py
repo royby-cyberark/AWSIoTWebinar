@@ -1,8 +1,14 @@
+import http.server
+from resource import HTML_PAGE
+import socketserver
+import io
+
 from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTClient
 import logging
 import time
 import argparse
 import json
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-e", "--endpoint", action="store", required=True, dest="host", help="Your AWS IoT custom endpoint")
@@ -44,24 +50,41 @@ streamHandler.setFormatter(formatter)
 logger.addHandler(streamHandler)
 
 logger.info("ClientID: ", clientId)
-myAWSIoTMQTTClient = None
+mqtt_client = None
 
-myAWSIoTMQTTClient = AWSIoTMQTTClient(clientId)
-myAWSIoTMQTTClient.configureEndpoint(host, port)
-myAWSIoTMQTTClient.configureCredentials(rootCAPath, privateKeyPath, certificatePath)
+mqtt_client = AWSIoTMQTTClient(clientId)
+mqtt_client.configureEndpoint(host, port)
+mqtt_client.configureCredentials(rootCAPath, privateKeyPath, certificatePath)
 
-myAWSIoTMQTTClient.configureAutoReconnectBackoffTime(1, 32, 20)
-myAWSIoTMQTTClient.configureOfflinePublishQueueing(-1)  # Infinite offline Publish queueing
-myAWSIoTMQTTClient.configureDrainingFrequency(2)  # Draining: 2 Hz
-myAWSIoTMQTTClient.configureConnectDisconnectTimeout(10)  # 10 sec
-myAWSIoTMQTTClient.configureMQTTOperationTimeout(5)  # 5 sec
+mqtt_client.configureAutoReconnectBackoffTime(1, 32, 20)
+mqtt_client.configureOfflinePublishQueueing(-1)  # Infinite offline Publish queueing
+mqtt_client.configureDrainingFrequency(2)  # Draining: 2 Hz
+mqtt_client.configureConnectDisconnectTimeout(10)  # 10 sec
+mqtt_client.configureMQTTOperationTimeout(5)  # 5 sec
 
-myAWSIoTMQTTClient.connect()
+mqtt_client.connect()
 
-message = {}
-message['message'] = "Alarma!"
-messageJson = json.dumps(message)
-myAWSIoTMQTTClient.publish(topic, messageJson, 1)
-print('Published topic %s: %s\n' % (topic, messageJson))
 
-time.sleep(2)
+class Handler(http.server.SimpleHTTPRequestHandler):
+
+    def do_GET(self):
+        self.send_response(200)
+        self.send_header('Content-Type', 'text/html; charset=utf-8')
+        self.end_headers()
+        page = HTML_PAGE
+        self.wfile.write(page.encode('utf-8'))
+        return
+
+
+print('Server listening on port 8000...')
+httpd = socketserver.TCPServer(('', 8000), Handler)
+httpd.serve_forever()
+
+
+# msg = {}
+# msg['message'] = "Alarma!"
+# msgJson = json.dumps(msg)
+# mqtt_client.publish(topic, msgJson, 1)
+# print('Published topic %s: %s\n' % (topic, msgJson))
+
+# time.sleep(2)

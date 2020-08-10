@@ -143,7 +143,8 @@ actually use this (TODO FIX THIS):
 * `git clone git@github.com:royby-cyberark/AWSIoTWebinar.git`
 * 
 * Run the following command line, replacing all placeholders with your values:
-//TODO - command line here
+`python canary-service.py -e <your iot endpoint> -r <path to root ca file - AmazonRootCA1.pem> -c <path to cert file - 8ad305037c-certificate.pem.crt> -k <path to private key file - 8ad305037c-private.pem.key> -id iot-webinar-device -t abcde-12345/iot-webinar-device/audit`
+
 * Open http://localhost:80 (this is the so called honeypot), which will in turn, send an even audit message to the topic
 * See that an audit was writter to the S3 bucket and also that an email notification was sent.
 

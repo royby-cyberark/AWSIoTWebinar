@@ -47,6 +47,7 @@ and have your infrastructure "as code".
   * Details: arn, thing type - note your device arn for later
   * Security: review the certificate, its arn, policies and things
   * Groups
+* Click on "Edit" in the thing page and add an attribute, which key is 'Owner' and value is abcde-12345. we will later use this is the policy that will restric devices to post to their teant topic
 
 ### Rule creation
 * Create an S3 bucket
@@ -54,7 +55,9 @@ and have your infrastructure "as code".
   * Use all defaults and create bucket
 * Under "Act", "Rules", click "Create"
 * Name it `IotWebinarRule` (only alphanumeric and underscore are allowed)
-* Set the SQL query to `SELECT * FROM 'iot-webinar-device/audit'` (Use the default SQL version)  //TODO - fix this to use thing-name???
+* Set the SQL query to `SELECT * FROM 'abcde-12345/+/audit'` (Use the default SQL version)  //TODO - fix this to use thing-name???
+  This select the entire message from the topic that start with the tenant-id 'abcde-12345', then any path then 'audit'
+  This, along with the policy restrictions will help us achieve tenant isolation.
   see [this](https://docs.aws.amazon.com/iot/latest/developerguide/iot-sql-from.html) for more info about FROM clause wildcards 
 * Create S3 store action
   * Click on "Add Action"
@@ -107,13 +110,13 @@ actually use this (TODO FIX THIS):
       "Action": [
         "iot:Publish"
       ],
-      "Resource": "arn:aws:iot:eu-west-1:195361640859:topic/${iot:Connection.Thing.ThingName}/audit"
+      "Resource": "arn:aws:iot:eu-west-1:195361640859:topic/${iot:Connection.Thing.Attributes[Owner]}/${iot:Connection.Thing.ThingName}/audit"
     }
   ]
 }
 ```
 
-
+//TODO - see this: https://docs.aws.amazon.com/iot/latest/developerguide/thing-policy-variables.html
 //TODO - see this: https://docs.aws.amazon.com/iot/latest/developerguide/example-iot-policies-elements.html
 //TODO and examples: https://docs.aws.amazon.com/iot/latest/developerguide/pub-sub-policy.html, etc.
 

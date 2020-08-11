@@ -21,6 +21,8 @@ For example, you will deploy all your resources with CDK (or another similar fra
 and have your infrastructure "as code".
 
 
+For full code examples, see the [SDK page](https://github.com/royby-cyberark/aws-iot-device-sdk-python)
+
 ## Step-By-Step
 
 **Prerequisites:**

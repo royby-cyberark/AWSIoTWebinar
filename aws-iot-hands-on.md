@@ -141,7 +141,7 @@ actually use this (TODO FIX THIS):
   * The Python SDK is here: https://github.com/aws/aws-iot-device-sdk-python
   * SDK code samples: https://github.com/aws/aws-iot-device-sdk-python
 * `git clone git@github.com:royby-cyberark/AWSIoTWebinar.git`
-* 
+* //TODO - venv, activate, pipinstall `pip install AWSIoTPythonSDK`, `pip install requests`
 * Run the following command line, replacing all placeholders with your values:
 `python canary-service.py -e <your iot endpoint> -r <path to root ca file - AmazonRootCA1.pem> -c <path to cert file - 8ad305037c-certificate.pem.crt> -k <path to private key file - 8ad305037c-private.pem.key> -id iot-webinar-device -t abcde-12345/iot-webinar-device/audit`
 

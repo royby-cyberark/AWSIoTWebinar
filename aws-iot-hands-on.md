@@ -174,7 +174,36 @@ We are going to create a job for certificate rotation. we will provide the certi
 * Select "I want to pre-sign my urls..."
 * Click "Create role" and name it `iot-webinar-signedurls-role`, review this role and policy to understand what was done
 * Click "Next", "Create"
-* 
+* Replace the thing policy with the following (//TODO - step by step):
+```
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "iot:Connect"
+      ],
+      "Resource": "arn:aws:iot:eu-west-1:195361640859:client/${iot:Connection.Thing.ThingName}"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "iot:Publish"
+      ],
+      "Resource": "arn:aws:iot:eu-west-1:195361640859:topic/${iot:Connection.Thing.Attributes[Owner]}/${iot:Connection.Thing.ThingName}/audit"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "iot:Subscribe"
+      ],
+      "Resource": "arn:aws:iot:eu-west-1:195361640859:topic/$aws/things/iot-webinar-device/jobs/notify-next"
+    }
+  ]
+}
+```
+
 
 * For a full code example, see the [SDK code sample](https://github.com/royby-cyberark/aws-iot-device-sdk-python/blob/master/samples/jobs/jobsSample.py)
 

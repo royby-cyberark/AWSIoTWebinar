@@ -191,7 +191,10 @@ We are going to create a job for certificate rotation. we will provide the certi
       "Action": [
         "iot:Publish"
       ],
-      "Resource": "arn:aws:iot:eu-west-1:195361640859:topic/${iot:Connection.Thing.Attributes[Owner]}/${iot:Connection.Thing.ThingName}/audit"
+      "Resource": [
+             "arn:aws:iot:eu-west-1:195361640859:topic/${iot:Connection.Thing.Attributes[Owner]}/${iot:Connection.Thing.ThingName}/audit",
+             "arn:aws:iot:eu-west-1:195361640859:topic/$aws/things/iot-webinar-device/jobs/notify-next"
+      ]
     },
     {
       "Effect": "Allow",

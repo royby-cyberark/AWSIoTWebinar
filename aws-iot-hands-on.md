@@ -174,6 +174,8 @@ We are going to create a job for certificate rotation. we will provide the certi
 * Click "Next", "Create"
 * 
 
+* For a full code example, see the [SDK code sample](https://github.com/royby-cyberark/aws-iot-device-sdk-python/blob/master/samples/jobs/jobsSample.py)
+
 //TODO: read, do these:
 //* https://aws.amazon.com/blogs/iot/using-device-jobs-for-over-the-air-updates/
 //* https://medium.com/@gowthamrocker12/aws-iot-jobs-how-it-works-65ffa7526dc7

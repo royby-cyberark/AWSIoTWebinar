@@ -1,26 +1,63 @@
+import argparse
+import datetime
+import json
+import logging
+import requests
+from shutil import copyfile
+import threading
+import time
+from typing import Dict
+
 from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTClient
 from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTThingJobsClient
 from AWSIoTPythonSDK.core.jobs.thingJobManager import jobExecutionTopicType
 from AWSIoTPythonSDK.core.jobs.thingJobManager import jobExecutionTopicReplyType
 from AWSIoTPythonSDK.core.jobs.thingJobManager import jobExecutionStatus
 
-import threading
-import logging
-import time
-import datetime
-import argparse
-import json
-from concurrent.futures import ThreadPoolExecutor
 
-import requests
+parser = argparse.ArgumentParser()
+parser.add_argument("-n", "--thingName", action="store", dest="thingName", help="Your AWS IoT ThingName to process jobs for")
+parser.add_argument("-e", "--endpoint", action="store", required=True, dest="host", help="Your AWS IoT custom endpoint")
+parser.add_argument("-r", "--rootCA", action="store", required=True, dest="rootCAPath", help="Root CA file path")
+parser.add_argument("-c", "--cert", action="store", dest="certificatePath", help="Certificate file path")
+parser.add_argument("-k", "--key", action="store", dest="privateKeyPath", help="Private key file path")
+parser.add_argument("-p", "--port", action="store", dest="port", type=int, help="Port number override")
+parser.add_argument("-id", "--clientId", action="store", dest="clientId", default="basicJobsSampleClient",
+                    help="Targeted client id")
 
-NEW_CERT_FILE = 'new_cert_file.crt'
 
-def rotate_cert(job_body):
-    signed_url = job_body['files']['url']
+args = parser.parse_args()
+host = args.host
+rootCAPath = args.rootCAPath
+certificatePath = args.certificatePath
+privateKeyPath = args.privateKeyPath
+port = args.port
+clientId = args.clientId
+thingName = args.thingName
+
+if not args.port: 
+    port = 8883
+
+
+logger = logging.getLogger("AWSIoTPythonSDK.core")
+logger.setLevel(logging.DEBUG)
+streamHandler = logging.StreamHandler()
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+streamHandler.setFormatter(formatter)
+logger.addHandler(streamHandler)
+
+
+def rotate_cert(job_body: Dict, cert_path: str, private_key_path: str):
+    rotate_cert_helper('cert', job_body, cert_path)
+    rotate_cert_helper('privateKey', job_body, private_key_path)
+
+
+def rotate_cert_helper(json_element: str, job_body: Dict, file_path: str):
+    copyfile(file_path, file_path+".old")
+    signed_url = job_body[json_element]['url']
     r = requests.get(signed_url, allow_redirects=True)
-    open(NEW_CERT_FILE, 'wb').write(r.content)
-    incoming_cert = True
+    open(file_path, 'wb').write(r.content)
+
 
 class JobsMessageProcessor(object):
     def __init__(self, jobs_client, client_id):
@@ -55,7 +92,7 @@ class JobsMessageProcessor(object):
         print('Executing job ID, version, number: {}, {}, {}'.format(execution['jobId'], execution['versionNumber'], execution['executionNumber']))
         print('With jobDocument: ' + json.dumps(execution['jobDocument']))
         if execution['jobDocument'].get('operation') == "rotate-cert":
-            rotate_cert(execution['jobDocument'])
+            rotate_cert(job_body=execution['jobDocument'], cert_path=certificatePath, private_key_path=privateKeyPath)
             self.cert_rotated = True
 
     def new_job_received(self, client, userdata, message):
@@ -77,37 +114,6 @@ class JobsMessageProcessor(object):
     def is_done(self):
         return self.done
 
-
-# Read in command-line parameters
-parser = argparse.ArgumentParser()
-parser.add_argument("-n", "--thingName", action="store", dest="thingName", help="Your AWS IoT ThingName to process jobs for")
-parser.add_argument("-e", "--endpoint", action="store", required=True, dest="host", help="Your AWS IoT custom endpoint")
-parser.add_argument("-r", "--rootCA", action="store", required=True, dest="rootCAPath", help="Root CA file path")
-parser.add_argument("-c", "--cert", action="store", dest="certificatePath", help="Certificate file path")
-parser.add_argument("-k", "--key", action="store", dest="privateKeyPath", help="Private key file path")
-parser.add_argument("-p", "--port", action="store", dest="port", type=int, help="Port number override")
-parser.add_argument("-id", "--clientId", action="store", dest="clientId", default="basicJobsSampleClient",
-                    help="Targeted client id")
-
-args = parser.parse_args()
-host = args.host
-rootCAPath = args.rootCAPath
-certificatePath = args.certificatePath
-privateKeyPath = args.privateKeyPath
-port = args.port
-clientId = args.clientId
-thingName = args.thingName
-
-if not args.port: 
-    port = 8883
-
-# Configure logging
-logger = logging.getLogger("AWSIoTPythonSDK.core")
-logger.setLevel(logging.DEBUG)
-streamHandler = logging.StreamHandler()
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-streamHandler.setFormatter(formatter)
-logger.addHandler(streamHandler)
 
 mqtt_client = None
 mqtt_client = AWSIoTMQTTClient(clientId)
@@ -138,7 +144,6 @@ while True:
         del jobsMsgProc
         jobsClient.disconnect()
         print("Disconnecting...")
-        certificatePath = NEW_CERT_FILE
         mqtt_client.configureCredentials(rootCAPath, privateKeyPath, certificatePath)
         jobsClient = AWSIoTMQTTThingJobsClient(clientId, thingName, QoS=1, awsIoTMQTTClient=mqtt_client)
         jobsClient.connect()

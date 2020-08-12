@@ -1,7 +1,7 @@
 aws iot create-job \
               --job-id "status-job-01" \
               --targets "arn:aws:iot:eu-west-1:<account_id>:thing/<thing_name>" \
-              --document file://job-status.json \
+              --document file://job-local-scan.json \
               --description "example status job" \
               --target-selection SNAPSHOT
 

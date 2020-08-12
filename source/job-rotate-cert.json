@@ -1,0 +1,11 @@
+{
+	"operation" : "rotate-cert",
+	"version" : "1.0",
+	"packageName" : "cert-files",
+	"autoStart" : "true",
+	"workingDirectory" : "./jobs",
+	"files" : {
+		"fileName" : "iot-webinar-cert2.perm.crt",
+		"url" : "${aws:iot:s3-presigned-url:https://s3.amazonaws.com/iot-webinar-audits/jobs/certs/iot-webinar-cert2.perm.crt}"
+	}
+}

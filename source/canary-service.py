@@ -1,13 +1,12 @@
+import argparse
 import http.server
-from resource import HTML_PAGE
+import json
+import logging
 import socketserver
-import io
 
 from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTClient
-import logging
-import time
-import argparse
-import json
+
+from resource import HTML_PAGE
 
 
 parser = argparse.ArgumentParser()

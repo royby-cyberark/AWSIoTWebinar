@@ -230,7 +230,7 @@ We are going to create a job for certificate rotation. we will provide the certi
 * Alternatively, you can create a job with the cli:
 ```
 aws iot create-job \
-              --job-id "status-job-01" \
+              --job-id "local-scan-job-01" \
               --targets "arn:aws:iot:eu-west-1:<account_id>:thing/<thing_name>" \
               --document file://job-local-scan.json \
               --description "example status job" \
@@ -261,20 +261,25 @@ And delete the job with:
 * Click on "Next", "Create"
 * See that you got the job and rotated the files locally
 * Send another local-scan job to ensure that the connection is working
-* 
+* Deactivate the old certificate
+  * "Manage", "Things", select `iot-webinar-device`, "Security"
+  * Click on the old cert (according to the name you noted at the begining)
+  * "Actions", "Deactivate"
+* Send another local-scan job to ensure that the connection is working
+* Deactivate the new cert
+* TODO - explain about revoking certs and connected devices - https://forums.aws.amazon.com/thread.jspa?threadID=225768
 
-* Alternatively, you can create a job with the cli:
+* You can always create jobs with the cli:
 ```
 aws iot create-job \
-              --job-id "status-job-01" \
+              --job-id "local-scan-job-01" \
               --targets "arn:aws:iot:eu-west-1:<account_id>:thing/<thing_name>" \
               --document file://job-local-scan.json \
               --description "example status job" \
               --target-selection SNAPSHOT
 ``` 
-
-* In a real process, you would wait for the jobs to be completed and then remove the old certificate
-  * You can see the job status by calling //TODO
+And delete the job with:
+`aws iot delete-job --job-id "local-scan-job-01"`
 
 * Create a cert rotation task from the cli:
 ```
@@ -287,7 +292,8 @@ aws iot create-job \
               --presigned-url-config roleArn=<role_arn>,expiresInSec=300
 ```
 
-* 
+* In a real process, you would wait for the jobs to be completed and then remove the old certificate
+  * You can see the job status by calling //TODO
 
 * For a full code example, see the [SDK code sample](https://github.com/royby-cyberark/aws-iot-device-sdk-python/blob/master/samples/jobs/jobsSample.py)
 

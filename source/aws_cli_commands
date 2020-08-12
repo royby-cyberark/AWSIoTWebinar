@@ -1,0 +1,17 @@
+aws iot create-job \
+              --job-id "status-job-01" \
+              --targets "arn:aws:iot:eu-west-1:<account_id>:thing/<thing_name>" \
+              --document file://job-status.json \
+              --description "example status job" \
+              --target-selection SNAPSHOT
+
+aws iot delete-job --job-id "status-job-01"
+
+
+aws iot create-job \
+              --job-id "rotate-job-01" \
+              --targets "arn:aws:iot:eu-west-1:<account_id>:thing/<thing_name>" \
+              --document file://job-rotate-cert.json \
+              --description "example cert rotation job" \
+              --target-selection SNAPSHOT \
+              --presigned-url-config roleArn=<role_arn>,expiresInSec=300

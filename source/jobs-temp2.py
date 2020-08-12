@@ -14,12 +14,13 @@ from concurrent.futures import ThreadPoolExecutor
 
 import requests
 
+NEW_CERT_FILE = 'new_cert_file.crt'
 
 def rotate_cert(job_body):
     signed_url = job_body['files']['url']
     r = requests.get(signed_url, allow_redirects=True)
-    open('test_cerm.crt', 'wb').write(r.content)
-
+    open(NEW_CERT_FILE, 'wb').write(r.content)
+    incoming_cert = True
 
 class JobsMessageProcessor(object):
     def __init__(self, jobs_client, client_id):
@@ -127,20 +128,21 @@ print('Starting to process jobs...')
 jobsMsgProc.process_jobs()
 
 
-
-
-def check_cert_update(client, jobs_msg_proc):
-    while True:
-        time.sleep(2)
-        if client.cert_rotated:
-            client.disconnect()
-            client.connect()
-            client.cert_rotated = False
-
-
-executor = ThreadPoolExecutor(max_workers=1)
-executor.submit(check_cert_update, jobsClient, jobsMsgProc)
-
-
+# TODO - reconnect gracefully 
 while True:
     time.sleep(2)
+    if jobsMsgProc.cert_rotated:
+        print("New cert detected!")
+        jobsMsgProc.cert_rotated = False
+        
+        del jobsMsgProc
+        jobsClient.disconnect()
+        print("Disconnecting...")
+        certificatePath = NEW_CERT_FILE
+        mqtt_client.configureCredentials(rootCAPath, privateKeyPath, certificatePath)
+        jobsClient = AWSIoTMQTTThingJobsClient(clientId, thingName, QoS=1, awsIoTMQTTClient=mqtt_client)
+        jobsClient.connect()
+
+        jobsMsgProc = JobsMessageProcessor(jobsClient, clientId)
+        print('Starting to process jobs...')
+        jobsMsgProc.process_jobs()

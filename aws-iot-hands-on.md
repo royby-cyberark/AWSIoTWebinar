@@ -259,6 +259,10 @@ And delete the job with:
   * Take a look at `job-rotate-cert.json`, this will have the IoT service replace the presigned url placeholders with real values.
 * When using presigned urls, you **must** use a role that will allow you access to the bucket, pick the `iot-webinar-signedurls-role` role
 * Click on "Next", "Create"
+* See that you got the job and rotated the files locally
+* Send another local-scan job to ensure that the connection is working
+* 
+
 * Alternatively, you can create a job with the cli:
 ```
 aws iot create-job \

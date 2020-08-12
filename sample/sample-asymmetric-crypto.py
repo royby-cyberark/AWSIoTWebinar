@@ -1,3 +1,4 @@
+
 # This sample code simulates Encryption and Decryption and as such should not be used in production systems as-is
 # Requirements: pycrypto
 

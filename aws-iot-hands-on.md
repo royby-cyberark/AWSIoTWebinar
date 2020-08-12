@@ -313,11 +313,12 @@ When creating the certificate, make sure you get the public key and store it som
 public keys are public, so you don't have to worry about security here, just keep it accessible by thing name (maybe a DynamoDB table)
 When rotating the cert, you can encrypt the files with the public key, and when the device receives the job it can use its private key to decrypt it. 
 You can, for example, indicate that it is encrypted in the job body. 
+Below you can find sample python code for doing the encryption/decryption using the public/private keys, but keep in mind that this is sample code
+and as such should not be used in production as-is.
 
+Code sample: 
+https://github.com/royby-cyberark/AWSIoTWebinar/blob/master/sample/sample-asymmetric-crypto.py
 
-
-
-use the public key
 
 ### Cleaning up
 Delete all resources you created, this should be the list of them, but please verify this yourself.

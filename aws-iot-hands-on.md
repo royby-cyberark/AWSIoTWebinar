@@ -42,7 +42,7 @@ For full code examples, see the [SDK page](https://github.com/royby-cyberark/aws
 * Make sure your device group is set to the new group, click "Next" 
 * Select "One-click certificate creation"
 * On the next page we are presented with a link to download the device certificate 
-* Download the certificate, public key* and private key and save them into the `AWSIoTWebinar/source` folder in the git repo folder you cloned
+* Download the certificate, private key and optionally the public key and save them into the `AWSIoTWebinar/source` folder in the git repo folder you cloned
   * Save certificate as `certificate.pem.crt` 
   * Save the private key as `private.pem.key`
   * Save the Root CA as `AmazonRootCA1.pem`
@@ -54,7 +54,7 @@ For full code examples, see the [SDK page](https://github.com/royby-cyberark/aws
 * "Register thing"
 * Under "Manage", "Things", open your device and review it
   * Details: arn, thing type - note your device arn for later
-  * Security: review the certificate, its arn, policies and things
+  * Security: review the certificate, its arn, policies and things, **note its name for later use**
   * Groups
 * Click on "Edit" in the thing page and add an attribute, which key is 'Owner' and value is abcde-12345. we will later use this is the policy that will restric devices to post to their teant topic
 
@@ -151,7 +151,7 @@ actually use this (TODO FIX THIS):
   * SDK code samples: https://github.com/aws/aws-iot-device-sdk-python
 * //TODO - venv, activate, pipinstall `pip install AWSIoTPythonSDK`, `pip install requests`
 * Run the following command line, replacing all placeholders with your values:
-`python canary-service.py -e <your iot endpoint> -r AmazonRootCA1.pem -c certificate.pem.crt -k private.pem.key -id iot-webinar-device -t iot-webinar-device/audit`
+`python canary-service.py -e <your iot endpoint> -r AmazonRootCA1.pem -c certificate.pem.crt -k private.pem.key -id iot-webinar-device -t abcde-12345/iot-webinar-device/audit`
   * `-id` is the client id, it is up to you, but it is recommended to use the thing name
   * `-t` is the topic we will publish to
 
@@ -236,6 +236,39 @@ aws iot create-job \
 ```
 And delete the job with:
 `aws iot delete-job --job-id "status-job-01"`
+
+#### Create a cert rotation job:
+* First create the new secrets
+  * "Manage", "Things", select our device `iot-webinar-device`
+  * "Security", "Create certificate"
+  * Download the certificate, private key and optionally the public key and save them into **ANOTHER** folder. usually this will be done on a different machine. make sure you don't save those into the project folder.
+    * Strictly speaking, the public key is not required on our end. but you can use it in the bonus section at the bottom.
+  * Click "Activate"
+  * Click "Attach Policy", select our policy `iot-webinar-policy` and click "Done"
+  * Open the thing, security page and **note the new certificate name for later**
+* Upload the new certificate and private key into our S3 bucket under the `certs` folder
+  * Upload the certificate as `certificate.pem.crt` 
+  * Upload the private key as `private.pem.key`
+* "Manage", "Jobs", "Create", "Create custom job"
+* Job id = `webinar-rotate-cert-01`
+* Under devices to update, select your device (you can also select the device group to update all group members)
+* Under "Add a job file", select `job-rotate-cert.json` from our S3 bucket
+* Under "Pre-sign resource URLs", select "I want to pre-sign my URLs and have configured my job file."
+  * Take a look at `job-rotate-cert.json`, this will have the IoT service replace the presigned url placeholders with real values.
+* When using presigned urls, you **must** use a role that will allow you to ... HERE
+* Click on "Next", "Create"
+* Alternatively, you can create a job with the cli:
+```
+aws iot create-job \
+              --job-id "status-job-01" \
+              --targets "arn:aws:iot:eu-west-1:<account_id>:thing/<thing_name>" \
+              --document file://job-local-scan.json \
+              --description "example status job" \
+              --target-selection SNAPSHOT
+``` 
+
+* In a real process, you would wait for the jobs to be completed and then remove the old certificate
+  * You can see the job status by calling //TODO
 
 * Create a cert rotation task from the cli:
 ```

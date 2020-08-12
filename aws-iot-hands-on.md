@@ -298,18 +298,25 @@ aws iot create-job \
 * For a full code example, see the [SDK code sample](https://github.com/royby-cyberark/aws-iot-device-sdk-python/blob/master/samples/jobs/jobsSample.py)
 
 
-
 ### Bonus stuff 1 - augmenting data with tenant id
-//TODO - fix this
+You can augment the message that is passed for example to S3, with data from the topic path. 
+This can be useful, for example, if you include the tenant id in the topic, you can augment that data with its value. 
+Update you Rule SQL query to something similar to this:
+`SELECT message as msg, topic(1) as tenant_id FROM ‘+/audit’`
+Now, look at the data that goes into the S3 bucket and see how it's changed.
 
-SELECT message as msg, topic(1) as tenant_id FROM ‘+/audit’
-
-09:28
-when the topic name is {tenant-id}/audit
-09:29
-the output that will be delivered to the destination will be JSON {tenant_id: <tid>, message: {}}
 
 ### Bonus stuff 2 - encrypting your certs with asymetric encryption
+Even though presigned urls are generally safe and can be set to expire after some time, still, anyone with the link can download the files that it points to.
+You can, if you want to secure your secrets better, you can use asymmetric encryption with the public key that is provided to you for the device cert.
+When creating the certificate, make sure you get the public key and store it somewhere that is accessible to the process that does the rotation. 
+public keys are public, so you don't have to worry about security here, just keep it accessible by thing name (maybe a DynamoDB table)
+When rotating the cert, you can encrypt the files with the public key, and when the device receives the job it can use its private key to decrypt it. 
+You can, for example, indicate that it is encrypted in the job body. 
+
+
+
+
 use the public key
 
 ### Cleaning up

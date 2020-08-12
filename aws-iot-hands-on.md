@@ -320,7 +320,7 @@ public keys are public, so you don't have to worry about security here, just kee
 Below you can find sample python code for doing the encryption/decryption using the public/private keys, but keep in mind that this is sample code
 and as such should not be used in production as-is.
 
-Code sample: 
+Assymetric crypto sample:
 https://github.com/royby-cyberark/AWSIoTWebinar/blob/master/sample/sample-asymmetric-crypto.py
 
 

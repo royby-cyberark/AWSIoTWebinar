@@ -21,6 +21,8 @@ For example, you will deploy all your resources with CDK (or another similar fra
 and have your infrastructure "as code".
 
 
+For full code examples, see the [SDK page](https://github.com/royby-cyberark/aws-iot-device-sdk-python)
+
 ## Step-By-Step
 
 **Prerequisites:**
@@ -33,7 +35,7 @@ and have your infrastructure "as code".
 * Click "Create a single thing"
 * Name your device `iot-webinar-device`
 * Optional: Click on "Create Type" and name it `iot-webinar-type` - this will create a device type which we can use later to group devices by type and act upon this type. //TODO add here - what are we doing with it
-* Optional: under "Add this thing to a group", click "Create group" and name the group `iot-webinar-group`, click "Create" //TODO - what is this used for
+* Under "Add this thing to a group", click "Create group" and name the group `iot-webinar-group`, click "Create", this will be used later during the jobs step
 * Make sure your device group is set to the new group, click "Next" 
 * Select "One-click certificate creation"
 * On the next page we are presented with a link to download the device certificate 
@@ -141,7 +143,7 @@ actually use this (TODO FIX THIS):
   * The Python SDK is here: https://github.com/aws/aws-iot-device-sdk-python
   * SDK code samples: https://github.com/aws/aws-iot-device-sdk-python
 * `git clone git@github.com:royby-cyberark/AWSIoTWebinar.git`
-* 
+* //TODO - venv, activate, pipinstall `pip install AWSIoTPythonSDK`, `pip install requests`
 * Run the following command line, replacing all placeholders with your values:
 `python canary-service.py -e <your iot endpoint> -r <path to root ca file - AmazonRootCA1.pem> -c <path to cert file - 8ad305037c-certificate.pem.crt> -k <path to private key file - 8ad305037c-private.pem.key> -id iot-webinar-device -t abcde-12345/iot-webinar-device/audit`
 
@@ -153,10 +155,88 @@ actually use this (TODO FIX THIS):
 * //TODO - fix timeout, updated policy to "Resource": "arn:aws:iot:eu-west-1:195361640859:*", and then the client worked. fix this.
 
 ### Job creation
-* Cert rotation...
-* //TODO - this shouldn't be manual...
+We are going to create a job for certificate rotation. we will provide the certificate as a pre-signed url in S3 which will be short lived.
+
+* In S3, open you `iot-webinar-audits` bucket
+  * Create a folder named `jobs` and optionally select "AES-256 (SSE-S3)" for encryption (this is beyond the scope of this webinar, but why not)
+  * Open the `jobs` folder and create a sub-folder named `certs`, also with SSE-S3 encryption
+
+* //TODO - create a new cert, save it as `iot-webinar-cert2.perm.crt`, upload - use default, but in a real environment, give thought to the permissions given
+* In the IoT dashboard, under "Manage", click on "Jobs", "Create Custom Job"
+* Set the job id to `webinar-job-rotate-cert`
+* Under "Select devices to update", either select your device (iot-webinar-device), or its group (iot-webinar-group). Using groups will allow us to apply this job to multiple devices.
+* Create the job document file. this needs to be uploaded to S3, alternatively, you can use things like aws cli, boto3, etc and avoid the need to create an S3 object.
+  * Create a local file named `job-rotate-cert.json`, paste this into it and save it locally.
+  //TODO - explain the fields
+  * Upload the file to our S3 bucket, under the `jobs` folder.
+* //TODO - order these items
+* Back in the job creation, under "Add a job file", navigate to `job-rotate-cert.json` and select it
+* Select "I want to pre-sign my urls..."
+* Click "Create role" and name it `iot-webinar-signedurls-role`, review this role and policy to understand what was done
+* Click "Next", "Create"
+* Replace the thing policy with the following (//TODO - step by step):
+```{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "iot:Connect"
+      ],
+      "Resource": "arn:aws:iot:eu-west-1:195361640859:client/${iot:Connection.Thing.ThingName}"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "iot:Publish",
+        "iot:Receive"
+      ],
+      "Resource": [
+        "arn:aws:iot:eu-west-1:195361640859:topic/${iot:Connection.Thing.Attributes[Owner]}/${iot:Connection.Thing.ThingName}/audit",
+        "arn:aws:iot:eu-west-1:195361640859:topic/$aws/things/${iot:Connection.Thing.ThingName}/jobs/*"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "iot:Subscribe"
+      ],
+      "Resource": "arn:aws:iot:eu-west-1:195361640859:topicfilter/$aws/things/${iot:Connection.Thing.ThingName}/jobs/*"
+    }
+  ]
+}
+```
 
 
-* Under 'Set searchable thing attributes' add a 'tenant_id' attribute and set its value to `abcdef-12345` //TODO - say something, where's the value?
-* Click on "Next step" and except to get a "Successfully created thing." message
-* 
+* For a full code example, see the [SDK code sample](https://github.com/royby-cyberark/aws-iot-device-sdk-python/blob/master/samples/jobs/jobsSample.py)
+
+//TODO: read, do these:
+//* https://aws.amazon.com/blogs/iot/using-device-jobs-for-over-the-air-updates/
+//* https://medium.com/@gowthamrocker12/aws-iot-jobs-how-it-works-65ffa7526dc7
+
+### Bonus stuff - augmenting data with tenant id
+//TODO - fix this
+
+SELECT message as msg, topic(1) as tenant_id FROM ‘+/audit’
+
+09:28
+when the topic name is {tenant-id}/audit
+09:29
+the output that will be delivered to the destination will be JSON {tenant_id: <tid>, message: {}}
+
+
+### Cleaning up
+Delete all resources you created, this should be the list of them, but please verify this yourself.
+//TODO - verify this
+* Delete thing: iot-webinar-device
+* Delete type: iot-webinar-type
+* Delete group: iot-webinar-group
+* Delete policy
+* Delete rule
+* Delete Job
+* Delete cert: 8ad305037c.cert.pem	
+* Delete S3 bucket (first delete all files and folders)
+* //TODO find all "created" roles during the process - search roles for webinar (other?)
+  * delete role `iot-webinar-signedurls-role`
+
+//TODO - something else>

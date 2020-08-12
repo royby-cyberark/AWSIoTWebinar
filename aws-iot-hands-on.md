@@ -43,8 +43,10 @@ For full code examples, see the [SDK page](https://github.com/royby-cyberark/aws
 * Select "One-click certificate creation"
 * On the next page we are presented with a link to download the device certificate 
 * Download the certificate, public key* and private key and save them into the `AWSIoTWebinar/source` folder in the git repo folder you cloned
-  * rename the certificate to `certificate.pem.crt` and private key to `private.pem.key` (we will use this to rotate the cert more easily)
-  * strictly speaking, the public key is not required on our end. but you can use it in the bonus section at the bottom.
+  * Save certificate as `certificate.pem.crt` 
+  * Save the private key as `private.pem.key`
+  * Save the Root CA as `AmazonRootCA1.pem`
+  * Strictly speaking, the public key is not required on our end. but you can use it in the bonus section at the bottom.
 * You also need AWS's Root ca which you can find [here](https://docs.aws.amazon.com/iot/latest/developerguide/server-authentication.html?icmpid=docs_iot_console#server-authentication-certs)
 * We are going to download the "RSA 2048 bit" key, right click on the link and save to file locally
 * Click on "Activate", this will activate the certificate that you created and associated with the device.
@@ -149,7 +151,9 @@ actually use this (TODO FIX THIS):
   * SDK code samples: https://github.com/aws/aws-iot-device-sdk-python
 * //TODO - venv, activate, pipinstall `pip install AWSIoTPythonSDK`, `pip install requests`
 * Run the following command line, replacing all placeholders with your values:
-`python canary-service.py -e <your iot endpoint> -r <path to root ca file - AmazonRootCA1.pem> -c certificate.pem.crt -k private.pem.key -id iot-webinar-device -t iot-webinar-device/audit`
+`python canary-service.py -e <your iot endpoint> -r AmazonRootCA1.pem -c certificate.pem.crt -k private.pem.key -id iot-webinar-device -t iot-webinar-device/audit`
+  * `-id` is the client id, it is up to you, but it is recommended to use the thing name
+  * `-t` is the topic we will publish to
 
 * Open http://localhost:80 (this is the so called honeypot), which will in turn, send an even audit message to the topic
 * See that an audit was writter to the S3 bucket and also that an email notification was sent.
@@ -211,7 +215,9 @@ We are going to create a job for certificate rotation. we will provide the certi
 }
 ```
 
-
+* Command: `python jobs-handler.py -e <your iot endpoint> -r AmazonRootCA1.pem -c certificate.pem.crt -k private.pem.key -id iot-webinar-device -n iot-webinar-device`
+  * `-n` is the thing name that will subscribe to the jobs topic
+  
 * For a full code example, see the [SDK code sample](https://github.com/royby-cyberark/aws-iot-device-sdk-python/blob/master/samples/jobs/jobsSample.py)
 
 //TODO: read, do these:

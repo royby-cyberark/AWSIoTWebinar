@@ -1,5 +1,7 @@
 # AWS IoT Hands-On session
 
+//TODO - disclaimer - pricing, demo, do not use for production, do your own research
+
 Below you can find a step-by-step for our AWS IoT Webinar. 
 A little remider first:
 
@@ -29,6 +31,9 @@ For full code examples, see the [SDK page](https://github.com/royby-cyberark/aws
 * git
 * python 3.7+
 
+### Get the code
+* `git clone git@github.com:royby-cyberark/AWSIoTWebinar.git`
+
 ### Device creation
 * In the AWS Console, open the "AWS IoT Core" service
 * Under "Manage", "Things", clicn on "Create"
@@ -39,7 +44,11 @@ For full code examples, see the [SDK page](https://github.com/royby-cyberark/aws
 * Make sure your device group is set to the new group, click "Next" 
 * Select "One-click certificate creation"
 * On the next page we are presented with a link to download the device certificate 
-* Download the certificate, public key and private key
+* Download the certificate, private key and optionally the public key and save them into the `AWSIoTWebinar/source` folder in the git repo folder you cloned
+  * Save certificate as `certificate.pem.crt` 
+  * Save the private key as `private.pem.key`
+  * Save the Root CA as `AmazonRootCA1.pem`
+  * Strictly speaking, the public key is not required on our end. but you can use it in the bonus section at the bottom.
 * You also need AWS's Root ca which you can find [here](https://docs.aws.amazon.com/iot/latest/developerguide/server-authentication.html?icmpid=docs_iot_console#server-authentication-certs)
 * We are going to download the "RSA 2048 bit" key, right click on the link and save to file locally
 * Click on "Activate", this will activate the certificate that you created and associated with the device.
@@ -47,7 +56,7 @@ For full code examples, see the [SDK page](https://github.com/royby-cyberark/aws
 * "Register thing"
 * Under "Manage", "Things", open your device and review it
   * Details: arn, thing type - note your device arn for later
-  * Security: review the certificate, its arn, policies and things
+  * Security: review the certificate, its arn, policies and things, **note its name for later use**
   * Groups
 * Click on "Edit" in the thing page and add an attribute, which key is 'Owner' and value is abcde-12345. we will later use this is the policy that will restric devices to post to their teant topic
 
@@ -142,10 +151,11 @@ actually use this (TODO FIX THIS):
   * SDK Hub: https://aws.amazon.com/tools/#sdk, under "IoT Device SDKs"
   * The Python SDK is here: https://github.com/aws/aws-iot-device-sdk-python
   * SDK code samples: https://github.com/aws/aws-iot-device-sdk-python
-* `git clone git@github.com:royby-cyberark/AWSIoTWebinar.git`
 * //TODO - venv, activate, pipinstall `pip install AWSIoTPythonSDK`, `pip install requests`
 * Run the following command line, replacing all placeholders with your values:
-`python canary-service.py -e <your iot endpoint> -r <path to root ca file - AmazonRootCA1.pem> -c <path to cert file - 8ad305037c-certificate.pem.crt> -k <path to private key file - 8ad305037c-private.pem.key> -id iot-webinar-device -t abcde-12345/iot-webinar-device/audit`
+`python canary-service.py -e <your iot endpoint> -r AmazonRootCA1.pem -c certificate.pem.crt -k private.pem.key -id iot-webinar-device -t abcde-12345/iot-webinar-device/audit`
+  * `-id` is the client id, it is up to you, but it is recommended to use the thing name
+  * `-t` is the topic we will publish to
 
 * Open http://localhost:80 (this is the so called honeypot), which will in turn, send an even audit message to the topic
 * See that an audit was writter to the S3 bucket and also that an email notification was sent.
@@ -166,9 +176,9 @@ We are going to create a job for certificate rotation. we will provide the certi
 * Set the job id to `webinar-job-rotate-cert`
 * Under "Select devices to update", either select your device (iot-webinar-device), or its group (iot-webinar-group). Using groups will allow us to apply this job to multiple devices.
 * Create the job document file. this needs to be uploaded to S3, alternatively, you can use things like aws cli, boto3, etc and avoid the need to create an S3 object.
-  * Create a local file named `job-rotate-cert.json`, paste this into it and save it locally.
+  * TODO - from repo folder - two files!, Create a local file named `job-rotate-cert.json`, paste this into it and save it locally.
   //TODO - explain the fields
-  * Upload the file to our S3 bucket, under the `jobs` folder.
+  * Upload the files to our S3 bucket, under the `jobs` folder.
 * //TODO - order these items
 * Back in the job creation, under "Add a job file", navigate to `job-rotate-cert.json` and select it
 * Select "I want to pre-sign my urls..."
@@ -207,14 +217,83 @@ We are going to create a job for certificate rotation. we will provide the certi
 }
 ```
 
+* Command: `python jobs-handler.py -e <your iot endpoint> -r AmazonRootCA1.pem -c certificate.pem.crt -k private.pem.key -id iot-webinar-device -n iot-webinar-device`
+  * `-n` is the thing name that will subscribe to the jobs topic
+
+//TODO - move this up. create sub header for the next parts
+#### Create a simple job
+* Under "Manage", "Jobs", "Create", "Create Custom Job"
+* Job id = `local-scan-job-01`
+* Under devices to update, select your device (you can also select the device group to update all group members)
+* Under "Add a job file", select `job-local-scan.json` from our S3 bucket
+* Click on "Next", "Create"
+* Alternatively, you can create a job with the cli:
+```
+aws iot create-job \
+              --job-id "status-job-01" \
+              --targets "arn:aws:iot:eu-west-1:<account_id>:thing/<thing_name>" \
+              --document file://job-local-scan.json \
+              --description "example status job" \
+              --target-selection SNAPSHOT
+```
+And delete the job with:
+`aws iot delete-job --job-id "status-job-01"`
+
+#### Create a cert rotation job:
+* First create the new secrets
+  * "Manage", "Things", select our device `iot-webinar-device`
+  * "Security", "Create certificate"
+  * Download the certificate, private key and optionally the public key and save them into **ANOTHER** folder. usually this will be done on a different machine. make sure you don't save those into the project folder.
+    * Strictly speaking, the public key is not required on our end. but you can use it in the bonus section at the bottom.
+  * Click "Activate"
+  * Click "Attach Policy", select our policy `iot-webinar-policy` and click "Done"
+  * Open the thing, security page and **note the new certificate name for later**
+* Upload the new certificate and private key into our S3 bucket under the `certs` folder
+  * Upload the certificate as `certificate.pem.crt` 
+  * Upload the private key as `private.pem.key`
+* "Manage", "Jobs", "Create", "Create custom job"
+* Job id = `webinar-rotate-cert-01`
+* Under devices to update, select your device (you can also select the device group to update all group members)
+* Under "Add a job file", select `job-rotate-cert.json` from our S3 bucket
+* Under "Pre-sign resource URLs", select "I want to pre-sign my URLs and have configured my job file."
+  * Take a look at `job-rotate-cert.json`, this will have the IoT service replace the presigned url placeholders with real values.
+* When using presigned urls, you **must** use a role that will allow you access to the bucket, pick the `iot-webinar-signedurls-role` role
+* Click on "Next", "Create"
+* See that you got the job and rotated the files locally
+* Send another local-scan job to ensure that the connection is working
+* 
+
+* Alternatively, you can create a job with the cli:
+```
+aws iot create-job \
+              --job-id "status-job-01" \
+              --targets "arn:aws:iot:eu-west-1:<account_id>:thing/<thing_name>" \
+              --document file://job-local-scan.json \
+              --description "example status job" \
+              --target-selection SNAPSHOT
+``` 
+
+* In a real process, you would wait for the jobs to be completed and then remove the old certificate
+  * You can see the job status by calling //TODO
+
+* Create a cert rotation task from the cli:
+```
+aws iot create-job \
+              --job-id "rotate-job-01" \
+              --targets "arn:aws:iot:eu-west-1:<account_id>:thing/<thing_name>" \
+              --document file://job-rotate-cert.json \
+              --description "example cert rotation job" \
+              --target-selection SNAPSHOT \
+              --presigned-url-config roleArn=<role_arn>,expiresInSec=300
+```
+
+* 
 
 * For a full code example, see the [SDK code sample](https://github.com/royby-cyberark/aws-iot-device-sdk-python/blob/master/samples/jobs/jobsSample.py)
 
-//TODO: read, do these:
-//* https://aws.amazon.com/blogs/iot/using-device-jobs-for-over-the-air-updates/
-//* https://medium.com/@gowthamrocker12/aws-iot-jobs-how-it-works-65ffa7526dc7
 
-### Bonus stuff - augmenting data with tenant id
+
+### Bonus stuff 1 - augmenting data with tenant id
 //TODO - fix this
 
 SELECT message as msg, topic(1) as tenant_id FROM ‘+/audit’
@@ -224,6 +303,8 @@ when the topic name is {tenant-id}/audit
 09:29
 the output that will be delivered to the destination will be JSON {tenant_id: <tid>, message: {}}
 
+### Bonus stuff 2 - encrypting your certs with asymetric encryption
+use the public key
 
 ### Cleaning up
 Delete all resources you created, this should be the list of them, but please verify this yourself.

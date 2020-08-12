@@ -42,8 +42,9 @@ For full code examples, see the [SDK page](https://github.com/royby-cyberark/aws
 * Make sure your device group is set to the new group, click "Next" 
 * Select "One-click certificate creation"
 * On the next page we are presented with a link to download the device certificate 
-* Download the certificate, public key and private key and save them into the `AWSIoTWebinar/source` folder in the git repo folder you cloned
+* Download the certificate, public key* and private key and save them into the `AWSIoTWebinar/source` folder in the git repo folder you cloned
   * rename the certificate to `certificate.pem.crt` and private key to `private.pem.key` (we will use this to rotate the cert more easily)
+  * strictly speaking, the public key is not required on our end. but you can use it in the bonus section at the bottom.
 * You also need AWS's Root ca which you can find [here](https://docs.aws.amazon.com/iot/latest/developerguide/server-authentication.html?icmpid=docs_iot_console#server-authentication-certs)
 * We are going to download the "RSA 2048 bit" key, right click on the link and save to file locally
 * Click on "Activate", this will activate the certificate that you created and associated with the device.
@@ -217,7 +218,7 @@ We are going to create a job for certificate rotation. we will provide the certi
 //* https://aws.amazon.com/blogs/iot/using-device-jobs-for-over-the-air-updates/
 //* https://medium.com/@gowthamrocker12/aws-iot-jobs-how-it-works-65ffa7526dc7
 
-### Bonus stuff - augmenting data with tenant id
+### Bonus stuff 1 - augmenting data with tenant id
 //TODO - fix this
 
 SELECT message as msg, topic(1) as tenant_id FROM ‘+/audit’
@@ -227,6 +228,8 @@ when the topic name is {tenant-id}/audit
 09:29
 the output that will be delivered to the destination will be JSON {tenant_id: <tid>, message: {}}
 
+### Bonus stuff 2 - encrypting your certs with asymetric encryption
+use the public key
 
 ### Cleaning up
 Delete all resources you created, this should be the list of them, but please verify this yourself.

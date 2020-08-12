@@ -1,5 +1,7 @@
 # AWS IoT Hands-On session
 
+//TODO - disclaimer - pricing, demo, do not use for production, do your own research
+
 Below you can find a step-by-step for our AWS IoT Webinar. 
 A little remider first:
 
@@ -255,7 +257,7 @@ And delete the job with:
 * Under "Add a job file", select `job-rotate-cert.json` from our S3 bucket
 * Under "Pre-sign resource URLs", select "I want to pre-sign my URLs and have configured my job file."
   * Take a look at `job-rotate-cert.json`, this will have the IoT service replace the presigned url placeholders with real values.
-* When using presigned urls, you **must** use a role that will allow you to ... HERE
+* When using presigned urls, you **must** use a role that will allow you access to the bucket, pick the `iot-webinar-signedurls-role` role
 * Click on "Next", "Create"
 * Alternatively, you can create a job with the cli:
 ```
@@ -280,6 +282,8 @@ aws iot create-job \
               --target-selection SNAPSHOT \
               --presigned-url-config roleArn=<role_arn>,expiresInSec=300
 ```
+
+* 
 
 * For a full code example, see the [SDK code sample](https://github.com/royby-cyberark/aws-iot-device-sdk-python/blob/master/samples/jobs/jobsSample.py)
 

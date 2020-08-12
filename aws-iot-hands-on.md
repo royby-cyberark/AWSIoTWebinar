@@ -189,11 +189,12 @@ We are going to create a job for certificate rotation. we will provide the certi
     {
       "Effect": "Allow",
       "Action": [
-        "iot:Publish"
+        "iot:Publish",
+        "iot:Receive"
       ],
       "Resource": [
-             "arn:aws:iot:eu-west-1:195361640859:topic/${iot:Connection.Thing.Attributes[Owner]}/${iot:Connection.Thing.ThingName}/audit",
-             "arn:aws:iot:eu-west-1:195361640859:topic/$aws/things/iot-webinar-device/jobs/notify-next"
+        "arn:aws:iot:eu-west-1:195361640859:topic/${iot:Connection.Thing.Attributes[Owner]}/${iot:Connection.Thing.ThingName}/audit",
+        "arn:aws:iot:eu-west-1:195361640859:topic/$aws/things/iot-webinar-device/jobs/*"
       ]
     },
     {
@@ -201,7 +202,7 @@ We are going to create a job for certificate rotation. we will provide the certi
       "Action": [
         "iot:Subscribe"
       ],
-      "Resource": "arn:aws:iot:eu-west-1:195361640859:topic/$aws/things/iot-webinar-device/jobs/notify-next"
+      "Resource": "arn:aws:iot:eu-west-1:195361640859:topicfilter/$aws/things/iot-webinar-device/jobs/*"
     }
   ]
 }

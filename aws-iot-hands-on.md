@@ -175,8 +175,7 @@ We are going to create a job for certificate rotation. we will provide the certi
 * Click "Create role" and name it `iot-webinar-signedurls-role`, review this role and policy to understand what was done
 * Click "Next", "Create"
 * Replace the thing policy with the following (//TODO - step by step):
-```
-{
+```{
   "Version": "2012-10-17",
   "Statement": [
     {
@@ -194,7 +193,7 @@ We are going to create a job for certificate rotation. we will provide the certi
       ],
       "Resource": [
         "arn:aws:iot:eu-west-1:195361640859:topic/${iot:Connection.Thing.Attributes[Owner]}/${iot:Connection.Thing.ThingName}/audit",
-        "arn:aws:iot:eu-west-1:195361640859:topic/$aws/things/iot-webinar-device/jobs/*"
+        "arn:aws:iot:eu-west-1:195361640859:topic/$aws/things/${iot:Connection.Thing.ThingName}/jobs/*"
       ]
     },
     {
@@ -202,7 +201,7 @@ We are going to create a job for certificate rotation. we will provide the certi
       "Action": [
         "iot:Subscribe"
       ],
-      "Resource": "arn:aws:iot:eu-west-1:195361640859:topicfilter/$aws/things/iot-webinar-device/jobs/*"
+      "Resource": "arn:aws:iot:eu-west-1:195361640859:topicfilter/$aws/things/${iot:Connection.Thing.ThingName}/jobs/*"
     }
   ]
 }

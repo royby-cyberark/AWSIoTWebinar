@@ -149,7 +149,7 @@ actually use this (TODO FIX THIS):
   * SDK code samples: https://github.com/aws/aws-iot-device-sdk-python
 * //TODO - venv, activate, pipinstall `pip install AWSIoTPythonSDK`, `pip install requests`
 * Run the following command line, replacing all placeholders with your values:
-`python canary-service.py -e <your iot endpoint> -r <path to root ca file - AmazonRootCA1.pem> -c <path to cert file - 8ad305037c-certificate.pem.crt> -k <path to private key file - 8ad305037c-private.pem.key> -id iot-webinar-device -t abcde-12345/iot-webinar-device/audit`
+`python canary-service.py -e <your iot endpoint> -r <path to root ca file - AmazonRootCA1.pem> -c certificate.pem.crt -k private.pem.key -id iot-webinar-device -t iot-webinar-device/audit`
 
 * Open http://localhost:80 (this is the so called honeypot), which will in turn, send an even audit message to the topic
 * See that an audit was writter to the S3 bucket and also that an email notification was sent.

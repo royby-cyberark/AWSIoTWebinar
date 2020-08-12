@@ -29,6 +29,9 @@ For full code examples, see the [SDK page](https://github.com/royby-cyberark/aws
 * git
 * python 3.7+
 
+### Get the code
+* `git clone git@github.com:royby-cyberark/AWSIoTWebinar.git`
+
 ### Device creation
 * In the AWS Console, open the "AWS IoT Core" service
 * Under "Manage", "Things", clicn on "Create"
@@ -39,7 +42,8 @@ For full code examples, see the [SDK page](https://github.com/royby-cyberark/aws
 * Make sure your device group is set to the new group, click "Next" 
 * Select "One-click certificate creation"
 * On the next page we are presented with a link to download the device certificate 
-* Download the certificate, public key and private key
+* Download the certificate, public key and private key and save them into the `AWSIoTWebinar/source` folder in the git repo folder you cloned
+  * rename the certificate to `certificate.pem.crt` and private key to `private.pem.key` (we will use this to rotate the cert more easily)
 * You also need AWS's Root ca which you can find [here](https://docs.aws.amazon.com/iot/latest/developerguide/server-authentication.html?icmpid=docs_iot_console#server-authentication-certs)
 * We are going to download the "RSA 2048 bit" key, right click on the link and save to file locally
 * Click on "Activate", this will activate the certificate that you created and associated with the device.
@@ -142,7 +146,6 @@ actually use this (TODO FIX THIS):
   * SDK Hub: https://aws.amazon.com/tools/#sdk, under "IoT Device SDKs"
   * The Python SDK is here: https://github.com/aws/aws-iot-device-sdk-python
   * SDK code samples: https://github.com/aws/aws-iot-device-sdk-python
-* `git clone git@github.com:royby-cyberark/AWSIoTWebinar.git`
 * //TODO - venv, activate, pipinstall `pip install AWSIoTPythonSDK`, `pip install requests`
 * Run the following command line, replacing all placeholders with your values:
 `python canary-service.py -e <your iot endpoint> -r <path to root ca file - AmazonRootCA1.pem> -c <path to cert file - 8ad305037c-certificate.pem.crt> -k <path to private key file - 8ad305037c-private.pem.key> -id iot-webinar-device -t abcde-12345/iot-webinar-device/audit`

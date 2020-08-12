@@ -308,11 +308,15 @@ Now, look at the data that goes into the S3 bucket and see how it's changed.
 
 ### Bonus stuff 2 - encrypting your certs with asymetric encryption
 Even though presigned urls are generally safe and can be set to expire after some time, still, anyone with the link can download the files that it points to.
+<BR>
 You can, if you want to secure your secrets better, you can use asymmetric encryption with the public key that is provided to you for the device cert.
-When creating the certificate, make sure you get the public key and store it somewhere that is accessible to the process that does the rotation. 
+
+* When creating the certificate, make sure you get the public key and store it somewhere that is accessible to the process that does the rotation. 
 public keys are public, so you don't have to worry about security here, just keep it accessible by thing name (maybe a DynamoDB table)
-When rotating the cert, you can encrypt the files with the public key, and when the device receives the job it can use its private key to decrypt it. 
-You can, for example, indicate that it is encrypted in the job body. 
+* When rotating the cert, encrypt the files with the public key
+* The device handling the job can use its private key to decrypt it. 
+* You can, for example, indicate that it is encrypted in the job body. 
+
 Below you can find sample python code for doing the encryption/decryption using the public/private keys, but keep in mind that this is sample code
 and as such should not be used in production as-is.
 

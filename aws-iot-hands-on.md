@@ -140,9 +140,9 @@ actually use this (TODO FIX THIS):
 
 ### Cloudwatch logging 
 * Open https://console.aws.amazon.com/cloudwatch/, choose "Log groups".
-* In the Filter text box, enter `AWSIotLogsV2` , and then press Enter
+* In the Filter text box, enter `AWSIotLogsV2`, and then press Enter
 * For more info, see the [docs](https://docs.aws.amazon.com/iot/latest/developerguide/cloud-watch-logs.html)
-* If you want to configure the logging vebosity, you can do that in the "Settings" page in the IoT dashboard
+* If you want to configure the logging verbosity, you can do that in the "Settings" page in the IoT dashboard
 
 ### Device Setup
 * In the IoT dashboard, click on "settings" and note your service endpoint address
@@ -157,25 +157,25 @@ actually use this (TODO FIX THIS):
   * `-id` is the client id, it is up to you, but it is recommended to use the thing name
   * `-t` is the topic we will publish to
 
-* Open http://localhost:80 (this is the so called honeypot), which will in turn, send an even audit message to the topic
-* See that an audit was writter to the S3 bucket and also that an email notification was sent.
+* Open http://localhost:80 (this is the so-called honeypot), which will, in turn, send an even audit message to the topic
+* See that an audit was written to the S3 bucket and also that email notification was sent.
 
 //TODO - tenantid/device name/type/group?
 
 * //TODO - fix timeout, updated policy to "Resource": "arn:aws:iot:eu-west-1:195361640859:*", and then the client worked. fix this.
 
 ### Job creation
-We are going to create a job for certificate rotation. we will provide the certificate as a pre-signed url in S3 which will be short lived.
+We are going to create a job for certificate rotation. we will provide the certificate as a pre-signed url in S3 which will be short-lived.
 
 * In S3, open you `iot-webinar-audits` bucket
   * Create a folder named `jobs` and optionally select "AES-256 (SSE-S3)" for encryption (this is beyond the scope of this webinar, but why not)
   * Open the `jobs` folder and create a sub-folder named `certs`, also with SSE-S3 encryption
 
-* //TODO - create a new cert, save it as `iot-webinar-cert2.perm.crt`, upload - use default, but in a real environment, give thought to the permissions given
+* //TODO - create a new cert, save it as `iot-webinar-cert2.perm.crt`, upload - use the defaults, but in a real environment, give thought to the permissions given
 * In the IoT dashboard, under "Manage", click on "Jobs", "Create Custom Job"
 * Set the job id to `webinar-job-rotate-cert`
 * Under "Select devices to update", either select your device (iot-webinar-device), or its group (iot-webinar-group). Using groups will allow us to apply this job to multiple devices.
-* Create the job document file. this needs to be uploaded to S3, alternatively, you can use things like aws cli, boto3, etc and avoid the need to create an S3 object.
+* Create the job document file. this needs to be uploaded to S3, alternatively, you can use things like aws cli, boto3, etc, and avoid the need to create an S3 object.
   * TODO - from repo folder - two files!, Create a local file named `job-rotate-cert.json`, paste this into it and save it locally.
   //TODO - explain the fields
   * Upload the files to our S3 bucket, under the `jobs` folder.
@@ -240,10 +240,10 @@ And delete the job with:
 `aws iot delete-job --job-id "status-job-01"`
 
 #### Create a cert rotation job:
-* First create the new secrets
+* First, create the new secrets
   * "Manage", "Things", select our device `iot-webinar-device`
   * "Security", "Create certificate"
-  * Download the certificate, private key and optionally the public key and save them into **ANOTHER** folder. usually this will be done on a different machine. make sure you don't save those into the project folder.
+  * Download the certificate, private key, and optionally the public key and save them into **ANOTHER** folder. usually, this will be done on a different machine. make sure you don't save those into the project folder.
     * Strictly speaking, the public key is not required on our end. but you can use it in the bonus section at the bottom.
   * Click "Activate"
   * Click "Attach Policy", select our policy `iot-webinar-policy` and click "Done"
@@ -263,7 +263,7 @@ And delete the job with:
 * Send another local-scan job to ensure that the connection is working
 * Deactivate the old certificate
   * "Manage", "Things", select `iot-webinar-device`, "Security"
-  * Click on the old cert (according to the name you noted at the begining)
+  * Click on the old cert (according to the name you noted at the beginning)
   * "Actions", "Deactivate"
 * Send another local-scan job to ensure that the connection is working
 * Deactivate the new cert
@@ -301,12 +301,12 @@ aws iot create-job \
 ### Bonus stuff 1 - augmenting data with tenant id
 You can augment the message that is passed for example to S3, with data from the topic path. 
 This can be useful, for example, if you include the tenant id in the topic, you can augment that data with its value. 
-Update you Rule SQL query to something similar to this:
+Update your Rule SQL query to something similar to this:
 `SELECT message as msg, topic(1) as tenant_id FROM ‘+/audit’`
 Now, look at the data that goes into the S3 bucket and see how it's changed.
 
 
-### Bonus stuff 2 - encrypting your certs with asymetric encryption
+### Bonus stuff 2 - encrypting your certs with asymmetric encryption
 Even though presigned urls are generally safe and can be set to expire after some time, still, anyone with the link can download the files that it points to.
 <BR>
 You can, if you want to secure your secrets better, you can use asymmetric encryption with the public key that is provided to you for the device cert.
@@ -320,7 +320,7 @@ public keys are public, so you don't have to worry about security here, just kee
 Below you can find sample python code for doing the encryption/decryption using the public/private keys, but keep in mind that this is sample code
 and as such should not be used in production as-is.
 
-Assymetric crypto sample:
+Asymmetric crypto sample:
 https://github.com/royby-cyberark/AWSIoTWebinar/blob/master/sample/sample-asymmetric-crypto.py
 
 

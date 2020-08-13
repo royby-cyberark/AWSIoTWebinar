@@ -3,22 +3,22 @@
 //TODO - disclaimer - pricing, demo, do not use for production, do your own research
 
 Below you can find a step-by-step for our AWS IoT Webinar. 
-A little remider first:
+A little reminder first:
 
 ## What Are We Going To Build?
-We will use AWS IoT to allow our services which are external to AWS, access to our cloud platform and allow them to communicate with our backend securly. We will see that AWS IoT doesnt have to do with IoT neccessarily, because what is an IoT device if not a machine running Linux? (or windows, or whatever for that matter)
+We will use AWS IoT to allow our services which are external to AWS, access to our cloud platform and allow them to communicate with our backend securely. We will see that AWS IoT doesn't have to do with IoT necessarily, because what is an IoT device if not a machine running Linux? (or windows, or whatever for that matter)
 
 ## The Scenario
-We have a honeypot service deployed in our network. this service means to lure attacker by which exposing seemingly lucrative endpoints that appeal to attackers. for example RDP, SSH Servers, various databases and more. since these aren't real services, usually we wouldn't expect anyone to try to communicate with them, and so upon detecting such a connection attempt the honeypot service must inform us of this incident.
+We have a honeypot service deployed in our network. this service means to lure attacker by which exposing seemingly lucrative endpoints that appeal to attackers. for example RDP, SSH Servers, various databases, and more. since these aren't real services, usually we wouldn't expect anyone to try to communicate with them, and so upon detecting such a connection attempt the honeypot service must inform us of this incident.
 
 In our cloud platform, we run an audit service, and we would like the honeypot to report to it directly for each suspicious incident. To do this we much put in place secure authentication and authorization means, so the honeypot service can communicate with the backend securely.
 
-We are going to use AWS IoT for this, since everything it provides can easily be used with any scenario and not necessarily with actual IoT devices.
+We are going to use AWS IoT for this since everything it provides can easily be used with any scenario and not necessarily with actual IoT devices.
 
 But before we dive in, let's do a quick overview of the prominent services that AWS IoT has to offer.
 
 **A Note Infrastructure as code**
-Being focused on the AWS IoT, I will go through the steps using the AWS console. in a real environment, you will, of course, do thing differently. 
+Being focused on the AWS IoT, I will go through the steps using the AWS console. in a real environment, you will, of course, do things differently. 
 For example, you will deploy all your resources with CDK (or another similar framework), keeping the producing code in source control. 
 and have your infrastructure "as code".
 
@@ -29,36 +29,36 @@ For full code examples, see the [SDK page](https://github.com/royby-cyberark/aws
 
 **Prerequisites:**
 * git
-* python 3.7+
+* Python 3.7+
 
 ### Get the code
 * `git clone git@github.com:royby-cyberark/AWSIoTWebinar.git`
 
 ### Device creation
 * In the AWS Console, open the "AWS IoT Core" service
-* Under "Manage", "Things", clicn on "Create"
+* Under "Manage", "Things", click on "Create"
 * Click "Create a single thing"
 * Name your device `iot-webinar-device`
-* Optional: Click on "Create Type" and name it `iot-webinar-type` - this will create a device type which we can use later to group devices by type and act upon this type. //TODO add here - what are we doing with it
+* Optional: Click on "Create Type" and name it `iot-webinar-type` - this will create a device type that we can use later to group devices by type and act upon this type. //TODO add here - what are we doing with it
 * Under "Add this thing to a group", click "Create group" and name the group `iot-webinar-group`, click "Create", this will be used later during the jobs step
 * Make sure your device group is set to the new group, click "Next" 
 * Select "One-click certificate creation"
-* On the next page we are presented with a link to download the device certificate 
+* On the next page, we are presented with a link to download the device certificate 
 * Download the certificate, private key and optionally the public key and save them into the `AWSIoTWebinar/source` folder in the git repo folder you cloned
-  * Save certificate as `certificate.pem.crt` 
+  * Save the certificate as `certificate.pem.crt` 
   * Save the private key as `private.pem.key`
   * Save the Root CA as `AmazonRootCA1.pem`
   * Strictly speaking, the public key is not required on our end. but you can use it in the bonus section at the bottom.
 * You also need AWS's Root ca which you can find [here](https://docs.aws.amazon.com/iot/latest/developerguide/server-authentication.html?icmpid=docs_iot_console#server-authentication-certs)
-* We are going to download the "RSA 2048 bit" key, right click on the link and save to file locally
+* We are going to download the "RSA 2048 bit" key, right-click on the link and save to file locally
 * Click on "Activate", this will activate the certificate that you created and associated with the device.
 * Click on "Attach policy" and **DO NOT** pick a policy (we will create a policy later)
 * "Register thing"
 * Under "Manage", "Things", open your device and review it
   * Details: arn, thing type - note your device arn for later
-  * Security: review the certificate, its arn, policies and things, **note its name for later use**
+  * Security: review the certificate, its arn, policies, and things **note its name for later use**
   * Groups
-* Click on "Edit" in the thing page and add an attribute, which key is 'Owner' and value is abcde-12345. we will later use this is the policy that will restric devices to post to their teant topic
+* Click on "Edit" in the thing page and add an attribute, which key is 'Owner', and value is abcde-12345. we will later use this is the policy that will restrict devices to post to their tenant topic
 
 ### Rule creation
 * Create an S3 bucket
@@ -67,7 +67,7 @@ For full code examples, see the [SDK page](https://github.com/royby-cyberark/aws
 * Under "Act", "Rules", click "Create"
 * Name it `IotWebinarRule` (only alphanumeric and underscore are allowed)
 * Set the SQL query to `SELECT * FROM 'abcde-12345/+/audit'` (Use the default SQL version)  //TODO - fix this to use thing-name???
-  This select the entire message from the topic that start with the tenant-id 'abcde-12345', then any path then 'audit'
+  This selects the entire message from the topic that starts with the tenant-id 'abcde-12345', then any path then 'audit'
   This, along with the policy restrictions will help us achieve tenant isolation.
   see [this](https://docs.aws.amazon.com/iot/latest/developerguide/iot-sql-from.html) for more info about FROM clause wildcards 
 * Create S3 store action
@@ -83,7 +83,7 @@ For full code examples, see the [SDK page](https://github.com/royby-cyberark/aws
   * Click on "Add Action" to finalize the creation
   * Subscribe to SNS notifications
     * Open the SNS service
-    * Subscrption, Create subsription
+    * Subscription, Create Subscription
     * Under "Topic ARN", use auto-complete to select your SNS webinar topic arn
     * Select "Email" for "Protocol"
     * For "Endpoint", enter your email and click "Create Subscription"

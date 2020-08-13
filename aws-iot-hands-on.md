@@ -9,7 +9,7 @@ A little reminder first:
 We will use AWS IoT to allow our services which are external to AWS, access to our cloud platform and allow them to communicate with our backend securely. We will see that AWS IoT doesn't have to do with IoT necessarily, because what is an IoT device if not a machine running Linux? (or windows, or whatever for that matter)
 
 ## The Scenario
-We have a honeypot service deployed in our network. this service is intended to lure attacker by exposing seemingly lucrative endpoints that appeal to attackers. for example RDP, SSH Servers, various databases, and more. since these aren't real services, usually we wouldn't expect anyone to try to communicate with them, and so upon detecting such a connection attempt the honeypot service must inform us of this incident.
+We have a honeypot service deployed in our network. this service is intended to lure attackers by exposing seemingly lucrative endpoints that appeal to attackers. for example RDP, SSH Servers, various databases, and more. since these aren't real services, usually we wouldn't expect anyone to try to communicate with them, and so upon detecting such a connection attempt the honeypot service must inform us of this incident.
 
 In our cloud platform, we run an audit service, and we would like the honeypot to report to it directly for each suspicious incident. To do this we much put in place secure authentication and authorization means, so the honeypot service can communicate with the backend securely.
 

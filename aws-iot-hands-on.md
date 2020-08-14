@@ -195,7 +195,6 @@ https://docs.aws.amazon.com/iot/latest/developerguide/pub-sub-policy.html
 * See that an audit was written to the S3 bucket and also that email notification was sent
 
 ----------------------------
-----------------------------
 
 ### Job creation
 We are going to create a job for certificate rotation. we will provide the certificate as a pre-signed url in S3 which will be short-lived.
@@ -237,6 +236,18 @@ We are going to create a job for certificate rotation. we will provide the certi
 }
 ```
 
+This policy will allow us to:
+1. Connect as before
+2. Public and receive messages on the audit topic (like before) - isn't used in the jobs example
+3. Public and receive messages on the reserved topic for jobs topic.
+4. Subscribe to the reserved topic for jobs topic filter.
+
+Notes:
+* The topic for jobs is reserved by aws and it has the following format: $aws/things/thingName/jobs/get. for more information see the [docs](https://docs.aws.amazon.com/iot/latest/developerguide/reserved-topics.html)
+* To be able to work with jobs, you must subscribe to the topicfilter. the reason for this is that being pub-sub, a client can publish to one topic (at a time), but subscribe to multiple topics. this is done by using the wildcard supporting topicfilter for subscribing and the non-wildcard-supporting topic for publishing and receiving. see the [doc](https://docs.aws.amazon.com/iot/latest/developerguide/topics.html#topicfilters).
+
+--------------------
+--------------------
 
 * In S3, open your bucket
   * Create a folder named `jobs` and optionally select "AES-256 (SSE-S3)" for encryption (this is beyond the scope of this webinar, but why not)

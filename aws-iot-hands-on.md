@@ -318,11 +318,20 @@ And delete the job with:
   * If this is the first time click "Create role" and name it `iot-webinar-signedurls-role`, review this role and policy to understand what is done
   * If you already created the role, simply select it
 * Click on "Next", "Create"
+* See that you got the job and rotated the files locally (you can look at the console output and the file update time)
+* The client has now reconnected with the new certificate and the old certificate can be revoked. 
 
---------------------
---------------------
+**NOTE:** When testing it is better to deactivate the certs so you can easily reactivate them when needed and not have to get them to the device again.
 
-* See that you got the job and rotated the files locally
+------------------
+------------------
+
+#### Testing the
+
+**BUT** if you try to revoke the current certificate, you will 
+
+(actually, when testing it is better to deactive the certificate so that you can reactivate it easily without the need to actually get the new certificate to the client)
+
 * Send another local-scan job to ensure that the connection is working
 //TODO - explain about revoked cert
 * Deactivate the old certificate

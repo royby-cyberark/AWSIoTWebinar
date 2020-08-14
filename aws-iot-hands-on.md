@@ -121,6 +121,8 @@ For full code examples, see the [SDK page](https://github.com/royby-cyberark/aws
 * To create a policy open "Secure", "Policies", "Create", name it `iot-webinar-policy`
 * Click on "Advanced mode" and paste the following policy document:
   
+**IMPORTANT!** Replace the region and account placeholders with your values for region and account number
+  
 ```
 {
   "Version": "2012-10-17",
@@ -130,20 +132,20 @@ For full code examples, see the [SDK page](https://github.com/royby-cyberark/aws
       "Action": [
         "iot:Connect"
       ],
-      "Resource": "arn:aws:iot:eu-west-1:195361640859:client/${iot:Connection.Thing.ThingName}"
+      "Resource": "arn:aws:iot:<region>:<account>:client/${iot:Connection.Thing.ThingName}"
     },
     {
       "Effect": "Allow",
       "Action": [
         "iot:Publish"
       ],
-      "Resource": "arn:aws:iot:eu-west-1:195361640859:topic/${iot:Connection.Thing.Attributes[Owner]}/${iot:Connection.Thing.ThingName}/audit"
+      "Resource": "arn:aws:iot:<region>:<account>:topic/${iot:Connection.Thing.Attributes[Owner]}/${iot:Connection.Thing.ThingName}/audit"
     }
   ]
 }
 ```
 
-* Go to thing, security, certificate, attach policy
+* Go to "Thing", "Security", "Certificate", "Attach policy"
 
 This policy allows a device (client) of the specified arn to connect. It requires the arn to include the specific thing name.
 Also, it allows to publish only to a topic that starts with the device "Owner" attribute value followed by the device thing name, followed by "audit".
@@ -197,10 +199,50 @@ https://docs.aws.amazon.com/iot/latest/developerguide/pub-sub-policy.html
 
 ### Job creation
 We are going to create a job for certificate rotation. we will provide the certificate as a pre-signed url in S3 which will be short-lived.
+* First let's update the policy so we can subscribe to the jobs topics, public and read from them
+* "Secure", "Policies", open `iot-webinar-policy`, "Edit policy document"
+* Paste the following policy document:
+
+**IMPORTANT!** Replace the region and account placeholders with your values for region and account number
+
+```{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "iot:Connect"
+      ],
+      "Resource": "arn:aws:iot:<region>:<account>:client/${iot:Connection.Thing.ThingName}"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "iot:Publish",
+        "iot:Receive"
+      ],
+      "Resource": [
+        "arn:aws:iot:<region>:<account>:topic/${iot:Connection.Thing.Attributes[Owner]}/${iot:Connection.Thing.ThingName}/audit",
+        "arn:aws:iot:<region>:<account>:topic/$aws/things/${iot:Connection.Thing.ThingName}/jobs/*"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "iot:Subscribe"
+      ],
+      "Resource": "arn:aws:iot:<region>:<account>:topicfilter/$aws/things/${iot:Connection.Thing.ThingName}/jobs/*"
+    }
+  ]
+}
+```
+
 
 * In S3, open your bucket
   * Create a folder named `jobs` and optionally select "AES-256 (SSE-S3)" for encryption (this is beyond the scope of this webinar, but why not)
   * Open the `jobs` folder and create a sub-folder named `certs`, also with SSE-S3 encryption
+
+We will use these folders to keep the new certificate and job files respectively
 
 * In the IoT dashboard, under "Manage", click on "Jobs", "Create Custom Job"
 * Set the job id to `webinar-job-rotate-cert`
@@ -214,39 +256,6 @@ We are going to create a job for certificate rotation. we will provide the certi
 * Select "I want to pre-sign my urls..."
 * Click "Create role" and name it `iot-webinar-signedurls-role`, review this role and policy to understand what was done
 * Click "Next", "Create"
-* Replace the thing policy with the following (//TODO - step by step):
-
-```{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": [
-        "iot:Connect"
-      ],
-      "Resource": "arn:aws:iot:eu-west-1:195361640859:client/${iot:Connection.Thing.ThingName}"
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-        "iot:Publish",
-        "iot:Receive"
-      ],
-      "Resource": [
-        "arn:aws:iot:eu-west-1:195361640859:topic/${iot:Connection.Thing.Attributes[Owner]}/${iot:Connection.Thing.ThingName}/audit",
-        "arn:aws:iot:eu-west-1:195361640859:topic/$aws/things/${iot:Connection.Thing.ThingName}/jobs/*"
-      ]
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-        "iot:Subscribe"
-      ],
-      "Resource": "arn:aws:iot:eu-west-1:195361640859:topicfilter/$aws/things/${iot:Connection.Thing.ThingName}/jobs/*"
-    }
-  ]
-}
-```
 
 * Command: `python jobs-handler.py -e <your iot endpoint> -r AmazonRootCA1.pem -c certificate.pem.crt -k private.pem.key -id iot-webinar-device -n iot-webinar-device`
   * `-n` is the thing name that will subscribe to the jobs topic

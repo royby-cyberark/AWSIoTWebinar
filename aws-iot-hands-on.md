@@ -202,7 +202,6 @@ We are going to create a job for certificate rotation. we will provide the certi
   * Create a folder named `jobs` and optionally select "AES-256 (SSE-S3)" for encryption (this is beyond the scope of this webinar, but why not)
   * Open the `jobs` folder and create a sub-folder named `certs`, also with SSE-S3 encryption
 
-* //TODO - create a new cert, save it as `iot-webinar-cert2.perm.crt`, upload - use the defaults, but in a real environment, give thought to the permissions given
 * In the IoT dashboard, under "Manage", click on "Jobs", "Create Custom Job"
 * Set the job id to `webinar-job-rotate-cert`
 * Under "Select devices to update", either select your device (iot-webinar-device), or its group (iot-webinar-group). Using groups will allow us to apply this job to multiple devices.

@@ -7,6 +7,7 @@ you are responsible for the costs and the resources you create and to clean up a
 A Cleanup section is provided at the bottom, but it many contain mistakes, os make sure you clean up what you did after it is no longer needed and bear in mind the costs
 
 🔥🔥 **DISCLAIMER 2:** 🔥🔥
+
 As webinars go, some of the settings here were simplified. when it come to production systems and code, you are responsible to do your own research and security review all parts including but not limited to IAM policies, IoT policies, certificates, S3 bucket settings and more.
 Consider this a webinar grade material and treat it as such.
 

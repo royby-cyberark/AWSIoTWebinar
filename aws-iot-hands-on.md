@@ -303,27 +303,28 @@ And delete the job with:
   * Download the certificate, private key, and optionally the public key and save them into **ANOTHER** folder. In a real environment, this will usually not be done on a different machine. make sure you don't save those into the project folder.
     * Strictly speaking, the public key is not required on our end. but you can use it in the bonus section at the bottom.
   * Click "Activate"
-
---------------------
---------------------
-
   * Click "Attach Policy", select our policy `iot-webinar-policy` and click "Done"
   * Open the thing, security page and **note the new certificate name for later**
 * Upload the new certificate and private key into our S3 bucket under the `certs` folder
   * Upload the certificate as `certificate.pem.crt` 
   * Upload the private key as `private.pem.key`
 * "Manage", "Jobs", "Create", "Create custom job"
-* Job id = `webinar-rotate-cert-01`
+* Set the job id to `webinar-rotate-cert-01`
 * Under devices to update, select your device (you can also select the device group to update all group members)
 * Under "Add a job file", select `job-rotate-cert.json` from our S3 bucket
-* Under "Pre-sign resource URLs", select "I want to pre-sign my URLs and have configured my job file."
+* Under "Pre-sign resource URLs", select "I want to pre-sign my URLs and have configured my job file"
   * Take a look at `job-rotate-cert.json`, this will have the IoT service replace the presigned url placeholders with real values.
 * When using presigned urls, you **must** use a role that will allow you access to the bucket
-  * If this is the first time click "Create role" and name it `iot-webinar-signedurls-role`, review this role and policy to understand what was done
+  * If this is the first time click "Create role" and name it `iot-webinar-signedurls-role`, review this role and policy to understand what is done
   * If you already created the role, simply select it
 * Click on "Next", "Create"
+
+--------------------
+--------------------
+
 * See that you got the job and rotated the files locally
 * Send another local-scan job to ensure that the connection is working
+//TODO - explain about revoked cert
 * Deactivate the old certificate
   * "Manage", "Things", select `iot-webinar-device`, "Security"
   * Click on the old cert (according to the name you noted at the beginning)

@@ -109,7 +109,7 @@ For full code examples, see the [SDK page](https://github.com/royby-cyberark/aws
 * Review your new roles
 * "Create Rule"
 
-Note: IoT rules are soft limited to 1000 per account, which means you can request an increase and expect to get at least 10x that, but this is specific to the service and the use case.
+**Note:** IoT rules are soft limited to 1000 per account, which means you can request an increase and expect to get at least 10x that, but this is specific to the service and the use case.
 
 ### IoT Policy Creation
 * To create a policy open "Secure", "Policies", "Create", name it `iot-webinar-policy`

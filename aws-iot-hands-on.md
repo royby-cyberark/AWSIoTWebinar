@@ -140,11 +140,12 @@ Note: IoT rules are soft limited to 1000 per account, which means you can reques
 This policy allows a device (client) of the specified arn to connect. It requires the arn to include the specific thing name.
 Also, it allows to publish only to a topic that starts with the device "Owner" attribute value followed by the device thing name, followed by "audit".
 This allows us to reuse this policy for other devices. but you can create explicit policies if you choose to do so.
-IoT policies are not limited, for service quotas, see the [docs] (https://docs.aws.amazon.com/general/latest/gr/iot-core.html#limits_iot)
+IoT policies are not limited, for service quotas, see the [docs](https://docs.aws.amazon.com/general/latest/gr/iot-core.html#limits_iot)
 
 * Go to thing, security, certificate, attach policy
 
 To learn more about policy variables and some IoT policy examples, see:
+
 https://docs.aws.amazon.com/iot/latest/developerguide/thing-policy-variables.html
 https://docs.aws.amazon.com/iot/latest/developerguide/example-iot-policies-elements.html
 https://docs.aws.amazon.com/iot/latest/developerguide/pub-sub-policy.html

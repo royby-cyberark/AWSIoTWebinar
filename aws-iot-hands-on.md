@@ -246,14 +246,20 @@ Notes:
 * The topic for jobs is reserved by aws and it has the following format: $aws/things/thingName/jobs/get. for more information see the [docs](https://docs.aws.amazon.com/iot/latest/developerguide/reserved-topics.html)
 * To be able to work with jobs, you must subscribe to the topicfilter. the reason for this is that being pub-sub, a client can publish to one topic (at a time), but subscribe to multiple topics. this is done by using the wildcard supporting topicfilter for subscribing and the non-wildcard-supporting topic for publishing and receiving. see the [doc](https://docs.aws.amazon.com/iot/latest/developerguide/topics.html#topicfilters).
 
---------------------
---------------------
-
 * In S3, open your bucket
   * Create a folder named `jobs` and optionally select "AES-256 (SSE-S3)" for encryption (this is beyond the scope of this webinar, but why not)
   * Open the `jobs` folder and create a sub-folder named `certs`, also with SSE-S3 encryption
 
 We will use these folders to keep the new certificate and job files respectively
+
+* Review and upload job files
+  * Jobs are described in json files. they can be either provided from an S3 bucket if you're using the console, local file for the cli or string for the sdk
+  * Upload `job-rotate-cert.json` and `job-local-scan.json` to the S3 bucket under `jobs`
+  * You can put anything you want there and have the device receive it. 
+  * If you would like to serve presigned urls for S3 files, you need to use the presigned placeholders in the following format `${aws:iot:s3-presigned-url:<s3 url>`, see example in `job-rotate-cert.json`
+  
+--------------------
+--------------------
 
 * In the IoT dashboard, under "Manage", click on "Jobs", "Create Custom Job"
 * Set the job id to `webinar-job-rotate-cert`

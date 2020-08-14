@@ -31,12 +31,12 @@ We are going to use AWS IoT for this since everything it provides can easily be 
 But before we dive in, let's do a quick overview of the prominent services that AWS IoT has to offer.
 
 
->**A Note on Infrastructure as code:**
+**A Note on Infrastructure as code:**
 
->Being focused on the AWS IoT, I will go through the steps using the AWS console. in a real environment you will, of course, do things differently. 
->For example, you will deploy all your resources with CDK (or another similar framework), keeping the producing code in source control. 
->and have your infrastructure "as code".
->I recommend watching our revious webinar on CDK: //TODO link
+Being focused on the AWS IoT, I will go through the steps using the AWS console. in a real environment you will, of course, do things differently. 
+For example, you will deploy all your resources with CDK (or another similar framework), keeping the producing code in source control. 
+and have your infrastructure "as code".
+I recommend watching our revious webinar on CDK: //TODO link
 
 For full code examples, see the [SDK page](https://github.com/royby-cyberark/aws-iot-device-sdk-python)
 
@@ -151,8 +151,8 @@ This policy allows a device (client) of the specified arn to connect. It require
 Also, it allows to publish only to a topic that starts with the device "Owner" attribute value followed by the device thing name, followed by "audit".
 This allows us to reuse this policy for other devices. but you can create explicit policies if you choose to do so.
 
->**NOTE:** 
->IoT policies are not limited, for service quotas, see the [docs](https://docs.aws.amazon.com/general/latest/gr/iot-core.html#limits_iot)
+**NOTE:** 
+IoT policies are not limited, for service quotas, see the [docs](https://docs.aws.amazon.com/general/latest/gr/iot-core.html#limits_iot)
 
 To learn more about policy variables and some IoT policy examples, see:
 
@@ -247,9 +247,9 @@ This policy will allow us to:
 3. Public and receive messages on the reserved topic for jobs topic.
 4. Subscribe to the reserved topic for jobs topic filter.
 
->Notes:
->* The topic for jobs is reserved by aws and it has the following format: $aws/things/thingName/jobs/get. for more information see the [docs](https://docs.aws.amazon.com/iot/latest/developerguide/reserved-topics.html)
->* To be able to work with jobs, you must subscribe to the topicfilter. the reason for this is that being pub-sub, a client can publish to one topic (at a time), >but subscribe to multiple topics. this is done by using the wildcard supporting topicfilter for subscribing and the non-wildcard-supporting topic for publishing >and receiving. see the [doc](https://docs.aws.amazon.com/iot/latest/developerguide/topics.html#topicfilters).
+Notes:
+* The topic for jobs is reserved by aws and it has the following format: $aws/things/thingName/jobs/get. for more information see the [docs](https://docs.aws.amazon.com/iot/latest/developerguide/reserved-topics.html)
+* To be able to work with jobs, you must subscribe to the topicfilter. the reason for this is that being pub-sub, a client can publish to one topic (at a time), but subscribe to multiple topics. this is done by using the wildcard supporting topicfilter for subscribing and the non-wildcard-supporting topic for publishing and receiving. see the [doc](https://docs.aws.amazon.com/iot/latest/developerguide/topics.html#topicfilters).
 
 #### S3 Bucket set up
 
@@ -322,38 +322,36 @@ And delete the job with:
 * See that you got the job and rotated the files locally (you can look at the console output and the file update time)
 * The client has now reconnected with the new certificate and the old certificate can be revoked. 
 
->**NOTE:** 
->When testing it is better to deactivate the certs so you can easily reactivate them when needed and not have to get them to the device again.
-
-------------------
-------------------
+**NOTE:** 
+When testing it is better to deactivate the certs so you can easily reactivate them when needed and not have to get them to the device again.
 
 #### Testing the rotation 
 
 **Note about certificate revocation:**
 Due to the distributed architecture of the IoT service, the devices that are connected are not disconnected immediately when a certificate is revoked. 
+if there are any changes to the certificate it will take a few minutes for them to be propagated across all the different nodes of the service and it will eventually reach the node where your device is currently connected and you should get a connection error.
+This is documented in the UpdateCertificate API [docs](https://docs.aws.amazon.com/iot/latest/apireference/API_UpdateCertificate.html).
+>“Within a few minutes of updating a certificate from the ACTIVE state to any other state, AWS IoT disconnects all devices that used that certificate to connect. >Devices cannot use a certificate that is not in the ACTIVE state to reconnect.”
 
-> take a few minutes for them to be propagated across all the different nodes of the service and it will eventually reach the node where your device is currently connected and you should get a connection error.
+//TODO - test this, test policy update
 
+Since we don't want to wait "a few minutes" between each test, the easiest way to test this is simply restarting our program. 
 
-The easiest way is to deactivate the old certificate, restart the script, send a simple job to it and make sure that it works. 
-Then, do the same with the new certificate an
+**NOTE:** Since we are testing, I will deactivate the certificates instead of revoking them. this will have the exact same effect, but allow me to reactivate them again later without having to create another certificate and copy it to the device. 
+In a real-world situation, you would revoke them. 
 
-**BUT** if you try to revoke the current certificate, you will 
+* Revoke the old certificate
+  * "Manage", "Things", `iot-webinar-device`, "Security"
+  * Click on the old certificate, use the name you noted before when creating it
+  * Under "Actions", click "Deactivate" (or "Revoke" if you sure it is no longer needed)
+* Terminal and run our jobs client
+* Send a simple "local-scan-job" like before (See command line below)
+* Verify that the job was received by the client
+* Deactivate (or revoke) the new certificate
+* Terminal and run our jobs client
+* You are not able to connect this time
 
-(actually, when testing it is better to deactive the certificate so that you can reactivate it easily without the need to actually get the new certificate to the client)
-
-* Send another local-scan job to ensure that the connection is working
-//TODO - explain about revoked cert
-* Deactivate the old certificate
-  * "Manage", "Things", select `iot-webinar-device`, "Security"
-  * Click on the old cert (according to the name you noted at the beginning)
-  * "Actions", "Deactivate"
-* Send another local-scan job to ensure that the connection is working
-* Deactivate the new cert
-* TODO - explain about revoking certs and connected devices - https://forums.aws.amazon.com/thread.jspa?threadID=225768
-
-* You can always create jobs with the cli:
+* Creating a local-scan job command:
 ```
 aws iot create-job \
               --job-id "local-scan-job-01" \
@@ -365,7 +363,7 @@ aws iot create-job \
 And delete the job with:
 `aws iot delete-job --job-id "local-scan-job-01"`
 
-* Create a cert rotation task from the cli:
+* Create a cert rotation task command:
 ```
 aws iot create-job \
               --job-id "rotate-job-01" \
@@ -376,10 +374,10 @@ aws iot create-job \
               --presigned-url-config roleArn=<role_arn>,expiresInSec=300
 ```
 
-* In a real process, you would wait for the jobs to be completed and then remove the old certificate
-  * You can see the job status by calling //TODO
+* In a real-world scenario, you would wait for the jobs to be completed and then remove the old certificate
+  * You can see the job status by using the SDK or CLI for describing the job execution (e.g. `aws iot describe-job-execution`)
 
-* For a full code example, see the [SDK code sample](https://github.com/royby-cyberark/aws-iot-device-sdk-python/blob/master/samples/jobs/jobsSample.py)
+* For a full example, see the [SDK code sample](https://github.com/royby-cyberark/aws-iot-device-sdk-python/blob/master/samples/jobs/jobsSample.py)
 
 Jobs have a full life-cycle that we didn't go into, like job status, cancellation, rollout control, and more.
 For more info see, as always, the [docs](https://docs.aws.amazon.com/iot/latest/developerguide/iot-jobs.html)
@@ -396,7 +394,7 @@ Now, look at the data that goes into the S3 bucket and see how it's changed.
 ### Bonus stuff 2 - encrypting your certs with asymmetric encryption
 Even though presigned urls are generally safe and can be set to expire after some time, still, anyone with the link can download the files that it points to.
 <BR>
-You can, if you want to secure your secrets better, use asymmetric encryption with the public key that is provided to you for the device cert.
+You can, if you want to secure your secrets further, use asymmetric encryption with the public key that is provided to you for the device cert.
 
 * When creating the certificate, make sure you get the public key and store it somewhere that is accessible to the process that does the rotation. 
 public keys are no secret, so you don't have to worry about it too much, just keep it accessible by thing name (maybe a DynamoDB table for key-value)

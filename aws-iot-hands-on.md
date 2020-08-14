@@ -196,7 +196,7 @@ https://docs.aws.amazon.com/iot/latest/developerguide/pub-sub-policy.html
 
 ----------------------------
 
-### Job creation
+#### Jobs
 We are going to create a job for certificate rotation. we will provide the certificate as a pre-signed url in S3 which will be short-lived.
 * First let's update the policy so we can subscribe to the jobs topics, public and read from them
 * "Secure", "Policies", open `iot-webinar-policy`, "Edit policy document"

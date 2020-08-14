@@ -37,19 +37,18 @@ For full code examples, see the [SDK page](https://github.com/royby-cyberark/aws
 ### Get the code
 * `git clone git@github.com:royby-cyberark/AWSIoTWebinar.git`
 
--------------------------
 
 ### Device creation
 * In the AWS Console, open the "AWS IoT Core" service
 * Under "Manage", "Things", click on "Create"
 * Click "Create a single thing"
 * Name your device `iot-webinar-device`
-* Optional: Click on "Create Type" and name it `iot-webinar-type` - this will create a device type that we can use later to group devices by type and act upon this type. //TODO add here - what are we doing with it
+* Optional: Click on "Create Type" and name it `iot-webinar-type` - this will create a device type that we can use later to group devices by type and act upon this type. You can use thing types to set properties that are shared for this type, and also use it as policy variables
 * Under "Add this thing to a group", click "Create group" and name the group `iot-webinar-group`, click "Create", this will be used later during the jobs step
 * Make sure your device group is set to the new group, click "Next" 
 * Select "One-click certificate creation"
 * On the next page, we are presented with a link to download the device certificate 
-* Download the certificate, private key and optionally the public key and save them into the `AWSIoTWebinar/source` folder in the git repo folder you cloned
+* Download the certificate, private key and optionally the public key and save them into the `AWSIoTWebinar/source` folder in the git repo folder you cloned, under the `source` folder
   * Save the certificate as `certificate.pem.crt` 
   * Save the private key as `private.pem.key`
   * Save the Root CA as `AmazonRootCA1.pem`
@@ -58,27 +57,29 @@ For full code examples, see the [SDK page](https://github.com/royby-cyberark/aws
 * We are going to download the "RSA 2048 bit" key, right-click on the link and save to file locally
 * Click on "Activate", this will activate the certificate that you created and associated with the device.
 * Click on "Attach policy" and **DO NOT** pick a policy (we will create a policy later)
-* "Register thing"
+* Click "Register thing"
 * Under "Manage", "Things", open your device and review it
   * Details: arn, thing type - note your device arn for later
-  * Security: review the certificate, its arn, policies, and things **note its name for later use**
+  * Security: review the certificate, its arn, policies, and things **note the certificate name for later use**
   * Groups
-* Click on "Edit" in the thing page and add an attribute, which key is 'Owner', and value is abcde-12345. we will later use this is the policy that will restrict devices to post to their tenant topic
+* Click on "Edit" in the thing page and add an attribute, which key is 'Owner', and value is `abcde-12345`. we will later use this is the policy that will restrict devices to post to their tenant topic
 
 ### Rule creation
 * Create an S3 bucket
-  * Open S3, create bucket, name it `iot-webinar-audits`
+  * Open S3, create bucket, name it `iot-webinar-audits-<random stuff>` (S3 bucket names are globally unique)
   * Use all defaults and create bucket
 * Under "Act", "Rules", click "Create"
 * Name it `IotWebinarRule` (only alphanumeric and underscore are allowed)
-* Set the SQL query to `SELECT * FROM 'abcde-12345/+/audit'` (Use the default SQL version)  //TODO - fix this to use thing-name???
+* Set the SQL query to `SELECT * FROM 'abcde-12345/+/audit'` (Use the default SQL version) 
   This selects the entire message from the topic that starts with the tenant-id 'abcde-12345', then any path then 'audit'
   This, along with the policy restrictions will help us achieve tenant isolation.
   see [this](https://docs.aws.amazon.com/iot/latest/developerguide/iot-sql-from.html) for more info about FROM clause wildcards 
+  * You can also use thing name, type and other properties as policy variables, see the [docs](https://docs.aws.amazon.com/iot/latest/developerguide/iot-policy-variables.html)
+  --------------------------------
 * Create S3 store action
   * Click on "Add Action"
   * Select S3
-  * Select the 'iot-webinar-audits' bucket and set the key to `${topic()}/${timestamp()}` see [this](https://docs.aws.amazon.com/iot/latest/developerguide/iot-substitution-templates.html) for details on substitution template
+  * Select the S3 bucket and set the key to `${topic()}/${timestamp()}` see [this](https://docs.aws.amazon.com/iot/latest/developerguide/iot-substitution-templates.html) for details on substitution template
   * To create a role that will allow iot to access our S3 bucket: "Create Role" and name it `iot-webinar-s3-role` 
   * Click on "Add Action" to finalize the creation
 * Create an SNS push notification action
@@ -172,7 +173,7 @@ actually use this (TODO FIX THIS):
 ### Job creation
 We are going to create a job for certificate rotation. we will provide the certificate as a pre-signed url in S3 which will be short-lived.
 
-* In S3, open you `iot-webinar-audits` bucket
+* In S3, open the bucket
   * Create a folder named `jobs` and optionally select "AES-256 (SSE-S3)" for encryption (this is beyond the scope of this webinar, but why not)
   * Open the `jobs` folder and create a sub-folder named `certs`, also with SSE-S3 encryption
 

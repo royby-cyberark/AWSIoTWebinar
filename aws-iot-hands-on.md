@@ -31,13 +31,12 @@ We are going to use AWS IoT for this since everything it provides can easily be 
 But before we dive in, let's do a quick overview of the prominent services that AWS IoT has to offer.
 
 
-**A Note on Infrastructure as code:**
+>**A Note on Infrastructure as code:**
 
-Being focused on the AWS IoT, I will go through the steps using the AWS console. in a real environment you will, of course, do things differently. 
-For example, you will deploy all your resources with CDK (or another similar framework), keeping the producing code in source control. 
-and have your infrastructure "as code".
-
-I recommend watching our revious webinar on CDK: //TODO link
+>Being focused on the AWS IoT, I will go through the steps using the AWS console. in a real environment you will, of course, do things differently. 
+>For example, you will deploy all your resources with CDK (or another similar framework), keeping the producing code in source control. 
+>and have your infrastructure "as code".
+>I recommend watching our revious webinar on CDK: //TODO link
 
 For full code examples, see the [SDK page](https://github.com/royby-cyberark/aws-iot-device-sdk-python)
 
@@ -113,7 +112,8 @@ For full code examples, see the [SDK page](https://github.com/royby-cyberark/aws
 * Review your new roles
 * "Create Rule"
 
-**Note:** IoT rules are soft limited to 1000 per account, which means you can request an increase and expect to get at least 10x that, but this is specific to the service and the use case.
+>**Note:** 
+>IoT rules are soft limited to 1000 per account, which means you can request an increase and expect to get at least 10x that, but this is specific to the service >and the use case.
 
 ----------------------------
 
@@ -151,7 +151,8 @@ This policy allows a device (client) of the specified arn to connect. It require
 Also, it allows to publish only to a topic that starts with the device "Owner" attribute value followed by the device thing name, followed by "audit".
 This allows us to reuse this policy for other devices. but you can create explicit policies if you choose to do so.
 
-**NOTE:** IoT policies are not limited, for service quotas, see the [docs](https://docs.aws.amazon.com/general/latest/gr/iot-core.html#limits_iot)
+>**NOTE:** 
+>IoT policies are not limited, for service quotas, see the [docs](https://docs.aws.amazon.com/general/latest/gr/iot-core.html#limits_iot)
 
 To learn more about policy variables and some IoT policy examples, see:
 
@@ -246,9 +247,9 @@ This policy will allow us to:
 3. Public and receive messages on the reserved topic for jobs topic.
 4. Subscribe to the reserved topic for jobs topic filter.
 
-Notes:
-* The topic for jobs is reserved by aws and it has the following format: $aws/things/thingName/jobs/get. for more information see the [docs](https://docs.aws.amazon.com/iot/latest/developerguide/reserved-topics.html)
-* To be able to work with jobs, you must subscribe to the topicfilter. the reason for this is that being pub-sub, a client can publish to one topic (at a time), but subscribe to multiple topics. this is done by using the wildcard supporting topicfilter for subscribing and the non-wildcard-supporting topic for publishing and receiving. see the [doc](https://docs.aws.amazon.com/iot/latest/developerguide/topics.html#topicfilters).
+>Notes:
+>* The topic for jobs is reserved by aws and it has the following format: $aws/things/thingName/jobs/get. for more information see the [docs](https://docs.aws.amazon.com/iot/latest/developerguide/reserved-topics.html)
+>* To be able to work with jobs, you must subscribe to the topicfilter. the reason for this is that being pub-sub, a client can publish to one topic (at a time), >but subscribe to multiple topics. this is done by using the wildcard supporting topicfilter for subscribing and the non-wildcard-supporting topic for publishing >and receiving. see the [doc](https://docs.aws.amazon.com/iot/latest/developerguide/topics.html#topicfilters).
 
 #### S3 Bucket set up
 
@@ -321,7 +322,8 @@ And delete the job with:
 * See that you got the job and rotated the files locally (you can look at the console output and the file update time)
 * The client has now reconnected with the new certificate and the old certificate can be revoked. 
 
-**NOTE:** When testing it is better to deactivate the certs so you can easily reactivate them when needed and not have to get them to the device again.
+>**NOTE:** 
+>When testing it is better to deactivate the certs so you can easily reactivate them when needed and not have to get them to the device again.
 
 ------------------
 ------------------
@@ -331,7 +333,7 @@ And delete the job with:
 **Note about certificate revocation:**
 Due to the distributed architecture of the IoT service, the devices that are connected are not disconnected immediately when a certificate is revoked. 
 
->>>>take a few minutes for them to be propagated across all the different nodes of the service and it will eventually reach the node where your device is currently connected and you should get a connection error.
+> take a few minutes for them to be propagated across all the different nodes of the service and it will eventually reach the node where your device is currently connected and you should get a connection error.
 
 
 The easiest way is to deactivate the old certificate, restart the script, send a simple job to it and make sure that it works. 

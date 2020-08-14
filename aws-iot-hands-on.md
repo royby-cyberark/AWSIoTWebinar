@@ -196,9 +196,13 @@ https://docs.aws.amazon.com/iot/latest/developerguide/pub-sub-policy.html
 
 ----------------------------
 
-#### Jobs
+### Jobs
 We are going to create a job for certificate rotation. we will provide the certificate as a pre-signed url in S3 which will be short-lived.
-* First let's update the policy so we can subscribe to the jobs topics, public and read from them
+
+#### Policy update
+
+First let's update the policy so we can subscribe to the jobs topics, public and read from them.
+
 * "Secure", "Policies", open `iot-webinar-policy`, "Edit policy document"
 * Paste the following policy document:
 
@@ -246,7 +250,7 @@ Notes:
 * The topic for jobs is reserved by aws and it has the following format: $aws/things/thingName/jobs/get. for more information see the [docs](https://docs.aws.amazon.com/iot/latest/developerguide/reserved-topics.html)
 * To be able to work with jobs, you must subscribe to the topicfilter. the reason for this is that being pub-sub, a client can publish to one topic (at a time), but subscribe to multiple topics. this is done by using the wildcard supporting topicfilter for subscribing and the non-wildcard-supporting topic for publishing and receiving. see the [doc](https://docs.aws.amazon.com/iot/latest/developerguide/topics.html#topicfilters).
 
-### S3 Bucket set up
+#### S3 Bucket set up
 
 * In S3, open your bucket
   * Create a folder named `jobs` and optionally select "AES-256 (SSE-S3)" for encryption (this is beyond the scope of this webinar, but why not)
@@ -254,7 +258,7 @@ Notes:
 
 We will use these folders to keep the new certificate and job files respectively
 
-### Prepare job files
+#### Prepare job files
 
 * Review and upload job files
   * Jobs are described in json files. they can be either provided from an S3 bucket if you're using the console, local file for the cli or string for the sdk
@@ -264,7 +268,7 @@ We will use these folders to keep the new certificate and job files respectively
   
   For more info on presigned urls for jobs see the [docs](https://docs.aws.amazon.com/iot/latest/developerguide/create-manage-jobs.html)
 
-###  Running our program 
+#### Running our program 
 
 Don't forget to replace iot endpoint with your endpoint address
 * Run: `python jobs-handler.py -e <your iot endpoint> -r AmazonRootCA1.pem -c certificate.pem.crt -k private.pem.key -id iot-webinar-device -n iot-webinar-device`
@@ -292,16 +296,17 @@ And delete the job with:
 
 * See that the job client receives the created job.
 
---------------------
---------------------
-
 #### Create a cert rotation job:
 * First, create the new secrets
   * "Manage", "Things", select our device `iot-webinar-device`
   * "Security", "Create certificate"
-  * Download the certificate, private key, and optionally the public key and save them into **ANOTHER** folder. This will be done on a different machine. make sure you don't save those into the project folder.
+  * Download the certificate, private key, and optionally the public key and save them into **ANOTHER** folder. In a real environment, this will usually not be done on a different machine. make sure you don't save those into the project folder.
     * Strictly speaking, the public key is not required on our end. but you can use it in the bonus section at the bottom.
   * Click "Activate"
+
+--------------------
+--------------------
+
   * Click "Attach Policy", select our policy `iot-webinar-policy` and click "Done"
   * Open the thing, security page and **note the new certificate name for later**
 * Upload the new certificate and private key into our S3 bucket under the `certs` folder

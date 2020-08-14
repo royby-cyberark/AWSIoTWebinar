@@ -197,10 +197,10 @@ https://docs.aws.amazon.com/iot/latest/developerguide/pub-sub-policy.html
 
 ----------------------------
 
-### Jobs
+## Jobs
 We are going to create a job for certificate rotation. we will provide the certificate as a pre-signed url in S3 which will be short-lived.
 
-#### Policy update
+### Policy update
 
 First let's update the policy so we can subscribe to the jobs topics, public and read from them.
 
@@ -251,7 +251,7 @@ Notes:
 * The topic for jobs is reserved by aws and it has the following format: $aws/things/thingName/jobs/get. for more information see the [docs](https://docs.aws.amazon.com/iot/latest/developerguide/reserved-topics.html)
 * To be able to work with jobs, you must subscribe to the topicfilter. the reason for this is that being pub-sub, a client can publish to one topic (at a time), but subscribe to multiple topics. this is done by using the wildcard supporting topicfilter for subscribing and the non-wildcard-supporting topic for publishing and receiving. see the [doc](https://docs.aws.amazon.com/iot/latest/developerguide/topics.html#topicfilters).
 
-#### S3 Bucket set up
+### S3 Bucket set up
 
 * In S3, open your bucket
   * Create a folder named `jobs` and optionally select "AES-256 (SSE-S3)" for encryption (this is beyond the scope of this webinar, but why not)
@@ -259,7 +259,7 @@ Notes:
 
 We will use these folders to keep the new certificate and job files respectively
 
-#### Prepare job files
+### Prepare job files
 
 * Review and upload job files
   * Jobs are described in json files. they can be either provided from an S3 bucket if you're using the console, local file for the cli or string for the sdk
@@ -269,7 +269,7 @@ We will use these folders to keep the new certificate and job files respectively
   
   For more info on presigned urls for jobs see the [docs](https://docs.aws.amazon.com/iot/latest/developerguide/create-manage-jobs.html)
 
-#### Running our program 
+### Running our program 
 
 Don't forget to replace iot endpoint with your endpoint address
 * Run: `python jobs-handler.py -e <your iot endpoint> -r AmazonRootCA1.pem -c certificate.pem.crt -k private.pem.key -id iot-webinar-device -n iot-webinar-device`
@@ -277,7 +277,7 @@ Don't forget to replace iot endpoint with your endpoint address
 
 We are now connected and waiting for jobs.
 
-#### Create a simple job
+### Create a simple job
 * Under "Manage", "Jobs", "Create", "Create Custom Job"
 * Set bob id to `local-scan-job-01`
 * Under "Devices to update", select your device (you can also select the device group to update all group members)
@@ -297,7 +297,7 @@ And delete the job with:
 
 * See that the job client receives the created job.
 
-#### Create a cert rotation job:
+### Create a cert rotation job:
 * First, create the new secrets
   * "Manage", "Things", select our device `iot-webinar-device`
   * "Security", "Create certificate"
@@ -325,7 +325,7 @@ And delete the job with:
 **NOTE:** 
 When testing it is better to deactivate the certs so you can easily reactivate them when needed and not have to get them to the device again.
 
-#### Testing the rotation 
+### Testing the rotation 
 
 **Note about certificate revocation:**
 Due to the distributed architecture of the IoT service, the devices that are connected are not disconnected immediately when a certificate is revoked. 

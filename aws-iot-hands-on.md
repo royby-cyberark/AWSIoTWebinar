@@ -51,6 +51,7 @@ For full code examples, see the [SDK page](https://github.com/royby-cyberark/aws
 ### Get the code
 * `git clone git@github.com:royby-cyberark/AWSIoTWebinar.git`
 
+----------------------------
 
 ### Device creation
 * In the AWS Console, open the "AWS IoT Core" service
@@ -77,6 +78,8 @@ For full code examples, see the [SDK page](https://github.com/royby-cyberark/aws
   * Security: review the certificate, its arn, policies, and things **note the certificate name for later use**
   * Groups
 * Click on "Edit" in the thing page and add an attribute, which key is 'Owner', and value is `abcde-12345`. we will later use this is the policy that will restrict devices to post to their tenant topic
+
+----------------------------
 
 ### Rule creation
 * Create an S3 bucket
@@ -111,6 +114,8 @@ For full code examples, see the [SDK page](https://github.com/royby-cyberark/aws
 * "Create Rule"
 
 **Note:** IoT rules are soft limited to 1000 per account, which means you can request an increase and expect to get at least 10x that, but this is specific to the service and the use case.
+
+----------------------------
 
 ### IoT Policy Creation
 * To create a policy open "Secure", "Policies", "Create", name it `iot-webinar-policy`
@@ -157,11 +162,15 @@ https://docs.aws.amazon.com/iot/latest/developerguide/pub-sub-policy.html
 * Under publish, enter iot/audit
 * Click "Publish to topic"
 
+----------------------------
+
 ### Cloudwatch logging 
 * Open https://console.aws.amazon.com/cloudwatch/, choose "Log groups"
 * In the Filter text box, enter `AWSIotLogsV2`, and then press Enter
 * For more info, see the [docs](https://docs.aws.amazon.com/iot/latest/developerguide/cloud-watch-logs.html)
 * If you want to configure the logging verbosity, you can do that in the "Settings" page in the IoT dashboard
+
+----------------------------
 
 ### Device Setup
 * In the IoT dashboard, click on "settings" and note your service endpoint address
@@ -184,11 +193,12 @@ https://docs.aws.amazon.com/iot/latest/developerguide/pub-sub-policy.html
 * See that an audit was written to the S3 bucket and also that email notification was sent
 
 ----------------------------
+----------------------------
 
 ### Job creation
 We are going to create a job for certificate rotation. we will provide the certificate as a pre-signed url in S3 which will be short-lived.
 
-* In S3, open the bucket
+* In S3, open your bucket
   * Create a folder named `jobs` and optionally select "AES-256 (SSE-S3)" for encryption (this is beyond the scope of this webinar, but why not)
   * Open the `jobs` folder and create a sub-folder named `certs`, also with SSE-S3 encryption
 
@@ -206,6 +216,7 @@ We are going to create a job for certificate rotation. we will provide the certi
 * Click "Create role" and name it `iot-webinar-signedurls-role`, review this role and policy to understand what was done
 * Click "Next", "Create"
 * Replace the thing policy with the following (//TODO - step by step):
+
 ```{
   "Version": "2012-10-17",
   "Statement": [
@@ -264,7 +275,7 @@ And delete the job with:
 * First, create the new secrets
   * "Manage", "Things", select our device `iot-webinar-device`
   * "Security", "Create certificate"
-  * Download the certificate, private key, and optionally the public key and save them into **ANOTHER** folder. usually, this will be done on a different machine. make sure you don't save those into the project folder.
+  * Download the certificate, private key, and optionally the public key and save them into **ANOTHER** folder. This will be done on a different machine. make sure you don't save those into the project folder.
     * Strictly speaking, the public key is not required on our end. but you can use it in the bonus section at the bottom.
   * Click "Activate"
   * Click "Attach Policy", select our policy `iot-webinar-policy` and click "Done"
@@ -325,22 +336,22 @@ This can be useful, for example, if you include the tenant id in the topic, you 
 Update your Rule SQL query to something similar to this:
 `SELECT message as msg, topic(1) as tenant_id FROM ‘+/audit’`
 Now, look at the data that goes into the S3 bucket and see how it's changed.
-
+//TODO - test this
 
 ### Bonus stuff 2 - encrypting your certs with asymmetric encryption
 Even though presigned urls are generally safe and can be set to expire after some time, still, anyone with the link can download the files that it points to.
 <BR>
-You can, if you want to secure your secrets better, you can use asymmetric encryption with the public key that is provided to you for the device cert.
+You can, if you want to secure your secrets better, use asymmetric encryption with the public key that is provided to you for the device cert.
 
 * When creating the certificate, make sure you get the public key and store it somewhere that is accessible to the process that does the rotation. 
-public keys are public, so you don't have to worry about security here, just keep it accessible by thing name (maybe a DynamoDB table)
-* When rotating the cert, encrypt the files with the public key
-* The device handling the job can use its private key to decrypt it. 
-* You can, for example, indicate that it is encrypted in the job body. 
+public keys are no secret, so you don't have to worry about it too much, just keep it accessible by thing name (maybe a DynamoDB table for key-value)
+* During the rotation process, encrypt the files with the public key
+* The device handling the job can use its private key to decrypt it
+* You can, for example, indicate that it is encrypted in the job body 
 
 Below you can find sample python code for doing the encryption/decryption using the public/private keys, but keep in mind that this is sample code
 and as such should not be used in production as-is.
-
+//TODO - test this
 Asymmetric crypto sample:
 https://github.com/royby-cyberark/AWSIoTWebinar/blob/master/sample/sample-asymmetric-crypto.py
 

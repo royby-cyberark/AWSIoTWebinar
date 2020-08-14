@@ -19,7 +19,8 @@ But before we dive in, let's do a quick overview of the prominent services that 
 
 -----------------
 
-**A Note on Infrastructure as code**
+**A Note on Infrastructure as code:**
+
 Being focused on the AWS IoT, I will go through the steps using the AWS console. in a real environment, you will, of course, do things differently. 
 For example, you will deploy all your resources with CDK (or another similar framework), keeping the producing code in source control. 
 and have your infrastructure "as code".

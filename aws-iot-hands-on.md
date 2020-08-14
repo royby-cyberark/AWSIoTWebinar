@@ -246,11 +246,15 @@ Notes:
 * The topic for jobs is reserved by aws and it has the following format: $aws/things/thingName/jobs/get. for more information see the [docs](https://docs.aws.amazon.com/iot/latest/developerguide/reserved-topics.html)
 * To be able to work with jobs, you must subscribe to the topicfilter. the reason for this is that being pub-sub, a client can publish to one topic (at a time), but subscribe to multiple topics. this is done by using the wildcard supporting topicfilter for subscribing and the non-wildcard-supporting topic for publishing and receiving. see the [doc](https://docs.aws.amazon.com/iot/latest/developerguide/topics.html#topicfilters).
 
+### S3 Bucket set up
+
 * In S3, open your bucket
   * Create a folder named `jobs` and optionally select "AES-256 (SSE-S3)" for encryption (this is beyond the scope of this webinar, but why not)
   * Open the `jobs` folder and create a sub-folder named `certs`, also with SSE-S3 encryption
 
 We will use these folders to keep the new certificate and job files respectively
+
+### Prepare job files
 
 * Review and upload job files
   * Jobs are described in json files. they can be either provided from an S3 bucket if you're using the console, local file for the cli or string for the sdk
@@ -259,34 +263,22 @@ We will use these folders to keep the new certificate and job files respectively
   * If you would like to serve presigned urls for S3 files, you need to use the presigned placeholders in the following format `${aws:iot:s3-presigned-url:<s3 url>`, see example in `job-rotate-cert.json`
   
   For more info on presigned urls for jobs see the [docs](https://docs.aws.amazon.com/iot/latest/developerguide/create-manage-jobs.html)
-  
---------------------
---------------------
 
-* In the IoT dashboard, under "Manage", click on "Jobs", "Create Custom Job"
-* Set the job id to `webinar-job-rotate-cert`
-* Under "Select devices to update", either select your device (iot-webinar-device), or its group (iot-webinar-group). Using groups will allow us to apply this job to multiple devices.
-* Create the job document file. this needs to be uploaded to S3, alternatively, you can use things like aws cli, boto3, etc, and avoid the need to create an S3 object.
-  * TODO - from repo folder - two files!, Create a local file named `job-rotate-cert.json`, paste this into it and save it locally.
-  //TODO - explain the fields
-  * Upload the files to our S3 bucket, under the `jobs` folder.
-* //TODO - order these items
-* Back in the job creation, under "Add a job file", navigate to `job-rotate-cert.json` and select it
-* Select "I want to pre-sign my urls..."
-* Click "Create role" and name it `iot-webinar-signedurls-role`, review this role and policy to understand what was done
-* Click "Next", "Create"
+###  Running our program 
 
-* Command: `python jobs-handler.py -e <your iot endpoint> -r AmazonRootCA1.pem -c certificate.pem.crt -k private.pem.key -id iot-webinar-device -n iot-webinar-device`
+Don't forget to replace iot endpoint with your endpoint address
+* Run: `python jobs-handler.py -e <your iot endpoint> -r AmazonRootCA1.pem -c certificate.pem.crt -k private.pem.key -id iot-webinar-device -n iot-webinar-device`
   * `-n` is the thing name that will subscribe to the jobs topic
 
-//TODO - move this up. create sub header for the next parts
+We are now connected and waiting for jobs.
+
 #### Create a simple job
 * Under "Manage", "Jobs", "Create", "Create Custom Job"
-* Job id = `local-scan-job-01`
-* Under devices to update, select your device (you can also select the device group to update all group members)
+* Set bob id to `local-scan-job-01`
+* Under "Devices to update", select your device (you can also select the device group to update all group members)
 * Under "Add a job file", select `job-local-scan.json` from our S3 bucket
 * Click on "Next", "Create"
-* Alternatively, you can create a job with the cli:
+* Alternatively, you can create a job with the cli (run from the `source` folder or point to the json file in another folder):
 ```
 aws iot create-job \
               --job-id "local-scan-job-01" \
@@ -297,6 +289,11 @@ aws iot create-job \
 ```
 And delete the job with:
 `aws iot delete-job --job-id "status-job-01"`
+
+* See that the job client receives the created job.
+
+--------------------
+--------------------
 
 #### Create a cert rotation job:
 * First, create the new secrets
@@ -316,7 +313,9 @@ And delete the job with:
 * Under "Add a job file", select `job-rotate-cert.json` from our S3 bucket
 * Under "Pre-sign resource URLs", select "I want to pre-sign my URLs and have configured my job file."
   * Take a look at `job-rotate-cert.json`, this will have the IoT service replace the presigned url placeholders with real values.
-* When using presigned urls, you **must** use a role that will allow you access to the bucket, pick the `iot-webinar-signedurls-role` role
+* When using presigned urls, you **must** use a role that will allow you access to the bucket
+  * If this is the first time click "Create role" and name it `iot-webinar-signedurls-role`, review this role and policy to understand what was done
+  * If you already created the role, simply select it
 * Click on "Next", "Create"
 * See that you got the job and rotated the files locally
 * Send another local-scan job to ensure that the connection is working
@@ -355,6 +354,9 @@ aws iot create-job \
   * You can see the job status by calling //TODO
 
 * For a full code example, see the [SDK code sample](https://github.com/royby-cyberark/aws-iot-device-sdk-python/blob/master/samples/jobs/jobsSample.py)
+
+Jobs have a full life-cycle that we didn't go into, like job status, cancellation, rollout control, and more.
+For more info see, as always, the [docs](https://docs.aws.amazon.com/iot/latest/developerguide/iot-jobs.html)
 
 
 ### Bonus stuff 1 - augmenting data with tenant id

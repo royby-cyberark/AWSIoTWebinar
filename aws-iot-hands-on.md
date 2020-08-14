@@ -157,10 +157,12 @@ https://docs.aws.amazon.com/iot/latest/developerguide/pub-sub-policy.html
 * Click "Publish to topic"
 
 ### Cloudwatch logging 
-* Open https://console.aws.amazon.com/cloudwatch/, choose "Log groups".
+* Open https://console.aws.amazon.com/cloudwatch/, choose "Log groups"
 * In the Filter text box, enter `AWSIotLogsV2`, and then press Enter
 * For more info, see the [docs](https://docs.aws.amazon.com/iot/latest/developerguide/cloud-watch-logs.html)
 * If you want to configure the logging verbosity, you can do that in the "Settings" page in the IoT dashboard
+
+-------------------
 
 ### Device Setup
 * In the IoT dashboard, click on "settings" and note your service endpoint address

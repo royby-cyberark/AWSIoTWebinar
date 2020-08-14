@@ -46,6 +46,7 @@ For full code examples, see the [SDK page](https://github.com/royby-cyberark/aws
 **Prerequisites:**
 * git
 * Python 3.7+
+* The ability to create virtual environments and install packages (e.g. use venv and pip)
 
 ### Get the code
 * `git clone git@github.com:royby-cyberark/AWSIoTWebinar.git`
@@ -162,27 +163,27 @@ https://docs.aws.amazon.com/iot/latest/developerguide/pub-sub-policy.html
 * For more info, see the [docs](https://docs.aws.amazon.com/iot/latest/developerguide/cloud-watch-logs.html)
 * If you want to configure the logging verbosity, you can do that in the "Settings" page in the IoT dashboard
 
--------------------
-
 ### Device Setup
 * In the IoT dashboard, click on "settings" and note your service endpoint address
-* //TODO - implement
 * The IoT (and other) SDKs can be found here: 
   * SDK Hub: https://aws.amazon.com/tools/#sdk, under "IoT Device SDKs"
   * The Python SDK is here: https://github.com/aws/aws-iot-device-sdk-python
   * SDK code samples: https://github.com/aws/aws-iot-device-sdk-python
-* //TODO - venv, activate, pipinstall `pip install AWSIoTPythonSDK`, `pip install requests`
-* Run the following command line, replacing all placeholders with your values:
+* Set up your python virtual env (this may vary according to you os and the way you do virtual environments)
+  * Open a terminal and run the following commands:
+  * `python -m venv .venv
+  * `source .venv/bin/activate` (on windows you need to run the activate batch file)
+  * `pip install AWSIoTPythonSDK requests`
+* Run the following command line, replacing the endpoint placeholder with your endpoint address:
 `python canary-service.py -e <your iot endpoint> -r AmazonRootCA1.pem -c certificate.pem.crt -k private.pem.key -id iot-webinar-device -t abcde-12345/iot-webinar-device/audit`
+  * `-e` is your IoT service endpoint which you notes before (from the settings page)
   * `-id` is the client id, it is up to you, but it is recommended to use the thing name
   * `-t` is the topic we will publish to
 
-* Open http://localhost:80 (this is the so-called honeypot), which will, in turn, send an even audit message to the topic
-* See that an audit was written to the S3 bucket and also that email notification was sent.
+* Open http://localhost:80 (this is the so-called honeypot), which will, in turn, send an incident audit message to the topic
+* See that an audit was written to the S3 bucket and also that email notification was sent
 
-//TODO - tenantid/device name/type/group?
-
-* //TODO - fix timeout, updated policy to "Resource": "arn:aws:iot:eu-west-1:195361640859:*", and then the client worked. fix this.
+----------------------------
 
 ### Job creation
 We are going to create a job for certificate rotation. we will provide the certificate as a pre-signed url in S3 which will be short-lived.

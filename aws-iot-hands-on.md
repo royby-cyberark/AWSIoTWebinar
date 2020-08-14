@@ -17,7 +17,6 @@ We are going to use AWS IoT for this since everything it provides can easily be 
 
 But before we dive in, let's do a quick overview of the prominent services that AWS IoT has to offer.
 
------------------
 
 **A Note on Infrastructure as code:**
 
@@ -36,6 +35,8 @@ For full code examples, see the [SDK page](https://github.com/royby-cyberark/aws
 
 ### Get the code
 * `git clone git@github.com:royby-cyberark/AWSIoTWebinar.git`
+
+-------------------------
 
 ### Device creation
 * In the AWS Console, open the "AWS IoT Core" service

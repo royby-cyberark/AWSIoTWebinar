@@ -328,6 +328,11 @@ And delete the job with:
 
 #### Testing the rotation 
 
+**Note about certificate revocation:**
+Due to the distributed architecture of the IoT service, the devices that are connected are not disconnected immediately when a certificate is revoked. 
+
+>>>>take a few minutes for them to be propagated across all the different nodes of the service and it will eventually reach the node where your device is currently connected and you should get a connection error.
+
 
 The easiest way is to deactivate the old certificate, restart the script, send a simple job to it and make sure that it works. 
 Then, do the same with the new certificate an

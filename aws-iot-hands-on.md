@@ -326,7 +326,11 @@ And delete the job with:
 ------------------
 ------------------
 
-#### Testing the
+#### Testing the rotation 
+
+
+The easiest way is to deactivate the old certificate, restart the script, send a simple job to it and make sure that it works. 
+Then, do the same with the new certificate an
 
 **BUT** if you try to revoke the current certificate, you will 
 

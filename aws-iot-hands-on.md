@@ -137,13 +137,13 @@ For full code examples, see the [SDK page](https://github.com/royby-cyberark/aws
 }
 ```
 
+* Go to thing, security, certificate, attach policy
+
 This policy allows a device (client) of the specified arn to connect. It requires the arn to include the specific thing name.
 Also, it allows to publish only to a topic that starts with the device "Owner" attribute value followed by the device thing name, followed by "audit".
 This allows us to reuse this policy for other devices. but you can create explicit policies if you choose to do so.
 
 **NOTE:** IoT policies are not limited, for service quotas, see the [docs](https://docs.aws.amazon.com/general/latest/gr/iot-core.html#limits_iot)
-
-* Go to thing, security, certificate, attach policy
 
 To learn more about policy variables and some IoT policy examples, see:
 

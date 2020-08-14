@@ -387,7 +387,9 @@ For more info see, as always, the [docs](https://docs.aws.amazon.com/iot/latest/
 You can augment the message that is passed for example to S3, with data from the topic path. 
 This can be useful, for example, if you include the tenant id in the topic, you can augment that data with its value. 
 Update your Rule SQL query to something similar to this:
+
 `SELECT message as msg, topic(1) as tenant_id FROM ‘+/audit’`
+
 Now, look at the data that goes into the S3 bucket and see how it's changed.
 //TODO - test this
 

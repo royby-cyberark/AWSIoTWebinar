@@ -108,21 +108,13 @@ For full code examples, see the [SDK page](https://github.com/royby-cyberark/aws
     * Open the email and click the confirm link
 * Review your new roles
 * "Create Rule"
------------------------
-### IoT Policy creation
-* "Secure", "Policies", "Create", name it `iot-webinar-policy`
-* Under "Add Statements". //TODO - verify minimum required actions
-  * Add the following actions: `iot:Connect,iot:Receive,iot:Publish,iot:Subscribe` (the field uses auto-complete) 
-  * Under 'Resource ARN' paste the device arn you noted before //TODO - what do we need here?
-  * For "Effect", check "Allow"
-  * "Create"
-  
-  
-  
-//TODO: FIX THIS:
-* Go to thing, security, certificate, attach policy
 
-actually use this (TODO FIX THIS):
+Note: IoT rules are soft limited to 1000 per account, which means you can request an increase and expect to get at least 10x that, but this is specific to the service and the use case.
+
+### IoT Policy Creation
+* To create a policy open "Secure", "Policies", "Create", name it `iot-webinar-policy`
+* Click on "Advanced mode" and paste the following policy document:
+  
 ```
 {
   "Version": "2012-10-17",
@@ -145,16 +137,22 @@ actually use this (TODO FIX THIS):
 }
 ```
 
-//TODO - see this: https://docs.aws.amazon.com/iot/latest/developerguide/thing-policy-variables.html
-//TODO - see this: https://docs.aws.amazon.com/iot/latest/developerguide/example-iot-policies-elements.html
-//TODO and examples: https://docs.aws.amazon.com/iot/latest/developerguide/pub-sub-policy.html, etc.
+This policy allows a device (client) of the specified arn to connect. It requires the arn to include the specific thing name.
+Also, it allows to publish only to a topic that starts with the device "Owner" attribute value followed by the device thing name, followed by "audit".
+This allows us to reuse this policy for other devices. but you can create explicit policies if you choose to do so.
+IoT policies are not limited, for service quotas, see the [docs] (https://docs.aws.amazon.com/general/latest/gr/iot-core.html#limits_iot)
+
+* Go to thing, security, certificate, attach policy
+
+To learn more about policy variables and some IoT policy examples, see:
+https://docs.aws.amazon.com/iot/latest/developerguide/thing-policy-variables.html
+https://docs.aws.amazon.com/iot/latest/developerguide/example-iot-policies-elements.html
+https://docs.aws.amazon.com/iot/latest/developerguide/pub-sub-policy.html
 
 ### Test the rule 
 * Open "Act", "Tests"
 * Under publish, enter iot/audit
 * Click "Publish to topic"
-
-//TODO - limit of rules, generally write the limits
 
 ### Cloudwatch logging 
 * Open https://console.aws.amazon.com/cloudwatch/, choose "Log groups".

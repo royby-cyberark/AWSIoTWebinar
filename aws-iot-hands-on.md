@@ -1,12 +1,15 @@
 # AWS IoT Hands-On session
 
-🔥🔥 **DiSCLAIMER 1:** 🔥🔥
+🔥🔥 **DISCLAIMER 1:** 🔥🔥
 
 Using AWS costs money. while the things we do here may or may not be under the free tier (and even if not, they are very low volume), 
 you are responsible for the costs and the resources you create and to clean up after yourself.
 A Cleanup section is provided at the bottom, but it many contain mistakes, os make sure you clean up what you did after it is no longer needed and bear in mind the costs
 
-//TODO - disclaimer - pricing, demo, do not use for production, do your own research
+🔥🔥 **DISCLAIMER 2:** 🔥🔥
+As webinars go, some of the settings here were simplified. when it come to production systems and code, you are responsible to do your own research and security review all parts including but not limited to IAM policies, IoT policies, certificates, S3 bucket settings and more.
+Consider this a webinar grade material and treat it as such.
+
 
 Below you can find a step-by-step for our AWS IoT Webinar. 
 A little reminder first:

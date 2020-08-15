@@ -434,7 +434,9 @@ https://github.com/royby-cyberark/AWSIoTWebinar/blob/master/sample/sample-asymme
 
 ## Cleaning Up
 
-Delete all resources you created, this should be the list of them, but please verify this yourself.
+Delete all resources you created, they may cost you and you shouldn't leave unused resources.
+**IMPORTANT!** This list may not be complete or may have mistakes, you are responsible to clean us everything you created.
+
 //TODO - verify this
 * Delete thing: iot-webinar-device
 * Delete type: iot-webinar-type
@@ -445,6 +447,6 @@ Delete all resources you created, this should be the list of them, but please ve
 * Delete cert: 8ad305037c.cert.pem	
 * Delete S3 bucket (first delete all files and folders)
 * //TODO find all "created" roles during the process - search roles for webinar (other?)
-  * delete role `iot-webinar-signedurls-role`
+* delete role `iot-webinar-signedurls-role`
 
-//TODO - something else>
+

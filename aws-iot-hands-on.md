@@ -36,7 +36,7 @@ For example, you will deploy all your resources with CDK (or another similar fra
 and have your infrastructure "as code".
 I recommend watching our revious webinar on CDK: //TODO link
 
-For full code examples, see the [SDK page](https://github.com/royby-cyberark/aws-iot-device-sdk-python)
+For full code examples, see the [SDK page](https://github.com/aws/aws-iot-device-sdk-python)
 
 
 # Step-By-Step
@@ -427,6 +427,17 @@ public keys are no secret, so you don't have to worry about it too much, just ke
 
 Below you can find sample python code for doing the encryption/decryption using the public/private keys, but keep in mind that this is sample code
 and as such should not be used in production as-is.
+
+---------------
+
+If you want to try this, do the following (may change due to os or the way you do virtual envs):
+* Open a new terminal window (new virtual environment for python) 
+* `python -m venv .venv`
+* ` source .venv/bin/activate` (or run the batch in Windows)
+* `pip install pycrypto`
+* Copy a file you want to encrypt into the working folder (the private key)
+* 
+---------------
 
 //TODO - test this
 Asymmetric crypto code sample:

@@ -197,12 +197,11 @@ https://docs.aws.amazon.com/iot/latest/developerguide/pub-sub-policy.html
 
 * Open http://localhost:80 (this is the so-called honeypot), which will, in turn, send an incident audit message to the topic
 * See that an audit was written to the S3 bucket and also that email notification was sent
-<BR>
-----------------------------
-<BR>
-## Jobs
-We are going to create a job for certificate rotation. we will provide the certificate as a pre-signed url in S3 which will be short-lived.
 
+
+## Jobs
+
+We are going to create a job for certificate rotation. we will provide the certificate as a pre-signed url in S3 which will be short-lived.
 
 ### Policy Update
 

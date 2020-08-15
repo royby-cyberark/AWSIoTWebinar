@@ -270,7 +270,7 @@ We will use these folders to keep the new certificate and job files respectively
   * Jobs are described in json files. they can be either provided from an S3 bucket if you're using the console, local file for the cli or string for the sdk
   * Upload `job-rotate-cert.json` and `job-local-scan.json` to the S3 bucket under `jobs`
   * You can put anything you want there and have the device receive it. 
-  * If you would like to serve presigned urls for S3 files, you need to use the presigned placeholders in the following format `${aws:iot:s3-presigned-url:<s3 url>`, see example in `job-rotate-cert.json`
+  * If you would like to serve presigned urls for S3 files, you need to use the presigned placeholders in the following format `${aws:iot:s3-presigned-url:<s3 url>}`, see example in `job-rotate-cert.json`
   
   For more info on presigned urls for jobs see the [docs](https://docs.aws.amazon.com/iot/latest/developerguide/create-manage-jobs.html)
 

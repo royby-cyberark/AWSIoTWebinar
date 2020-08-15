@@ -428,18 +428,17 @@ public keys are no secret, so you don't have to worry about it too much, just ke
 Below you can find sample python code for doing the encryption/decryption using the public/private keys, but keep in mind that this is sample code
 and as such should not be used in production as-is.
 
----------------
-
 If you want to try this, do the following (may change due to os or the way you do virtual envs):
 * Open a new terminal window (new virtual environment for python) 
 * `python -m venv .venv`
 * ` source .venv/bin/activate` (or run the batch in Windows)
 * `pip install pycrypto`
-* Copy a file you want to encrypt into the working folder (the private key)
-* 
----------------
+* Run the encrypt script (replace placeholders with files): `python asymm-encrypt-sample.py -t <file to encrypt> -p <public key to encrypt with>`
+* A new file name `enc_<file to encrypt>` is created. review its encrypted content
+* Run the decrypt script: `python asymm-decrypt-sample.py -e <encrypted file> -p <private key to decrypt with>`
+* A new 'dec_<encrypted file>' with the decrypted content is created
+* Compare the original file with the decrypted file and rejoice with the equal content 
 
-//TODO - test this
 Asymmetric crypto code sample:
 
 https://github.com/royby-cyberark/AWSIoTWebinar/blob/master/sample/sample-asymmetric-crypto.py

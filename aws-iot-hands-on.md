@@ -169,10 +169,13 @@ https://docs.aws.amazon.com/iot/latest/developerguide/pub-sub-policy.html
 
 ## Cloudwatch Logging 
 
+* If you want to turn on logging, go to "settings", turn it on and select the desired log level
+  * Create a role for writing to CloudWatch and name it `iot-webinar-logs`
 * Open https://console.aws.amazon.com/cloudwatch/, choose "Log groups"
 * In the Filter text box, enter `AWSIotLogsV2`, and then press Enter
 * For more info, see the [docs](https://docs.aws.amazon.com/iot/latest/developerguide/cloud-watch-logs.html)
 * If you want to configure the logging verbosity, you can do that in the "Settings" page in the IoT dashboard
+iot-webinar-logs
 
 
 ## Device Setup
@@ -466,4 +469,5 @@ Delete all resources you created, they may cost you and you shouldn't leave unus
   * For each of our roles (`iot-webinar-s3-role`, `iot-webinar-signedurls-role`, `iot-webinar-sns-role`
     * Go to the policy under the "Permissions" tab and delete the policy
     * Delete the role
+  * Also delete the `iot-webinar-logs` role
 * Delete the `iot-webinar-type` thing type (assuming it has been 5 minutes)

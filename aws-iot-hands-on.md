@@ -54,7 +54,7 @@ For full code examples, see the [SDK page](https://github.com/aws/aws-iot-device
 ## Device Creation
 
 * In the AWS Console, open the "AWS IoT Core" service
-* Under "Manage", "Things", click on "Create"
+* Under "Manage", "Things", "Register a thing" (Or "Create" if you already have devices)
 * Click "Create a single thing"
 * Name your device `iot-webinar-device`
 * Optional: Click on "Create Type" and name it `iot-webinar-type` - this will create a device type that we can use later to group devices by type and act upon this type. You can use thing types to set properties that are shared for this type, and also use it as policy variables

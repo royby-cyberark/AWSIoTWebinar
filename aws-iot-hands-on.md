@@ -427,8 +427,10 @@ public keys are no secret, so you don't have to worry about it too much, just ke
 
 Below you can find sample python code for doing the encryption/decryption using the public/private keys, but keep in mind that this is sample code
 and as such should not be used in production as-is.
+
 //TODO - test this
-Asymmetric crypto sample:
+Asymmetric crypto code sample:
+
 https://github.com/royby-cyberark/AWSIoTWebinar/blob/master/sample/sample-asymmetric-crypto.py
 
 

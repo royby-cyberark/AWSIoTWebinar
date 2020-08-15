@@ -71,10 +71,8 @@ For full code examples, see the [SDK page](https://github.com/aws/aws-iot-device
   * Save the certificate as `certificate.pem.crt` 
   * Optionally save the public key as `public.pem.key`
   * Save the private key as `private.pem.key`
-  * Save the Root CA as `AmazonRootCA1.pem`
+  * Save the Root CA as `AmazonRootCA1.pem` (download the "RSA 2048 bit" key from [here](https://docs.aws.amazon.com/iot/latest/developerguide/server-authentication.html?icmpid=docs_iot_console#server-authentication-certs), right-click on the link and save to file locally)
   * Strictly speaking, the public key is not required on our end. but you can use it in the bonus section at the bottom.
-* You also need AWS's Root ca which you can find [here](https://docs.aws.amazon.com/iot/latest/developerguide/server-authentication.html?icmpid=docs_iot_console#server-authentication-certs)
-* We are going to download the "RSA 2048 bit" key, right-click on the link and save to file locally
 * Click on "Activate", this will activate the certificate that you created and associated with the device.
 * Click on "Attach policy" and **DO NOT** pick a policy (we will create a policy later)
 * Click "Register thing"

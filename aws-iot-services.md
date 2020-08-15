@@ -97,3 +97,6 @@ We will only mention those by name since they are generally out of scope for thi
 * **Greengrass** - AWS IoT Greengrass is software that lets you run local compute, messaging, management, sync, and ML inference capabilities on connected devices in a secure way. With AWS IoT Greengrass, connected devices can run AWS Lambda functions, Docker containers, or both, execute predictions based on machine learning models, keep device data in sync, and communicate with other devices securely – even when not connected to the Internet.
 
 And there's a lot more. I encourage you to go and see for yourself.
+
+### What's next?
+Go to the [hands-on session](https://github.com/royby-cyberark/AWSIoTWebinar/blob/master/aws-iot-hands-on.md)

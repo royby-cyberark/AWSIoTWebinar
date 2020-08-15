@@ -59,6 +59,7 @@ For full code examples, see the [SDK page](https://github.com/aws/aws-iot-device
 * Name your device `iot-webinar-device`
 * Optional: Click on "Create Type" and name it `iot-webinar-type` - this will create a device type that we can use later to group devices by type and act upon this type. You can use thing types to set properties that are shared for this type, and also use it as policy variables
 * Under "Add this thing to a group", click "Create group" and name the group `iot-webinar-group`, click "Create", this will be used later during the jobs step
+* Add an attribute, which key is 'Owner', and value is `abcde-12345`. we will later use this is the policy that will restrict devices to post to their tenant topic
 * Make sure your device group is set to the new group, click "Next" 
 * Select "One-click certificate creation"
 * On the next page, we are presented with a link to download the device certificate 
@@ -76,7 +77,6 @@ For full code examples, see the [SDK page](https://github.com/aws/aws-iot-device
   * Details: arn, thing type - note your device arn for later
   * Security: review the certificate, its arn, policies, and things **note the certificate name for later use**
   * Groups
-* Click on "Edit" in the thing page and add an attribute, which key is 'Owner', and value is `abcde-12345`. we will later use this is the policy that will restrict devices to post to their tenant topic
 
 
 ## Rule Creation

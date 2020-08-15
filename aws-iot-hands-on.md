@@ -69,6 +69,7 @@ For full code examples, see the [SDK page](https://github.com/aws/aws-iot-device
 * On the next page, we are presented with a link to download the device certificate 
 * Download the certificate, private key and optionally the public key (for the bonus section) and save them into the `AWSIoTWebinar/source` folder in the git repo folder you cloned, under the `source` folder
   * Save the certificate as `certificate.pem.crt` 
+  * Optionally save the public key as `public.pem.key`
   * Save the private key as `private.pem.key`
   * Save the Root CA as `AmazonRootCA1.pem`
   * Strictly speaking, the public key is not required on our end. but you can use it in the bonus section at the bottom.

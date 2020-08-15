@@ -40,19 +40,19 @@ I recommend watching our revious webinar on CDK: //TODO link
 
 For full code examples, see the [SDK page](https://github.com/royby-cyberark/aws-iot-device-sdk-python)
 
-## Step-By-Step
+# Step-By-Step
 
 **Prerequisites:**
 * git
 * Python 3.7+
 * The ability to create virtual environments and install packages (e.g. use venv and pip)
 
-### Get the code
+## Get the code
 * `git clone git@github.com:royby-cyberark/AWSIoTWebinar.git`
 
 ----------------------------
 
-### Device creation
+## Device creation
 * In the AWS Console, open the "AWS IoT Core" service
 * Under "Manage", "Things", click on "Create"
 * Click "Create a single thing"
@@ -80,7 +80,7 @@ For full code examples, see the [SDK page](https://github.com/royby-cyberark/aws
 
 ----------------------------
 
-### Rule creation
+## Rule creation
 * Create an S3 bucket
   * Open S3, create bucket, name it `iot-webinar-audits-<random stuff>` (S3 bucket names are globally unique)
   * Use all defaults and create bucket
@@ -112,12 +112,12 @@ For full code examples, see the [SDK page](https://github.com/royby-cyberark/aws
 * Review your new roles
 * "Create Rule"
 
->**Note:** 
->IoT rules are soft limited to 1000 per account, which means you can request an increase and expect to get at least 10x that, but this is specific to the service >and the use case.
+**Note:** 
+IoT rules are soft limited to 1000 per account, which means you can request an increase and expect to get at least 10x that, but this is specific to the service and the use case.
 
 ----------------------------
 
-### IoT Policy Creation
+## IoT Policy Creation
 * To create a policy open "Secure", "Policies", "Create", name it `iot-webinar-policy`
 * Click on "Advanced mode" and paste the following policy document:
   
@@ -160,14 +160,14 @@ https://docs.aws.amazon.com/iot/latest/developerguide/thing-policy-variables.htm
 https://docs.aws.amazon.com/iot/latest/developerguide/example-iot-policies-elements.html
 https://docs.aws.amazon.com/iot/latest/developerguide/pub-sub-policy.html
 
-### Test the rule 
+## Test the rule 
 * Open "Act", "Tests"
 * Under publish, enter iot/audit
 * Click "Publish to topic"
 
 ----------------------------
 
-### Cloudwatch logging 
+## Cloudwatch logging 
 * Open https://console.aws.amazon.com/cloudwatch/, choose "Log groups"
 * In the Filter text box, enter `AWSIotLogsV2`, and then press Enter
 * For more info, see the [docs](https://docs.aws.amazon.com/iot/latest/developerguide/cloud-watch-logs.html)
@@ -175,7 +175,7 @@ https://docs.aws.amazon.com/iot/latest/developerguide/pub-sub-policy.html
 
 ----------------------------
 
-### Device Setup
+## Device Setup
 * In the IoT dashboard, click on "settings" and note your service endpoint address
 * The IoT (and other) SDKs can be found here: 
   * SDK Hub: https://aws.amazon.com/tools/#sdk, under "IoT Device SDKs"
@@ -382,6 +382,7 @@ aws iot create-job \
 Jobs have a full life-cycle that we didn't go into, like job status, cancellation, rollout control, and more.
 For more info see, as always, the [docs](https://docs.aws.amazon.com/iot/latest/developerguide/iot-jobs.html)
 
+## Bonus stuff
 
 ### Bonus stuff 1 - augmenting data with tenant id
 You can augment the message that is passed for example to S3, with data from the topic path. 
@@ -414,7 +415,7 @@ Asymmetric crypto sample:
 https://github.com/royby-cyberark/AWSIoTWebinar/blob/master/sample/sample-asymmetric-crypto.py
 
 
-### Cleaning up
+## Cleaning up
 Delete all resources you created, this should be the list of them, but please verify this yourself.
 //TODO - verify this
 * Delete thing: iot-webinar-device

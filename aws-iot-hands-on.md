@@ -38,6 +38,7 @@ I recommend watching our revious webinar on CDK: //TODO link
 
 For full code examples, see the [SDK page](https://github.com/royby-cyberark/aws-iot-device-sdk-python)
 
+
 # Step-By-Step
 
 **Prerequisites:**
@@ -45,13 +46,13 @@ For full code examples, see the [SDK page](https://github.com/royby-cyberark/aws
 * Python 3.7+
 * The ability to create virtual environments and install packages (e.g. use venv and pip)
 
+
 ## Get the Code
 * `git clone git@github.com:royby-cyberark/AWSIoTWebinar.git`
-<BR>
-----------------------------
-<BR>
+
  
 ## Device Creation
+
 * In the AWS Console, open the "AWS IoT Core" service
 * Under "Manage", "Things", click on "Create"
 * Click "Create a single thing"
@@ -76,10 +77,10 @@ For full code examples, see the [SDK page](https://github.com/royby-cyberark/aws
   * Security: review the certificate, its arn, policies, and things **note the certificate name for later use**
   * Groups
 * Click on "Edit" in the thing page and add an attribute, which key is 'Owner', and value is `abcde-12345`. we will later use this is the policy that will restrict devices to post to their tenant topic
-<BR>
-----------------------------
-<BR>
+
+
 ## Rule Creation
+
 * Create an S3 bucket
   * Open S3, create bucket, name it `iot-webinar-audits-<random stuff>` (S3 bucket names are globally unique)
   * Use all defaults and create bucket
@@ -113,10 +114,9 @@ For full code examples, see the [SDK page](https://github.com/royby-cyberark/aws
 
 **Note:** 
 IoT rules are soft limited to 1000 per account, which means you can request an increase and expect to get at least 10x that, but this is specific to the service and the use case.
-<BR>
-----------------------------
-<BR>
+
 ## IoT Policy Creation
+
 * To create a policy open "Secure", "Policies", "Create", name it `iot-webinar-policy`
 * Click on "Advanced mode" and paste the following policy document:
   
@@ -159,22 +159,24 @@ https://docs.aws.amazon.com/iot/latest/developerguide/thing-policy-variables.htm
 https://docs.aws.amazon.com/iot/latest/developerguide/example-iot-policies-elements.html
 https://docs.aws.amazon.com/iot/latest/developerguide/pub-sub-policy.html
 
+
 ## Test the Rule 
+
 * Open "Act", "Tests"
 * Under publish, enter iot/audit
 * Click "Publish to topic"
-<BR>
-----------------------------
-<BR>
+
+
 ## Cloudwatch Logging 
+
 * Open https://console.aws.amazon.com/cloudwatch/, choose "Log groups"
 * In the Filter text box, enter `AWSIotLogsV2`, and then press Enter
 * For more info, see the [docs](https://docs.aws.amazon.com/iot/latest/developerguide/cloud-watch-logs.html)
 * If you want to configure the logging verbosity, you can do that in the "Settings" page in the IoT dashboard
-<BR>
-----------------------------
-<BR>
+
+
 ## Device Setup
+
 * In the IoT dashboard, click on "settings" and note your service endpoint address
 * The IoT (and other) SDKs can be found here: 
   * SDK Hub: https://aws.amazon.com/tools/#sdk, under "IoT Device SDKs"
@@ -200,6 +202,7 @@ https://docs.aws.amazon.com/iot/latest/developerguide/pub-sub-policy.html
 <BR>
 ## Jobs
 We are going to create a job for certificate rotation. we will provide the certificate as a pre-signed url in S3 which will be short-lived.
+
 
 ### Policy Update
 
@@ -252,6 +255,7 @@ Notes:
 * The topic for jobs is reserved by aws and it has the following format: $aws/things/thingName/jobs/get. for more information see the [docs](https://docs.aws.amazon.com/iot/latest/developerguide/reserved-topics.html)
 * To be able to work with jobs, you must subscribe to the topicfilter. the reason for this is that being pub-sub, a client can publish to one topic (at a time), but subscribe to multiple topics. this is done by using the wildcard supporting topicfilter for subscribing and the non-wildcard-supporting topic for publishing and receiving. see the [doc](https://docs.aws.amazon.com/iot/latest/developerguide/topics.html#topicfilters).
 
+
 ### S3 Bucket Setup
 
 * In S3, open your bucket
@@ -259,6 +263,7 @@ Notes:
   * Open the `jobs` folder and create a sub-folder named `certs`, also with SSE-S3 encryption
 
 We will use these folders to keep the new certificate and job files respectively
+
 
 ### Prepare Job Files
 
@@ -270,6 +275,7 @@ We will use these folders to keep the new certificate and job files respectively
   
   For more info on presigned urls for jobs see the [docs](https://docs.aws.amazon.com/iot/latest/developerguide/create-manage-jobs.html)
 
+
 ### Running our Program 
 
 Don't forget to replace iot endpoint with your endpoint address
@@ -278,7 +284,9 @@ Don't forget to replace iot endpoint with your endpoint address
 
 We are now connected and waiting for jobs.
 
+
 ### Create a Simple Job
+
 * Under "Manage", "Jobs", "Create", "Create Custom Job"
 * Set bob id to `local-scan-job-01`
 * Under "Devices to update", select your device (you can also select the device group to update all group members)
@@ -298,7 +306,9 @@ And delete the job with:
 
 * See that the job client receives the created job.
 
+
 ### Create a Certificate Rotation Job:
+
 * First, create the new secrets
   * "Manage", "Things", select our device `iot-webinar-device`
   * "Security", "Create certificate"
@@ -325,6 +335,7 @@ And delete the job with:
 
 **NOTE:** 
 When testing it is better to deactivate the certs so you can easily reactivate them when needed and not have to get them to the device again.
+
 
 ### Testing the Rotation 
 
@@ -389,6 +400,7 @@ For more info see, as always, the [docs](https://docs.aws.amazon.com/iot/latest/
 ## Bonus Stuff
 
 ### Bonus Stuff 1 - Augmenting Data with Tenant-id
+
 You can augment the message that is passed for example to S3, with data from the topic path. 
 This can be useful, for example, if you include the tenant id in the topic, you can augment that data with its value. 
 Update your Rule SQL query to something similar to this:
@@ -401,7 +413,9 @@ Now, look at the data that goes into the S3 bucket and see how it's changed.
 See [this reference](https://docs.aws.amazon.com/iot/latest/developerguide/iot-sql-functions.html) for functions that you can use in the query statement.
 Which is under the [AWS IoT SQL reference](https://docs.aws.amazon.com/iot/latest/developerguide/iot-sql-reference.html)
 
+
 ### Bonus Stuff 2 - Encrypting your Certificates with Asymmetric Encryption
+
 Even though presigned urls are generally safe and can be set to expire after some time, still, anyone with the link can download the files that it points to.
 <BR>
 You can, if you want to secure your secrets further, use asymmetric encryption with the public key that is provided to you for the device cert.
@@ -420,6 +434,7 @@ https://github.com/royby-cyberark/AWSIoTWebinar/blob/master/sample/sample-asymme
 
 
 ## Cleaning Up
+
 Delete all resources you created, this should be the list of them, but please verify this yourself.
 //TODO - verify this
 * Delete thing: iot-webinar-device

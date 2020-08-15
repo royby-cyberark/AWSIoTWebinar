@@ -15,8 +15,6 @@ Consider this a webinar grade material and treat it as such.
 
 ---------------------
 
-Below you can find a step-by-step for our AWS IoT Webinar. 
-A little reminder first:
 
 ## What Are We Going To Build?
 We will use AWS IoT to allow our services which are external to AWS, access to our cloud platform and allow them to communicate with our backend securely. We will see that AWS IoT doesn't have to do with IoT necessarily, because what is an IoT device if not a machine running Linux? (or windows, or whatever for that matter)

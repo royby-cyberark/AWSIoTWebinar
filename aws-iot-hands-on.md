@@ -450,16 +450,20 @@ Delete all resources you created, they may cost you and you shouldn't leave unus
 **IMPORTANT!** This list may not be complete or may have mistakes, you are responsible to clean us everything you created.
 
 //TODO - verify this
+* From the thing page, "Security", delete all certificates
 * Delete thing: iot-webinar-device
 * Delete type: iot-webinar-type (You need to deprecate first, then wait 5 minutes, then delete it - all from the type, actions menu)
 * Delete group: iot-webinar-group
 * Delete the policy versions
 * Delete policy (requires deleting the versions first)
-* Delete rule
-* Delete Job
-* Delete cert: 8ad305037c.cert.pem	
+* Delete Rule
+* Delete all Jobs	
 * Delete S3 bucket (first delete all files and folders)
 * //TODO find all "created" roles during the process - search roles for webinar (other?)
-* delete role `iot-webinar-signedurls-role`
-
-
+* Open the IAM service and delete all policies and roles:
+  * Open "Roles"
+  * Search for `webinar` (Assuming you adhered to the values in this guide)
+  * For each of our roles (`iot-webinar-s3-role`, `iot-webinar-signedurls-role`, `iot-webinar-sns-role`
+    * Go to the policy under the "Permissions" tab and delete the policy
+    * Delete the role
+    

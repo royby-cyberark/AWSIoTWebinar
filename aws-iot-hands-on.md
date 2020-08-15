@@ -376,13 +376,16 @@ aws iot create-job \
               --presigned-url-config roleArn=<role_arn>,expiresInSec=300
 ```
 
+A few more notes about jobs:
+
 * In a real-world scenario, you would wait for the jobs to be completed and then remove the old certificate
   * You can see the job status by using the SDK or CLI for describing the job execution (e.g. `aws iot describe-job-execution`)
 
 * For a full example, see the [SDK code sample](https://github.com/royby-cyberark/aws-iot-device-sdk-python/blob/master/samples/jobs/jobsSample.py)
 
-Jobs have a full life-cycle that we didn't go into, like job status, cancellation, rollout control, and more.
+* Jobs have a full life-cycle that we didn't go into, like job status, cancellation, rollout control, and more.
 For more info see, as always, the [docs](https://docs.aws.amazon.com/iot/latest/developerguide/iot-jobs.html)
+
 
 ## Bonus Stuff
 

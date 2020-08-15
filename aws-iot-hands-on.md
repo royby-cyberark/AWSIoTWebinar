@@ -451,7 +451,7 @@ Delete all resources you created, they may cost you and you shouldn't leave unus
 
 //TODO - verify this
 * Delete thing: iot-webinar-device
-* Delete type: iot-webinar-type
+* Delete type: iot-webinar-type (You need to deprecate first, then wait 5 minutes, then delete it - all from the type, actions menu)
 * Delete group: iot-webinar-group
 * Delete the policy versions
 * Delete policy (requires deleting the versions first)

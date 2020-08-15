@@ -187,7 +187,9 @@ https://docs.aws.amazon.com/iot/latest/developerguide/pub-sub-policy.html
   * `source .venv/bin/activate` (on windows you need to run the activate batch file)
   * `pip install AWSIoTPythonSDK requests`
 * Run the following command line, replacing the endpoint placeholder with your endpoint address:
+
 `python canary-service.py -e <your iot endpoint> -r AmazonRootCA1.pem -c certificate.pem.crt -k private.pem.key -id iot-webinar-device -t abcde-12345/iot-webinar-device/audit`
+
   * `-e` is your IoT service endpoint which you notes before (from the settings page)
   * `-id` is the client id, it is up to you, but it is recommended to use the thing name
   * `-t` is the topic we will publish to

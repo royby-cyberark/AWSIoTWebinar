@@ -450,9 +450,9 @@ Delete all resources you created, they may cost you and you shouldn't leave unus
 **IMPORTANT!** This list may not be complete or may have mistakes, you are responsible to clean us everything you created.
 
 //TODO - verify this
+* Deprecate the thing type: `iot-webinar-type` (You need to deprecate first, then wait 5 minutes, then delete it - all from the type, actions menu)
 * From the thing page, "Security", delete all certificates
 * Delete thing: iot-webinar-device
-* Delete type: iot-webinar-type (You need to deprecate first, then wait 5 minutes, then delete it - all from the type, actions menu)
 * Delete group: iot-webinar-group
 * Delete the policy versions
 * Delete policy (requires deleting the versions first)
@@ -466,4 +466,4 @@ Delete all resources you created, they may cost you and you shouldn't leave unus
   * For each of our roles (`iot-webinar-s3-role`, `iot-webinar-signedurls-role`, `iot-webinar-sns-role`
     * Go to the policy under the "Permissions" tab and delete the policy
     * Delete the role
-    
+* Delete the `iot-webinar-type` thing type (assuming it has been 5 minutes)

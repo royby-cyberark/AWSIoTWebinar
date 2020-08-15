@@ -47,9 +47,10 @@ For full code examples, see the [SDK page](https://github.com/royby-cyberark/aws
 
 ## Get the Code
 * `git clone git@github.com:royby-cyberark/AWSIoTWebinar.git`
-
+<BR>
 ----------------------------
-
+<BR>
+ 
 ## Device Creation
 * In the AWS Console, open the "AWS IoT Core" service
 * Under "Manage", "Things", click on "Create"
@@ -75,9 +76,9 @@ For full code examples, see the [SDK page](https://github.com/royby-cyberark/aws
   * Security: review the certificate, its arn, policies, and things **note the certificate name for later use**
   * Groups
 * Click on "Edit" in the thing page and add an attribute, which key is 'Owner', and value is `abcde-12345`. we will later use this is the policy that will restrict devices to post to their tenant topic
-
+<BR>
 ----------------------------
-
+<BR>
 ## Rule Creation
 * Create an S3 bucket
   * Open S3, create bucket, name it `iot-webinar-audits-<random stuff>` (S3 bucket names are globally unique)
@@ -112,9 +113,9 @@ For full code examples, see the [SDK page](https://github.com/royby-cyberark/aws
 
 **Note:** 
 IoT rules are soft limited to 1000 per account, which means you can request an increase and expect to get at least 10x that, but this is specific to the service and the use case.
-
+<BR>
 ----------------------------
-
+<BR>
 ## IoT Policy Creation
 * To create a policy open "Secure", "Policies", "Create", name it `iot-webinar-policy`
 * Click on "Advanced mode" and paste the following policy document:
@@ -162,17 +163,17 @@ https://docs.aws.amazon.com/iot/latest/developerguide/pub-sub-policy.html
 * Open "Act", "Tests"
 * Under publish, enter iot/audit
 * Click "Publish to topic"
-
+<BR>
 ----------------------------
-
+<BR>
 ## Cloudwatch Logging 
 * Open https://console.aws.amazon.com/cloudwatch/, choose "Log groups"
 * In the Filter text box, enter `AWSIotLogsV2`, and then press Enter
 * For more info, see the [docs](https://docs.aws.amazon.com/iot/latest/developerguide/cloud-watch-logs.html)
 * If you want to configure the logging verbosity, you can do that in the "Settings" page in the IoT dashboard
-
+<BR>
 ----------------------------
-
+<BR>
 ## Device Setup
 * In the IoT dashboard, click on "settings" and note your service endpoint address
 * The IoT (and other) SDKs can be found here: 
@@ -194,9 +195,9 @@ https://docs.aws.amazon.com/iot/latest/developerguide/pub-sub-policy.html
 
 * Open http://localhost:80 (this is the so-called honeypot), which will, in turn, send an incident audit message to the topic
 * See that an audit was written to the S3 bucket and also that email notification was sent
-
+<BR>
 ----------------------------
-
+<BR>
 ## Jobs
 We are going to create a job for certificate rotation. we will provide the certificate as a pre-signed url in S3 which will be short-lived.
 

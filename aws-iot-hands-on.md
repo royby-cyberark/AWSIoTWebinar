@@ -453,7 +453,8 @@ Delete all resources you created, they may cost you and you shouldn't leave unus
 * Delete thing: iot-webinar-device
 * Delete type: iot-webinar-type
 * Delete group: iot-webinar-group
-* Delete policy
+* Delete the policy versions
+* Delete policy (requires deleting the versions first)
 * Delete rule
 * Delete Job
 * Delete cert: 8ad305037c.cert.pem	

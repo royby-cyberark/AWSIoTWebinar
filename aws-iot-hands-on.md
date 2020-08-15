@@ -64,6 +64,7 @@ For full code examples, see the [SDK page](https://github.com/aws/aws-iot-device
 * Select "One-click certificate creation"
   * If this is the first time you're using AWS IoT you might get an error 
     >We are provisioning a Device Gateway endpoint for your account. It may take a few minutes for the endpoint to be ready, after which you can connect devices   to AWS IoT, publish/subscribe to topics, and access device shadows.
+  
   in this case, either wait, or try to open the thing page from the "Manage" side link, go to "Security" and create the certificate from there.
 * On the next page, we are presented with a link to download the device certificate 
 * Download the certificate, private key and optionally the public key and save them into the `AWSIoTWebinar/source` folder in the git repo folder you cloned, under the `source` folder

@@ -208,7 +208,7 @@ We are going to create a job for certificate rotation. we will provide the certi
 
 ### Policy Update
 
-First let's update the policy so we can subscribe to the jobs topics, public and read from them.
+First let's update the policy so we can subscribe to the jobs topics, publish and read from them.
 
 * "Secure", "Policies", open `iot-webinar-policy`, "Edit policy document"
 * Paste the following policy document:

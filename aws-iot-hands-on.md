@@ -36,7 +36,7 @@ But before we dive in, let's do a quick overview of the prominent services that 
 Being focused on the AWS IoT, I will go through the steps using the AWS console. in a real environment you will, of course, do things differently. 
 For example, you will deploy all your resources with CDK (or another similar framework), keeping the producing code in source control. 
 and have your infrastructure "as code".
-I recommend watching our revious webinar on CDK: //TODO link
+I recommend watching our [previous webinar on CDK](https://www.youtube.com/watch?v=W7rF62a96G0)
 
 For full code examples, see the [SDK page](https://github.com/aws/aws-iot-device-sdk-python)
 

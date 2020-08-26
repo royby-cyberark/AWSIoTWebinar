@@ -463,8 +463,10 @@ Delete all resources you created, they may cost you and you shouldn't leave unus
 * From the thing page, "Security", delete all certificates
 * Delete thing: 'iot-webinar-device'
 * Delete group: 'iot-webinar-group'
-* Delete the policy versions
 * Delete policy (requires deleting the versions first)
+  * Open the `iot-webinar-policy` policy
+  * Delete the policy versions
+  * Delete the policy (requires deletion of versions first)
 * Delete Rule: `IotWebinarRule`
 * Delete all Jobs	
 * Delete S3 bucket

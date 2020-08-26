@@ -151,7 +151,7 @@ IoT rules are soft limited to 1000 per account, which means you can request an i
 ```
 
 * "Create"
-* Go to "Thing", "Security", "Certificate", "Attach policy"
+* Open our "thing" from the "Manage" page, go to "Security", "Certificate", click on the certificate, "Action", then "Attach policy"
 
 This policy allows a device (client) of the specified arn to connect. It requires the arn to include the specific thing name.
 Also, it allows to publish only to a topic that starts with the device "Owner" attribute value followed by the device thing name, followed by "audit".

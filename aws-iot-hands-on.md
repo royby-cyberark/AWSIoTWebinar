@@ -86,7 +86,6 @@ For full code examples, see the [SDK page](https://github.com/aws/aws-iot-device
 
 * Create an S3 bucket
   * Open S3, create bucket, name it `iot-webinar-audits-<random stuff>` (S3 bucket names are globally unique)
-  * Use all defaults and create bucket
 * Under "Act", "Rules", click "Create"
 * Name it `IotWebinarRule` (only alphanumeric and underscore are allowed)
 * Set the SQL query to `SELECT * FROM 'abcde-12345/+/audit'` (Use the default SQL version) 

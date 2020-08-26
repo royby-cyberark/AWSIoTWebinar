@@ -431,6 +431,7 @@ Below you can find sample python code for doing the encryption/decryption using 
 and as such should not be used in production as-is.
 
 If you want to try this, do the following (may change due to os or the way you do virtual envs):
+* First make sure that you have two sets of public-private keys. each set must have a matching pair of a public and private keys. it is easy to leave a public key behind while rotating the private in the above examples. so if you're not sure, simply generate two new certificates, download each certificate files and, named them each set with "new", "old" or whatever works for you. **Just make sure that you decrypt with the matching private key**
 * Open a new terminal window (new virtual environment for python) 
 * cd into `asymm-crpto-sample` under the cloned repo
 * `python -m venv .venv`

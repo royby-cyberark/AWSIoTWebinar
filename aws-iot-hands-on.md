@@ -109,7 +109,7 @@ For full code examples, see the [SDK page](https://github.com/aws/aws-iot-device
   * Subscribe to SNS notifications
     * Open the SNS service
     * Subscription, Create Subscription
-    * Under "Topic ARN", use auto-complete to select your SNS webinar topic arn
+    * Under "Topic ARN", use auto-complete to select your SNS webinar topic arn (for `iot-webinar-sns-topic`) 
     * Select "Email" for "Protocol"
     * For "Endpoint", enter your email and click "Create Subscription"
     * Open the email and click the confirm link

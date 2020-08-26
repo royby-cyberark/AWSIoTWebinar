@@ -477,3 +477,5 @@ Delete all resources you created, they may cost you and you shouldn't leave unus
     * Delete the role
   * Also delete the `iot-webinar-logs` role
 * Delete the `iot-webinar-type` thing type (assuming it has been 5 minutes)
+* Delete the `iot-webinar-sns-topic` topic under SNS
+

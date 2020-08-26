@@ -435,7 +435,7 @@ If you want to try this, do the following (may change due to os or the way you d
 * cd into `asymm-crpto-sample` under the cloned repo
 * `python -m venv .venv`
 * ` source .venv/bin/activate` (or run the batch in Windows)
-* `pip install pycrypto`
+* `pip install pycryptodome`
 * Run the encrypt script (replace placeholders with files): `python asymm-encrypt-sample.py -t <file to encrypt> -p <public key to encrypt with>`
 * A new file name `enc_<file to encrypt>` is created. review its encrypted content
 * Run the decrypt script: `python asymm-decrypt-sample.py -e <encrypted file> -p <private key to decrypt with>`

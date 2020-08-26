@@ -451,9 +451,9 @@ https://github.com/royby-cyberark/AWSIoTWebinar/blob/master/sample/sample-asymme
 ## Cleaning Up
 
 Delete all resources you created, they may cost you and you shouldn't leave unused resources.
+
 **IMPORTANT!** This list may not be complete or may have mistakes, you are responsible to clean us everything you created.
 
-//TODO - verify this
 * Deprecate the thing type: `iot-webinar-type` (You need to deprecate first, then wait 5 minutes, then delete it - all from the type, actions menu)
 * From the thing page, "Security", delete all certificates
 * Delete thing: 'iot-webinar-device'

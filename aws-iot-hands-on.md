@@ -300,7 +300,7 @@ We are now connected and waiting for jobs.
 ```
 aws iot create-job \
               --job-id "local-scan-job-01" \
-              --targets "arn:aws:iot:eu-west-1:<account_id>:thing/<thing_name>" \
+              --targets "arn:aws:iot:<region>:<account_id>:thing/<thing_name>" \
               --document file://job-local-scan.json \
               --description "example status job" \
               --target-selection SNAPSHOT
@@ -371,7 +371,7 @@ In a real-world situation, you would revoke them.
 ```
 aws iot create-job \
               --job-id "local-scan-job-01" \
-              --targets "arn:aws:iot:eu-west-1:<account_id>:thing/<thing_name>" \
+              --targets "arn:aws:iot:<region>:<account_id>:thing/<thing_name>" \
               --document file://job-local-scan.json \
               --description "example status job" \
               --target-selection SNAPSHOT
@@ -383,7 +383,7 @@ And delete the job with:
 ```
 aws iot create-job \
               --job-id "rotate-job-01" \
-              --targets "arn:aws:iot:eu-west-1:<account_id>:thing/<thing_name>" \
+              --targets "arn:aws:iot:<region>:<account_id>:thing/<thing_name>" \
               --document file://job-rotate-cert.json \
               --description "example cert rotation job" \
               --target-selection SNAPSHOT \

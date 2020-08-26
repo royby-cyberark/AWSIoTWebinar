@@ -292,7 +292,7 @@ We are now connected and waiting for jobs.
 ### Create a Simple Job
 
 * Under "Manage", "Jobs", "Create", "Create Custom Job"
-* Set bob id to `local-scan-job-01`
+* Set job id to `local-scan-job-01`
 * Under "Devices to update", select your device (you can also select the device group to update all group members)
 * Under "Add a job file", select `job-local-scan.json` from our S3 bucket
 * Click on "Next", "Create"

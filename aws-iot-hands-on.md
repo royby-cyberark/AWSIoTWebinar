@@ -362,8 +362,9 @@ In a real-world situation, you would revoke them.
 * Send a simple "local-scan-job" like before (See command line below)
 * Verify that the job was received by the client
 * Deactivate (or revoke) the new certificate
-* Terminal and run our jobs client
+* Stop and restart our jobs client
 * You are not able to connect this time
+* Optionally do the same but without restarting the client, but rather wait a few (5-10) minutes instead
 
 * Creating a local-scan job command:
 ```

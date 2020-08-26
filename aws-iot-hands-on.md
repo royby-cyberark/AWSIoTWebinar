@@ -316,7 +316,7 @@ And delete the job with:
 * First, create the new secrets
   * "Manage", "Things", select our device `iot-webinar-device`
   * "Security", "Create certificate"
-  * Download the certificate, private key, and optionally the public key and save them into **ANOTHER** folder. In a real environment, this will be done on a different machine. make sure you don't save those into the project folder to avoid cheating
+  * Download the certificate (save as: `certificate.pem.crt`), private key (save as `private.pem.key`), and optionally the public key and save them into **ANOTHER** folder. In a real environment, this will be done on a different machine. make sure you don't save those into the project folder to avoid cheating
     * Strictly speaking, the public key is not required on our end. but you can use it in the bonus section at the bottom.
   * Click "Activate"
   * Click "Attach Policy", select our policy `iot-webinar-policy` and click "Done"

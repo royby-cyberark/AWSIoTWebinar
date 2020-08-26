@@ -256,7 +256,7 @@ This policy will allow us to:
 4. Subscribe to the reserved topic for jobs topic filter.
 
 Notes:
-* The topic for jobs is reserved by aws and it has the following format: $aws/things/thingName/jobs/get. for more information see the [docs](https://docs.aws.amazon.com/iot/latest/developerguide/reserved-topics.html)
+* The topic for jobs is reserved by aws and it has the following format: $aws/things/thingName/jobs/get (for example). for more information see the [docs](https://docs.aws.amazon.com/iot/latest/developerguide/reserved-topics.html)
 * To be able to work with jobs, you must subscribe to the topicfilter. the reason for this is that being pub-sub, a client can publish to one topic (at a time), but subscribe to multiple topics. this is done by using the wildcard supporting topicfilter for subscribing and the non-wildcard-supporting topic for publishing and receiving. see the [doc](https://docs.aws.amazon.com/iot/latest/developerguide/topics.html#topicfilters).
 
 

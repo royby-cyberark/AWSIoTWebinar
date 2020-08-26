@@ -1,6 +1,6 @@
 # AWS IoT Hands-On session
 
-🔥🔥 **DISCLAIMER 1:** 🔥🔥
+💵💵 **DISCLAIMER 1:** 💵💵
 
 Using AWS costs money. while the things we do here may or may not be under the free tier (and even if not, they are very low volume), 
 you are responsible for the costs and the resources you create and to clean up after yourself.

@@ -51,7 +51,6 @@ For full code examples, see the [SDK page](https://github.com/aws/aws-iot-device
 
 ## Get the Code
 * `git clone git@github.com:royby-cyberark/AWSIoTWebinar.git`
-
  
 ## Device Creation
 
@@ -186,7 +185,8 @@ iot-webinar-logs
   * The Python SDK is here: https://github.com/aws/aws-iot-device-sdk-python
   * SDK code samples: https://github.com/aws/aws-iot-device-sdk-python
 * Set up your python virtual env (this may vary according to you os and the way you do virtual environments)
-  * Open a terminal and run the following commands:
+  * Open a terminal in your cloned repo folder and run the following commands:
+  * cd `source`
   * `python -m venv .venv
   * `source .venv/bin/activate` (on windows you need to run the activate batch file)
   * `pip install AWSIoTPythonSDK requests`

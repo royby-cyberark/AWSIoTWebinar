@@ -126,7 +126,7 @@ IoT rules are soft limited to 1000 per account, which means you can request an i
 * To create a policy open "Secure", "Policies", "Create", name it `iot-webinar-policy`
 * Click on "Advanced mode" and paste the following policy document:
   
-**IMPORTANT!** Replace the region and account placeholders with your values for region and account number
+**IMPORTANT!** Replace the region and account placeholders with your values for region and account number (best to take it from the policy arn which will minimize the chance of a mistake)
   
 ```
 {
@@ -213,7 +213,8 @@ First let's update the policy so we can subscribe to the jobs topics, public and
 * "Secure", "Policies", open `iot-webinar-policy`, "Edit policy document"
 * Paste the following policy document:
 
-**IMPORTANT!** Replace the region and account placeholders with your values for region and account number
+**IMPORTANT!** Replace the region and account placeholders with your values for region and account number (best to take it from the policy arn which will minimize the chance of a mistake)
+  
 
 ```{
   "Version": "2012-10-17",

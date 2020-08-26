@@ -474,5 +474,6 @@ Delete all resources you created, they may cost you and you shouldn't leave unus
     * Go to the policy under the "Permissions" tab and delete the policy
     * Delete the role
 * Delete the `iot-webinar-type` thing type (assuming it has been 5 minutes)
-* Delete the `iot-webinar-sns-topic` topic under SNS
-  * TODO - check that subsription is deleted
+* SNS
+  * Delete the subscription you created
+  * Delete the `iot-webinar-sns-topic` topic under SNS

@@ -97,7 +97,7 @@ For full code examples, see the [SDK page](https://github.com/aws/aws-iot-device
   * You can also use thing name, type and other properties as policy variables, see the [docs](https://docs.aws.amazon.com/iot/latest/developerguide/iot-policy-variables.html)
 * Create S3 store action
   * Click on "Add Action"
-  * Select S3
+  * Select S3, "Configure action"
   * Select the S3 bucket and set the key to `${topic()}/${timestamp()}` see [this](https://docs.aws.amazon.com/iot/latest/developerguide/iot-substitution-templates.html) for details on substitution templates
   * To create a role that will allow iot to access our S3 bucket: "Create Role" and name it `iot-webinar-s3-role` 
   * Click on "Add Action" to finalize the creation

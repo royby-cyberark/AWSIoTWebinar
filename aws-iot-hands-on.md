@@ -13,6 +13,8 @@ A Cleanup section is provided at the bottom, but it many contain mistakes, os ma
 As webinars go, some of the settings here were simplified. when it come to production systems and code, you are responsible to do your own research and security review all parts including but not limited to IAM policies, IoT policies, certificates, S3 bucket settings and anything else that is mentioned here.
 Consider this a webinar grade material and treat it as such.
 
+Especially note all default role creation, in a real scenario, you must review and narrow down your policies to the absolute minimus needed.
+
 ---------------------
 
 
@@ -117,7 +119,7 @@ For full code examples, see the [SDK page](https://github.com/aws/aws-iot-device
 * "Create Rule"
 
 **Note:** 
-IoT rules are soft limited to 1000 per account, which means you can request an increase and expect to get at least 10x that, but this is specific to the service and the use case.
+IoT rules are soft limited to 1000 per account, which means you can request an increase and usually expect to get at least 10x that, but this is specific to the service and the use case.
 
 ## IoT Policy Creation
 

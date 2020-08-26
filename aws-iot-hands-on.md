@@ -306,7 +306,7 @@ aws iot create-job \
               --target-selection SNAPSHOT
 ```
 And delete the job with:
-`aws iot delete-job --job-id "status-job-01"`
+`aws iot delete-job --job-id "local-scan-job-01"`
 
 * See that the job client receives the created job.
 

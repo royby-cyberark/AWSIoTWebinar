@@ -432,6 +432,7 @@ and as such should not be used in production as-is.
 
 If you want to try this, do the following (may change due to os or the way you do virtual envs):
 * Open a new terminal window (new virtual environment for python) 
+* cd into `asymm-crpto-sample` under the cloned repo
 * `python -m venv .venv`
 * ` source .venv/bin/activate` (or run the batch in Windows)
 * `pip install pycrypto`

@@ -445,7 +445,7 @@ If you want to try this, do the following (may change due to os or the way you d
 
 Asymmetric crypto code sample:
 
-https://github.com/royby-cyberark/AWSIoTWebinar/blob/master/sample/sample-asymmetric-crypto.py
+https://github.com/royby-cyberark/AWSIoTWebinar/tree/master/asymm-crpto-sample
 
 
 ## Cleaning Up

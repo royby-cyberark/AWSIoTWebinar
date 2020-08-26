@@ -358,7 +358,7 @@ In a real-world situation, you would revoke them.
   * "Manage", "Things", `iot-webinar-device`, "Security"
   * Click on the old certificate, use the name you noted before when creating it
   * Under "Actions", click "Deactivate" (or "Revoke" if you sure it is no longer needed)
-* Terminal and run our jobs client
+* Stop and restart our jobs client
 * Send a simple "local-scan-job" like before (See command line below)
 * Verify that the job was received by the client
 * Deactivate (or revoke) the new certificate

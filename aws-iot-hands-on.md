@@ -250,8 +250,8 @@ First let's update the policy so we can subscribe to the jobs topics, public and
 
 This policy will allow us to:
 1. Connect as before
-2. Public and receive messages on the audit topic (like before) - isn't used in the jobs example
-3. Public and receive messages on the reserved topic for jobs topic.
+2. Publish and receive messages on the audit topic (like before) - isn't used in the jobs example
+3. Publish and receive messages on the reserved topic for jobs topic.
 4. Subscribe to the reserved topic for jobs topic filter.
 
 Notes:

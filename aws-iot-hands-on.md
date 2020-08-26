@@ -172,7 +172,7 @@ https://docs.aws.amazon.com/iot/latest/developerguide/pub-sub-policy.html
 * If you want to turn on logging, go to "settings", turn it on and select the desired log level
   * Create a role for writing to CloudWatch and name it `iot-webinar-logs`
 * Open https://console.aws.amazon.com/cloudwatch/, choose "Log groups"
-* In the Filter text box, enter `AWSIotLogsV2`, and then press Enter
+* In the Filter text box, enter `AWSIotLogsV2`, and then press Enter (It might be `AWSIotLogs` if you region does not support `AWSIotLogsV2` yet)
 * For more info, see the [docs](https://docs.aws.amazon.com/iot/latest/developerguide/cloud-watch-logs.html)
 * If you want to configure the logging verbosity, you can do that in the "Settings" page in the IoT dashboard
 iot-webinar-logs

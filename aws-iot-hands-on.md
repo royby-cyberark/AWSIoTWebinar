@@ -463,7 +463,9 @@ Delete all resources you created, they may cost you and you shouldn't leave unus
 * Delete policy (requires deleting the versions first)
 * Delete Rule
 * Delete all Jobs	
-* Delete S3 bucket (first delete all files and folders)
+* Delete S3 bucket
+  * Delete all files and folders
+  * Delete bucket
 * //TODO find all "created" roles during the process - search roles for webinar (other?)
 * Open the IAM service and delete all policies and roles:
   * Open "Roles"

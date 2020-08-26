@@ -216,7 +216,8 @@ First let's update the policy so we can subscribe to the jobs topics, publish an
 **IMPORTANT!** Replace the region and account placeholders with your values for region and account number (best to take it from the policy arn which will minimize the chance of a mistake)
   
 
-```{
+```
+{
   "Version": "2012-10-17",
   "Statement": [
     {

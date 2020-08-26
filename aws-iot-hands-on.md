@@ -89,7 +89,9 @@ For full code examples, see the [SDK page](https://github.com/aws/aws-iot-device
 * Under "Act", "Rules", click "Create"
 * Name it `IotWebinarRule` (only alphanumeric and underscore are allowed)
 * Set the SQL query to `SELECT * FROM 'abcde-12345/+/audit'` (Use the default SQL version) 
-  This selects the entire message from the topic that starts with the tenant-id 'abcde-12345', then any path then 'audit'
+  
+  This selects the entire message from the topic that starts with the tenant-id 'abcde-12345', then any path, then 'audit'
+  
   This, along with the policy restrictions will help us achieve tenant isolation.
   see [this](https://docs.aws.amazon.com/iot/latest/developerguide/iot-sql-from.html) for more info about FROM clause wildcards 
   * You can also use thing name, type and other properties as policy variables, see the [docs](https://docs.aws.amazon.com/iot/latest/developerguide/iot-policy-variables.html)

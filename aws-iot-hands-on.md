@@ -476,10 +476,9 @@ Delete all resources you created, they may cost you and you shouldn't leave unus
 * Open the IAM service and delete all policies and roles:
   * Open "Roles"
   * Search for `webinar` (Assuming you adhered to the values in this guide)
-  * For each of our roles (`iot-webinar-s3-role`, `iot-webinar-signedurls-role`, `iot-webinar-sns-role`
+  * For each of our roles (`iot-webinar-s3-role`, `iot-webinar-signedurls-role`, `iot-webinar-sns-role`, `iot-webinar-logs`)
     * Go to the policy under the "Permissions" tab and delete the policy
     * Delete the role
-  * Also delete the `iot-webinar-logs` role
 * Delete the `iot-webinar-type` thing type (assuming it has been 5 minutes)
 * Delete the `iot-webinar-sns-topic` topic under SNS
   * TODO - check that subsription is deleted

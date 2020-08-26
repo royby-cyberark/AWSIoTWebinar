@@ -167,13 +167,6 @@ https://docs.aws.amazon.com/iot/latest/developerguide/example-iot-policies-eleme
 https://docs.aws.amazon.com/iot/latest/developerguide/pub-sub-policy.html
 
 
-## Test the Rule 
-
-* Open "Act", "Tests"
-* Under publish, enter iot/audit
-* Click "Publish to topic"
-
-
 ## Cloudwatch Logging 
 
 * If you want to turn on logging, go to "settings", turn it on and select the desired log level

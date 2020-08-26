@@ -178,7 +178,7 @@ https://docs.aws.amazon.com/iot/latest/developerguide/pub-sub-policy.html
 iot-webinar-logs
 
 
-## Device Setup
+## Device Setup //TODO - here
 
 * In the IoT dashboard, click on "settings" and note your service endpoint address
 * The IoT (and other) SDKs can be found here: 

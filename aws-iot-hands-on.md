@@ -349,8 +349,6 @@ if there are any changes to the certificate it will take a few minutes for them 
 This is documented in the UpdateCertificate API [docs](https://docs.aws.amazon.com/iot/latest/apireference/API_UpdateCertificate.html).
 >“Within a few minutes of updating a certificate from the ACTIVE state to any other state, AWS IoT disconnects all devices that used that certificate to connect. >Devices cannot use a certificate that is not in the ACTIVE state to reconnect.”
 
-//TODO - test this, test policy update
-
 Since we don't want to wait "a few minutes" between each test, the easiest way to test this is simply restarting our program. 
 
 **NOTE:** Since we are testing, I will deactivate the certificates instead of revoking them. this will have the exact same effect, but allow me to reactivate them again later without having to create another certificate and copy it to the device. 

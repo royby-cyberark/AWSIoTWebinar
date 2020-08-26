@@ -415,7 +415,6 @@ Now, look at the data that goes into the S3 bucket and see how it's changed.
 See [this reference](https://docs.aws.amazon.com/iot/latest/developerguide/iot-sql-functions.html) for functions that you can use in the query statement.
 Which is under the [AWS IoT SQL reference](https://docs.aws.amazon.com/iot/latest/developerguide/iot-sql-reference.html)
 
-//TODO - here
 ### Bonus Stuff 2 - Encrypting your Certificates with Asymmetric Encryption
 
 Even though presigned urls are generally safe and can be set to expire after some time, still, anyone with the link can download the files that it points to.

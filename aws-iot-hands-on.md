@@ -336,7 +336,6 @@ And delete the job with:
 * Click on "Next", "Create"
 * See that you got the job and rotated the files locally (you can look at the console output and the file update time)
 * The client has now reconnected with the new certificate and the old certificate can be revoked. 
-* Stop and start our script to verify that it works after a restart and reloading of the new certs (see notes below on revocation)
 
 **NOTE:** 
 When testing it is better to deactivate the certs so you can easily reactivate them when needed and not have to get them to the device again.

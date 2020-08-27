@@ -171,10 +171,15 @@ https://docs.aws.amazon.com/iot/latest/developerguide/pub-sub-policy.html
 * If you want to turn on logging, go to "settings", turn it on and select the desired log level
   * Create a role for writing to CloudWatch and name it `iot-webinar-logs`
 * Open https://console.aws.amazon.com/cloudwatch/, choose "Log groups"
-* In the Filter text box, enter `AWSIotLogsV2`, and then press Enter (It might be `AWSIotLogs` if your region does not support `AWSIotLogsV2` yet)
+* In the Filter text box, enter `AWSIotLogsV2`
 * For more info, see the [docs](https://docs.aws.amazon.com/iot/latest/developerguide/cloud-watch-logs.html)
-* If you want to configure the logging verbosity, you can do that in the "Settings" page in the IoT dashboard
-iot-webinar-logs
+* Troubleshooting: if you are unable to see logs, try searching for the `AWSIotLogs`. If you only see this one, you can enable the V2 logs with the following command (use your role arn):
+
+```
+aws iot set-v2-logging-options \
+    --role-arn arn:aws:iam::<your aws account number>:role/<IoTLoggingRole> \
+    --default-log-level DEBUG
+```
 
 
 ## Device Setup

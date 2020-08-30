@@ -76,7 +76,7 @@ For full code examples, see the [SDK page](https://github.com/aws/aws-iot-device
   * Strictly speaking, the public key is not required on our end. but you can use it in the bonus section at the bottom.
 * Click on "Activate", this will activate the certificate that you created and associated with the device.
 * Click on "Done" (or "Attach policy" and "Done) but **DO NOT** pick a policy (we will create a policy later)
-* Click "Register thing"
+* Click "Register thing"e
 * Under "Manage", "Things", open your device and review it
   * Details: arn, thing type - note your device arn for later
   * Security: review the certificate, its arn, policies, and things **note the certificate name for later use**
@@ -84,6 +84,12 @@ For full code examples, see the [SDK page](https://github.com/aws/aws-iot-device
 
 
 ## Rule Creation
+
+**Note on reducing costs:** 
+
+For simplicity and learning purposes, we are using normal topics. depending on the use-case, it may be possible to lower your costs by using basic ingest.
+it is useful when you don't need the fancy pub-sub capabilities that the normal IoT queues have to offer. 
+See the [docs](https://docs.aws.amazon.com/iot/latest/developerguide/iot-basic-ingest.html) for more info
 
 * Create an S3 bucket
   * Open S3, create bucket, name it `iot-webinar-audits-<random stuff>` (S3 bucket names are globally unique)

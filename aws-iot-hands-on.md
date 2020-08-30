@@ -88,7 +88,7 @@ For full code examples, see the [SDK page](https://github.com/aws/aws-iot-device
 **Note on reducing costs:** 
 
 For simplicity and learning purposes, we are using normal topics. depending on the use-case, it may be possible to lower your costs by using basic ingest.
-it is useful when you don't need the fancy pub-sub capabilities that the normal IoT queues have to offer. 
+it is useful when you don't need the fancy pub-sub capabilities that the normal IoT queues have to offer, and only send messages to some rules. 
 See the [docs](https://docs.aws.amazon.com/iot/latest/developerguide/iot-basic-ingest.html) for more info
 
 * Create an S3 bucket

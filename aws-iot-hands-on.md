@@ -197,8 +197,8 @@ aws iot set-v2-logging-options \
   * SDK code samples: https://github.com/aws/aws-iot-device-sdk-python
 * Set up your python virtual env (this may vary according to you os and the way you do virtual environments)
   * Open a terminal in your cloned repo folder and run the following commands:
-  * cd `source`
-  * `python -m venv .venv
+  * `cd source`
+  * `python -m venv .venv`
   * `source .venv/bin/activate` (on windows you need to run the activate batch file)
   * `pip install AWSIoTPythonSDK requests`
 * Run the following command line, replacing the endpoint placeholder with your endpoint address:

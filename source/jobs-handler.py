@@ -134,7 +134,6 @@ print('Starting to process jobs...')
 jobsMsgProc.process_jobs()
 
 
-# TODO - reconnect gracefully 
 while True:
     time.sleep(2)
     if jobsMsgProc.cert_rotated:

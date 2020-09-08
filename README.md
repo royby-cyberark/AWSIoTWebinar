@@ -6,7 +6,9 @@ Welcome to the CyberArk AWS IoT Webinar.
 below you will find general description, links and most importantly, step-by-step which you can follow to recreate everything we did during the webinar. 
 I hope you enjoy the webinar and if you have any questions feel free to open an issue here or DM me @RoyBenYosefTM on twitter.
 
-This is part 2 of our on-going series "Reaching the cloud". you can find part 1 "AWS CDK Hands on: Developing SaaS Infrastructure as Code" here: https://www.meetup.com/CyberArk-Meetups/events/271226496/
+This is part 2 of our on-going series "Reaching the cloud". you can find part 1, "AWS CDK Hands on: Developing SaaS Infrastructure as Code" here:
+
+https://www.meetup.com/CyberArk-Meetups/events/271226496/
 
 💵💵 **DISCLAIMER 1:** 💵💵
 
